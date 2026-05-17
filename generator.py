@@ -43,7 +43,7 @@ def generate_prd(user_idea: str, retrieved_examples: str = "") -> dict:
     )
     message = _get_client().messages.create(
         model=MODEL,
-        max_tokens=2048,
+        max_tokens=4096,
         messages=[{"role": "user", "content": prompt}],
     )
     raw = message.content[0].text
@@ -59,3 +59,13 @@ def evaluate_prd(prd: dict) -> dict:
     )
     raw = message.content[0].text
     return json.loads(_strip_fences(raw))
+
+
+def generate_prd_with_retrieval(user_idea: str) -> dict:
+    from retrieval import retrieve_similar_prds
+    retrieved = retrieve_similar_prds(user_idea, k=2)
+    retrieved_examples = (
+        "For reference, here are similar PRDs to use as style and structure "
+        "guidance, not content to copy:\n\n" + retrieved
+    )
+    return generate_prd(user_idea, retrieved_examples=retrieved_examples)

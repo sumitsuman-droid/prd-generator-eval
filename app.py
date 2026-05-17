@@ -1,6 +1,7 @@
 import streamlit as st
 
-from generator import generate_prd, evaluate_prd
+from generator import generate_prd_with_retrieval, evaluate_prd
+from retrieval import get_similar_prd_metas
 
 st.set_page_config(page_title="PRD Generator", page_icon="📋", layout="wide")
 st.title("PRD Generator")
@@ -13,12 +14,36 @@ idea = st.text_area(
 )
 
 if st.button("Generate PRD", type="primary", disabled=not idea.strip()):
-    with st.spinner("Generating PRD…"):
+    with st.spinner("Retrieving similar PRDs and generating…"):
         try:
-            prd = generate_prd(idea.strip())
+            prd = generate_prd_with_retrieval(idea.strip())
+            retrieved_prds = get_similar_prd_metas(idea.strip(), k=2)
         except Exception as e:
             st.error(f"PRD generation failed: {e}")
             st.stop()
+
+    with st.spinner("Running LLM-as-judge evaluation…"):
+        try:
+            evaluation = evaluate_prd(prd)
+        except Exception as e:
+            st.error(f"Evaluation failed: {e}")
+            st.stop()
+
+    st.session_state["prd"] = prd
+    st.session_state["retrieved_prds"] = retrieved_prds
+    st.session_state["evaluation"] = evaluation
+
+if "retrieved_prds" in st.session_state:
+    with st.expander("Retrieved similar PRDs (RAG context)"):
+        for r in st.session_state["retrieved_prds"]:
+            st.markdown(f"**{r['title']}**")
+            sentences = r.get("problem_statement", "").split(". ")
+            summary = ". ".join(sentences[:2]) + ("." if len(sentences) > 2 else "")
+            st.caption(summary)
+
+if "prd" in st.session_state:
+    prd = st.session_state["prd"]
+    evaluation = st.session_state["evaluation"]
 
     st.divider()
     st.header(prd.get("title", "Untitled"))
@@ -62,20 +87,8 @@ if st.button("Generate PRD", type="primary", disabled=not idea.strip()):
     st.divider()
     st.header("Eval Results")
 
-    with st.spinner("Running LLM-as-judge evaluation…"):
-        try:
-            evaluation = evaluate_prd(prd)
-        except Exception as e:
-            st.error(f"Evaluation failed: {e}")
-            st.stop()
-
     overall = evaluation.get("overall_score", 0)
-    if overall >= 7.5:
-        color = "green"
-    elif overall >= 5.0:
-        color = "orange"
-    else:
-        color = "red"
+    color = "green" if overall >= 7.5 else "orange" if overall >= 5.0 else "red"
 
     st.markdown(
         f"<h2 style='color:{color}'>Overall Score: {overall} / 10</h2>",
