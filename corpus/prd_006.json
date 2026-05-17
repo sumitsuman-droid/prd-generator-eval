@@ -1,0 +1,73 @@
+{
+  "title": "GlucoPath",
+  "problem_statement": "People managing Type 2 diabetes with a continuous glucose monitor (CGM) receive detailed real-time glucose graphs but no actionable guidance connecting specific food choices to their postprandial glucose patterns. Glucose response to identical foods varies substantially by individual — a reality that makes population-average dietary advice from quarterly endocrinology appointments largely ineffective. Patients are expected to interpret multi-day glucose traces and self-adjust their diets without clinical training, and care teams lack the bandwidth to review CGM data between appointments for stable patients. The result is a large and growing population of CGM-equipped diabetes patients who understand their glucose is variable but cannot identify which of their specific daily meals and habits are driving the variability.",
+  "target_users": [
+    "Newly diagnosed Type 2 diabetes patient using a CGM for the first time who lacks the clinical knowledge to interpret glucose trends in relation to their diet",
+    "Long-term Type 2 diabetes patient on oral medication who has plateaued on HbA1c improvement despite following generic dietary guidelines",
+    "Adult with prediabetes or metabolic syndrome who has been advised to monitor glucose and reduce post-meal spikes without a formal diabetes education program",
+    "Endocrinologist or diabetes care and education specialist managing a panel of 150+ patients and needing asynchronous insight into which patients require proactive outreach between appointments"
+  ],
+  "user_stories": [
+    "As a newly diagnosed Type 2 diabetes patient using a CGM for the first time, I want to log a meal with a photo or text description and see a side-by-side view of my glucose response curve for the 3 hours following that meal so that I can visually understand which specific foods cause my glucose to spike above my target range rather than guessing from a daily average",
+    "As a long-term Type 2 diabetes patient on oral medication who has plateaued on HbA1c improvement, I want GlucoPath to identify the 3 meals from my last 30 days that caused my largest and most sustained glucose excursions so that I can have a targeted conversation with my care team about modifying those specific meals rather than reviewing my entire diet",
+    "As an adult with prediabetes managing glucose without a formal diabetes education program, I want GlucoPath to suggest a lower-glycemic alternative for each meal I log that produced a spike above my configured target so that I get personalized, actionable guidance specific to my actual eating patterns rather than a generic low-carb food list",
+    "As a newly diagnosed Type 2 diabetes patient using a CGM for the first time, I want to see a weekly pattern report showing which days and times my glucose is consistently highest so that I can identify whether my glycemic control issues are concentrated around specific meals or behavioral patterns like weekend eating",
+    "As an endocrinologist managing a panel of patients, I want a dashboard view of all GlucoPath-connected patients ranked by time-out-of-range over the past 14 days so that I can prioritize outreach to the patients with the greatest glycemic control deterioration without manually reviewing each patient's CGM app",
+    "As an adult with prediabetes managing glucose without a formal education program, I want GlucoPath to send me a morning summary of yesterday's glucose performance — time in range, peak value, and the meal most likely responsible for the peak — so that I build daily awareness without having to open the app proactively",
+    "As a long-term Type 2 diabetes patient on oral medication who has plateaued on HbA1c improvement, I want to share a structured GlucoPath summary report with my endocrinologist before my appointment so that we can spend appointment time discussing specific patterns instead of exporting and interpreting raw CGM data together"
+  ],
+  "acceptance_criteria": [
+    "Given a user has connected a supported CGM (Dexcom G6/G7 or Abbott Libre 2/3) via the manufacturer's API, when glucose data syncs, then GlucoPath must display the current glucose value, a 3-hour trend graph, and time-in-range for the current day within 5 minutes of the most recent sensor reading, for 95% of sync events",
+    "Given a user logs a meal with a text description or photo, when the meal is saved, then GlucoPath must overlay a 3-hour post-meal glucose curve on the meal log entry and calculate the peak glucose value and time-to-peak for that meal, with the overlay visible within 60 seconds of the meal log submission",
+    "Given a user has at least 14 days of meal log and CGM data, when GlucoPath generates the Top Excursion Meals analysis, then it must correctly identify and rank the meals associated with the highest average post-meal glucose AUC (area under the curve above target threshold) from the logged meal history",
+    "Given a user has configured a personal glucose target range (default 70–140 mg/dL, user-adjustable), when GlucoPath sends the morning summary notification, then the summary must include: yesterday's time-in-range percentage, the highest glucose value recorded and its timestamp, and the meal log entry most closely preceding the highest excursion, delivered between 07:00 and 08:00 in the user's local time",
+    "Given an endocrinologist has connected a patient panel of at least 5 patients, when the provider dashboard loads, then it must display each connected patient's time-in-range for the past 14 days, sorted descending by out-of-range percentage, with data no more than 4 hours stale",
+    "Given a user requests a shareable appointment summary report, when the report is generated, then it must be available as a PDF containing: 30-day time-in-range, average glucose, top 5 excursion meals with associated glucose curves, and weekly pattern heatmap, downloadable within 2 minutes of the request",
+    "Given GlucoPath accesses CGM data via manufacturer OAuth APIs, when data is stored, then GlucoPath must not store raw CGM sensor serial numbers or device identifiers that could re-identify a user beyond their GlucoPath account; PHI handling must comply with HIPAA minimum necessary standard and be confirmed by a HIPAA security review before any provider-facing feature ships"
+  ],
+  "success_metrics": [
+    {
+      "metric": "User-reported time-in-range improvement (percentage point change in daily time-in-range from onboarding week to week 12, self-reported via in-app CGM data)",
+      "baseline": "TBD — captured from each user's CGM data during the first 7 days post-connection as the individual baseline",
+      "target": "Average 8 percentage-point improvement in time-in-range at week 12 for users who log at least 4 meals per week"
+    },
+    {
+      "metric": "Meal logging frequency (average number of meals logged per user per week among users active for 30+ days)",
+      "baseline": "0 meals pre-adoption — feature does not exist",
+      "target": "Average of 7 or more meals logged per week per active user by week 4, sustained through week 12"
+    },
+    {
+      "metric": "Day-90 retention rate (percentage of activated users who open GlucoPath and sync CGM data at least once in the 90th day week)",
+      "baseline": "Expected range: 20–40% based on chronic disease management app category norms; exact baseline TBD from first 90-day post-launch cohort",
+      "target": "45% day-90 retention among users who log at least 3 meals in week 1"
+    },
+    {
+      "metric": "Provider dashboard adoption rate (percentage of connected endocrinologists who open the patient panel dashboard at least once per week)",
+      "baseline": "0% pre-adoption — feature does not exist",
+      "target": "60% of connected providers open the dashboard at least weekly within 60 days of provider account activation"
+    },
+    {
+      "metric": "Appointment summary report share rate (percentage of active users who generate and share at least one summary report in a 90-day period)",
+      "baseline": "TBD — to be established from first 90-day post-launch cohort",
+      "target": "40% of users with a connected provider generate at least one appointment summary report within their first 90 days"
+    }
+  ],
+  "risks_open_questions": [
+    "Dexcom and Abbott CGM APIs have rate limits and require device-specific OAuth tokens that expire and require periodic re-authentication; silent sync failures that leave glucose data gaps could cause users to miss meal-to-spike correlations on days they ate carefully — how do we surface sync gaps clearly without alarming users?",
+    "GlucoPath's meal-to-glucose correlation analysis may be confounded by medication timing, exercise, stress, and sleep — attributing a spike entirely to a logged meal when the user also exercised late or took medication early could generate incorrect dietary guidance; how do we communicate the correlation's limitations without undermining user confidence in the product?",
+    "HIPAA compliance is required for the provider-facing dashboard because it involves handling patient PHI on behalf of a covered entity; does GlucoPath need to execute a Business Associate Agreement with every endocrinology practice that connects, and who owns the BAA negotiation process at a startup scale?",
+    "GlucoPath's meal logging and dietary suggestions could interact dangerously with insulin dosing decisions for insulin-dependent users — even though T2D patients on oral medication are the primary target, some users will be on basal insulin; what guardrails prevent GlucoPath from being used to inform insulin dose adjustments it is not designed to support?",
+    "Photo-based meal logging requires a food recognition model with sufficient accuracy for common meal types; performance on culturally diverse diets (South Asian, East Asian, Latin American, Middle Eastern) is often substantially lower than on Western diets in generic models — what demographic-specific accuracy testing is required before launch?",
+    "The prediabetes segment may not have insurance-covered CGM access, limiting the addressable user base to self-pay CGM purchasers who pay $60–$150 per month out of pocket for sensors; does GlucoPath's value proposition justify an additional subscription on top of that cost, and what price point preserves conversion?",
+    "Regulatory classification: FDA's Software as a Medical Device guidance for prescription-use CGM apps differs from wellness apps; if GlucoPath's meal-to-spike correlation is construed as a clinical decision support tool, it may require a 510(k) clearance path — has FDA regulatory counsel assessed the product's risk class?"
+  ],
+  "out_of_scope": [
+    "Insulin dose calculation, bolus recommendation, or closed-loop pump control — GlucoPath is an observational and coaching tool only, not a drug dosing system",
+    "Support for Type 1 diabetes or users on insulin pump therapy in v1 — primary target is Type 2 diabetes and prediabetes on oral medication or no medication",
+    "Manual blood glucose meter entry — GlucoPath requires a connected CGM for all glucose data in v1",
+    "Support for CGM devices beyond Dexcom G6/G7 and Abbott Libre 2/3 at launch",
+    "Telehealth or in-app messaging between patients and providers — GlucoPath surfaces data; clinical communication occurs through the provider's existing EHR or telehealth system",
+    "Nutrition tracking for calories, macros, or micronutrients beyond meal identification for glucose correlation purposes",
+    "Pediatric use or recommendations for users under 18"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "title": "ClauseGuard",
+  "problem_statement": "In-house legal teams at mid-market companies review dozens of vendor and customer contracts per month, spending several hours per standard NDA or MSA on clause-level review that follows highly predictable patterns. Outside counsel rates make delegating routine commercial contract review cost-prohibitive, yet in-house teams lack the bandwidth to keep pace with deal velocity as companies scale. The consequence is a queue of contracts awaiting legal review that delays procurement, partnership, and customer deals by days or weeks — a friction that business teams increasingly bypass by signing contracts without legal review. Simultaneously, legal teams have no systematic way to identify non-standard clauses that deviate from company playbook positions, meaning deviations slip through when reviewers are rushed.",
+  "target_users": [
+    "In-house corporate counsel at a 200–2,000-person company managing a backlog of commercial contract reviews without enough attorneys to cover deal volume",
+    "Contracts manager or senior paralegal responsible for first-pass review of inbound NDAs, MSAs, and vendor agreements",
+    "General Counsel or VP Legal overseeing contract risk posture and legal team productivity across a growing company",
+    "Procurement manager waiting on legal sign-off to complete a vendor onboarding or renewal"
+  ],
+  "user_stories": [
+    "As an in-house corporate counsel managing a backlog of commercial contract reviews, I want ClauseGuard to read an uploaded contract and surface every clause that deviates from my configured playbook positions — highlighted with the specific deviation and the playbook-preferred alternative language — so that I can focus my review time on non-standard language rather than re-reading standard boilerplate",
+    "As a contracts manager or senior paralegal responsible for first-pass review, I want to upload an inbound NDA and receive a structured summary identifying the governing law, term and auto-renewal provisions, mutual vs. one-way confidentiality, and any unusual carve-outs within 2 minutes of upload so that I can route standard NDAs for attorney sign-off and escalate non-standard ones without reading every word",
+    "As a General Counsel overseeing contract risk posture across a growing company, I want a contract repository that tags every executed agreement by clause type — limitation of liability cap, indemnification scope, IP ownership, auto-renewal trigger — so that when a counterparty faces a legal issue I can identify all related contracts in under 10 minutes rather than searching email threads",
+    "As a procurement manager waiting on legal sign-off, I want to see a real-time status indicator showing where my submitted contract is in the ClauseGuard review queue and which attorney is assigned so that I can communicate an expected turnaround to the vendor without emailing legal directly",
+    "As an in-house corporate counsel managing a backlog of commercial contract reviews, I want ClauseGuard to generate a redlined version of the uploaded contract applying my saved playbook edits to deviating clauses so that I can send a first-draft redline to the counterparty within an hour of receiving their paper rather than authoring every change manually",
+    "As a General Counsel overseeing contract risk posture, I want a monthly report showing average review turnaround time, volume of contracts reviewed by type, and frequency of specific clause deviations flagged so that I can identify which clause categories consume the most review time and prioritize playbook improvements",
+    "As a contracts manager or senior paralegal responsible for first-pass review, I want ClauseGuard to flag any clause that would require review by a licensed attorney in our jurisdiction — such as indemnification for IP infringement or uncapped liability — so that I do not inadvertently approve a contract that exceeds my review authority"
+  ],
+  "acceptance_criteria": [
+    "Given a user uploads a contract in PDF or DOCX format up to 50 pages, when the upload is complete, then ClauseGuard must return a structured clause-level analysis including deviation flags, clause summaries, and playbook comparison within 3 minutes for 95% of submissions",
+    "Given an administrator has configured a playbook with preferred positions for at least 5 clause types, when a contract is analyzed, then ClauseGuard must correctly identify deviations from playbook positions for each configured clause type with a false-negative rate below 10% validated on a labeled test set of 30 contracts before the feature ships",
+    "Given ClauseGuard generates a redlined document, when the redline is downloaded, then it must be a valid DOCX file with tracked changes that opens and renders correctly in Microsoft Word and Google Docs, with each change linked to the playbook rule that triggered it",
+    "Given a contracts manager uploads an NDA, when the analysis completes, then the structured summary must explicitly identify: governing law jurisdiction, confidentiality direction (mutual or one-way), term length, auto-renewal trigger if present, and any carve-outs from the confidentiality obligation",
+    "Given a contract is stored in the repository, when a user searches by clause type or counterparty name, then results must be returned within 3 seconds and must include every contract in the workspace that contains the searched clause type or counterparty, with no omissions for contracts ingested more than 24 hours prior to the search",
+    "Given a procurement manager submits a contract for review, when the contract enters the review queue, then the submitter must see a real-time status indicator (Queued, In Review, Needs Action, Complete) that updates within 5 minutes of any status change without requiring a page refresh",
+    "Given any contract or clause analysis is stored, when data is at rest, then all contract content must be encrypted with AES-256; no contract content may be used to train or fine-tune any shared model; data isolation between workspace tenants must be confirmed by automated access-control tests before GA"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Attorney time spent per contract review (hours from contract receipt to legal sign-off or redline return)",
+      "baseline": "TBD — measured from legal team's time-tracking or self-reported time-per-review survey at onboarding",
+      "target": "50% reduction in attorney active review time per standard NDA or MSA within 90 days of go-live"
+    },
+    {
+      "metric": "Contract review turnaround time (calendar hours from contract submission to legal response delivered to submitter)",
+      "baseline": "TBD — measured from customer's email or ticketing system review cycle data at onboarding; manual queues commonly range from several days to over a week for mid-market teams",
+      "target": "Median turnaround under 4 business hours for standard NDAs within 60 days of go-live"
+    },
+    {
+      "metric": "Playbook deviation detection recall (percentage of actual clause deviations correctly flagged, validated quarterly on a labeled holdout set)",
+      "baseline": "0% automated detection pre-adoption — deviations identified only through manual attorney review",
+      "target": "90% recall with less than 15% false-positive rate on the labeled holdout set within 30 days of playbook configuration completion"
+    },
+    {
+      "metric": "Percentage of submitted contracts reviewed using ClauseGuard analysis vs. reviewed without opening ClauseGuard (attorney adoption rate)",
+      "baseline": "0% pre-adoption — feature does not exist",
+      "target": "80% of contracts submitted to the workspace reviewed by an attorney who opened the ClauseGuard analysis panel within 90 days of go-live"
+    },
+    {
+      "metric": "Number of contracts bypassing legal review per month (business teams signing without submitting to legal queue)",
+      "baseline": "TBD — estimated from business team interviews at onboarding; exact baseline requires monitoring of executed agreements signed without legal ticket",
+      "target": "30% reduction in bypass incidents within 90 days, measured by comparing contracts surfaced in the CLM repository vs. contracts discovered via ERP/procurement system post-hoc"
+    }
+  ],
+  "risks_open_questions": [
+    "ClauseGuard's AI-generated redlines may contain errors that an attorney reviewing quickly does not catch before sending to a counterparty — what disclaimers, confidence indicators, and mandatory attorney confirmation steps are required before a redline can be sent externally, and does their absence create professional liability exposure for the in-house team?",
+    "Law firms and legal departments routinely receive contracts in scanned PDF form with poor OCR quality; extraction accuracy for scanned documents is substantially lower than for native-digital DOCX; what minimum document quality threshold do we set, and how do we handle contracts that fall below it?",
+    "Playbook configuration is a high-stakes task — a misconfigured playbook could systematically fail to flag material deviations; who is accountable for playbook accuracy, and do we need a mandatory attorney certification step before a playbook is activated for production use?",
+    "Contract content is among the most sensitive data a company holds; some legal teams will refuse to upload contracts to any third-party SaaS; is an on-premises or VPC-isolated deployment option required to close regulated industry deals (financial services, healthcare)?",
+    "Clause detection models trained on general commercial contracts may perform poorly on specialized agreement types (SaaS DPAs, clinical trial agreements, construction subcontracts) that use non-standard terminology; how do we scope which contract types are supported at launch and communicate the boundaries clearly?",
+    "Bar association unauthorized practice of law rules vary by jurisdiction; if ClauseGuard's output is construed as legal advice rather than a document processing tool, some jurisdictions may impose restrictions on how the product can be marketed or used; has external legal counsel reviewed the product framing and disclaimers?",
+    "Integration with DocuSign, Adobe Sign, and CLM systems (Ironclad, Conga, Apttus) is needed for contracts to flow into ClauseGuard automatically rather than requiring manual upload; which integration is the highest-priority based on prospect pipeline data, and is it required for the first paid customers?"
+  ],
+  "out_of_scope": [
+    "Litigation document review or e-discovery — ClauseGuard is scoped to commercial contract review only",
+    "Regulatory compliance monitoring or legal hold management",
+    "Contract authoring or template generation from scratch — ClauseGuard reviews and redlines inbound contracts; it does not generate original contract drafts",
+    "Electronic signature or contract execution — ClauseGuard ends at the legal review and redline stage; execution is handled by the customer's existing e-signature tool",
+    "Patent, trademark, or IP prosecution document handling",
+    "Real-time negotiation support or counterparty-facing features — all output is internal to the legal team's workspace",
+    "Support for languages other than English in v1 — clause analysis and playbook comparison are English-only at launch"
+  ]
+}

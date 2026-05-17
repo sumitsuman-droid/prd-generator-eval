@@ -1,0 +1,73 @@
+{
+  "title": "BuildDock",
+  "problem_statement": "Engineering teams at companies with 200 to 1,000 engineers spend a disproportionate share of developer time filing infrastructure tickets and waiting for platform team reviews rather than shipping product code. Platform engineering teams are chronically under-staffed relative to demand, creating a bottleneck where product engineers wait days or weeks for environments that should take minutes to provision. As organizations move to microservices, the number of distinct environments — per-service, per-feature-branch, ephemeral test, production-replica staging — multiplies faster than central teams can safely serve. The result is widespread shadow infrastructure: engineers fork and hand-edit Terraform modules outside governed workflows, creating configuration drift, security policy violations, and environments that accumulate cloud cost with no owner and no decommission path.",
+  "target_users": [
+    "Backend software engineer at a 200–1,000-person company who needs a named staging environment but waits several days for a platform ticket to be resolved",
+    "Platform engineering lead managing a persistent backlog of infrastructure provisioning requests from a dozen or more product squads",
+    "Engineering manager responsible for deployment frequency and environment stability metrics across multiple feature teams",
+    "Security engineer responsible for cloud resource policy compliance and preventing unauthorized configuration drift across the organization"
+  ],
+  "user_stories": [
+    "As a backend software engineer who needs a named staging environment but waits several days for a platform ticket, I want to select a pre-approved service template from BuildDock's catalog and provision a fully configured staging environment with one CLI command so that I can begin integration testing within 15 minutes rather than waiting in a ticket queue",
+    "As a platform engineering lead managing a persistent backlog of provisioning requests from a dozen or more product squads, I want to define parameterized infrastructure templates in BuildDock that enforce organization-wide guardrails — VPC placement, tagging, IAM boundaries — so that product engineers self-serve without my team reviewing each request individually",
+    "As a backend software engineer who needs a named staging environment but waits several days for a platform ticket, I want BuildDock to automatically decommission my environment when my pull request is merged or closed so that I am not responsible for manually cleaning up resources or accumulating idle cloud spend",
+    "As an engineering manager responsible for deployment frequency and environment stability metrics, I want a dashboard showing all active environments per squad including age, owner, linked PR or release, and estimated daily cloud cost so that I can identify abandoned environments and hold squads accountable for cleanup",
+    "As a security engineer responsible for cloud policy compliance and preventing configuration drift, I want BuildDock to block any provisioning request that would create a resource violating defined security policies — public S3 bucket, unencrypted RDS instance, missing required tags — and surface the specific violated rule name so that engineers understand the constraint without opening a ticket",
+    "As a platform engineering lead managing a persistent backlog, I want BuildDock to generate a GitOps pull request with the rendered Terraform plan for every provisioning action so that I can audit infrastructure changes through the same PR review process used for application code",
+    "As a backend software engineer who needs a named staging environment but waits several days for a platform ticket, I want to clone an existing environment with its configuration intact to a new named environment so that I can reproduce a colleague's setup without reverse-engineering their configuration from scratch"
+  ],
+  "acceptance_criteria": [
+    "Given a software engineer submits a provisioning request using a published service template with all required parameters, when the request is submitted, then BuildDock must create the environment and return a confirmation with endpoint URLs within 10 minutes for templates that provision fewer than 5 AWS resource types",
+    "Given a platform engineering lead defines an infrastructure template with guardrail rules, when a provisioning request is submitted that violates one or more rules, then BuildDock must reject the request before any cloud API calls are made and return the violated rule names and remediation guidance in the CLI or UI response",
+    "Given a pull request linked to an ephemeral environment is merged or closed in GitHub or GitLab, when BuildDock's webhook receives the event, then the associated environment must be fully decommissioned — all provisioned cloud resources deleted — within 30 minutes of the event",
+    "Given an engineering manager opens the environment dashboard, when the view loads, then it must display all active environments across all squads in the workspace, each showing owner, linked PR or release, creation date, and estimated daily cost derived from cloud provider pricing APIs, with data no more than 1 hour stale",
+    "Given BuildDock generates a GitOps pull request for a provisioning action, when the PR is created, then it must contain the complete rendered Terraform plan as a comment, the diff must be reviewable without additional tooling, and the PR must be opened in the engineer's configured code repository within 5 minutes of request submission",
+    "Given an engineer requests to clone an existing named environment, when the clone action is initiated, then BuildDock must apply all configuration parameters from the source environment to the new environment, substituting only the new environment name, and complete provisioning within 15 minutes",
+    "Given BuildDock is deployed in a customer's cloud account, when all provisioning actions are performed, then BuildDock must operate exclusively through customer-supplied IAM roles with least-privilege scopes and must never store long-lived AWS access keys, confirmed by a security review checklist before GA"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Mean time from provisioning request submitted to environment ready (P95 across all template types)",
+      "baseline": "TBD — to be established from customer-reported ticket-to-environment cycle time measured at onboarding via platform team survey",
+      "target": "Under 15 minutes for standard single-service templates within 60 days of go-live"
+    },
+    {
+      "metric": "Percentage of infrastructure provisioning requests fulfilled via BuildDock self-service vs. manual platform team tickets",
+      "baseline": "0% self-service at baseline — all provisioning routed through platform team tickets pre-adoption",
+      "target": "80% of provisioning requests fulfilled via self-service within 90 days of go-live for accounts with at least 3 published templates"
+    },
+    {
+      "metric": "Idle environment cloud cost as a percentage of total cloud spend for BuildDock-managed environments",
+      "baseline": "TBD — measured from 30-day pre-adoption cloud cost report at customer onboarding",
+      "target": "Reduce idle environment spend by 50% or more within 60 days of auto-decommission feature activation"
+    },
+    {
+      "metric": "Platform engineering team ticket volume for infrastructure provisioning requests per month",
+      "baseline": "TBD — captured from customer's ticketing system (Jira or Linear) at onboarding",
+      "target": "60% reduction in provisioning ticket volume within 90 days of go-live"
+    },
+    {
+      "metric": "Security policy violation rate on active provisioned environments (percentage flagged by automated cloud compliance scan)",
+      "baseline": "TBD — established from pre-adoption compliance scan run at customer onboarding",
+      "target": "Zero policy violations on BuildDock-provisioned environments within 30 days of guardrail template activation"
+    }
+  ],
+  "risks_open_questions": [
+    "Platform engineering leads may resist adopting BuildDock because self-service tooling reduces their team's perceived indispensability — adoption requires explicit executive sponsorship and a narrative that the platform team's role evolves from ticket-fulfiller to template-author; how do we support that change management at the point of sale?",
+    "Infrastructure templates must encode opinionated defaults for networking, IAM, and tagging that will conflict with some customers' existing conventions — should BuildDock ship a standard template library or require customers to author all templates from scratch, and which approach reduces time-to-first-provision more reliably?",
+    "Auto-decommission of ephemeral environments on PR close carries risk of data loss if a database in the environment held test data a developer intended to keep — what is the warning and confirmation model, and is a configurable soft-delete window sufficient?",
+    "Multi-cloud support (GCP, Azure alongside AWS) is likely required to close enterprise deals; AWS-first means losing customers whose primary cloud is GCP or Azure; what is the earliest we can commit a second cloud provider to the roadmap without fragmenting the core AWS implementation?",
+    "BuildDock's least-privilege IAM model requires customers to create and maintain IAM roles with carefully scoped permissions — this onboarding step may be the highest-friction point for companies without a dedicated cloud engineer; do we need a CloudFormation bootstrap module to eliminate this step?",
+    "GitOps PR generation for every provisioning action increases PR noise in repositories with high PR volume — is a separate BuildDock-owned repository per workspace the right default, or should platform leads configure PR destinations per template?",
+    "Pricing model is undecided: per-environment-hour, per-seat, or flat platform fee — per-environment-hour aligns with cloud cost savings but requires metering infrastructure; per-seat is predictable but may penalize the high-usage engineering teams that get the most value"
+  ],
+  "out_of_scope": [
+    "Application deployment or CI/CD pipeline orchestration — BuildDock provisions infrastructure only; application code deployment is handled by the customer's existing pipeline",
+    "Cost optimization recommendations or reserved instance purchasing — BuildDock surfaces cost data but does not manage cloud billing or purchasing decisions",
+    "Support for on-premises or bare-metal infrastructure — cloud-hosted environments (AWS primary, multi-cloud deferred) only",
+    "Secrets management or secrets rotation — BuildDock provisions infrastructure but does not store or rotate application secrets; integration with HashiCorp Vault or AWS Secrets Manager is the customer's responsibility",
+    "Production environment provisioning — BuildDock v1 is scoped to development, staging, and ephemeral environments; production changes require a separate change management workflow",
+    "Ad hoc Terraform authoring within BuildDock — all provisioning must use a published template; free-form infrastructure code is not supported in v1",
+    "Multi-tenant shared environment models — each environment is owned by one team linked to one PR or release"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "title": "MathPath",
+  "problem_statement": "Elementary and middle school students who fall behind grade-level math standards often cannot be identified precisely enough for targeted remediation — teachers know a student is struggling but not which specific prerequisite skill gaps are the root cause. Existing adaptive math software assigns grade-level practice problems without diagnosing the foundational gaps that make those problems inaccessible, so struggling students receive work they cannot do and become progressively more disengaged. Teachers managing 25 to 35 students simultaneously cannot conduct individualized diagnostic interviews, and quarterly or annual standardized tests provide data too coarse and too late to adjust instruction before a student's gap compounds into a multi-year deficit. Districts that purchase supplemental math programs often see low teacher adoption because the platforms require significant configuration and do not connect student performance data to lesson planning in a way teachers can act on daily.",
+  "target_users": [
+    "Elementary or middle school math teacher managing a class of 25–35 students with widely varying skill levels and limited time for individual diagnostic assessment",
+    "Student in grades 3–8 who has fallen one or more grade levels behind in math and experiences daily frustration from grade-level work that is inaccessible",
+    "School principal or instructional coach responsible for improving math proficiency scores across a building with limited budget for instructional staff",
+    "District curriculum coordinator responsible for selecting, deploying, and evaluating supplemental math programs across multiple schools"
+  ],
+  "user_stories": [
+    "As an elementary or middle school math teacher managing a class of 25–35 students with widely varying skill levels, I want MathPath to run an initial diagnostic for each student that identifies their current mastery frontier — the specific skills they have and have not yet secured — so that I have an individual skill map for every student within the first week of use rather than relying on last year's state test scores",
+    "As a student in grades 3–8 who has fallen behind and experiences daily frustration, I want MathPath to assign me problems that are just above my current mastery level — challenging but solvable with effort — so that I experience success frequently enough to stay motivated rather than hitting a wall of problems I cannot begin",
+    "As an elementary or middle school math teacher managing a class with widely varying skill levels, I want a class-wide view showing which specific skills my students have not yet mastered, grouped by the skill, so that I can identify which prerequisite gaps are shared by a large enough group to warrant a whole-class re-teach rather than only individual intervention",
+    "As a school principal responsible for improving math proficiency scores, I want a school-level dashboard showing average mastery growth per student per week across all MathPath-using classrooms so that I can identify which teachers are generating the strongest student growth and share their instructional practices with colleagues",
+    "As a student in grades 3–8 who has fallen behind in math, I want to earn visible progress markers as I master each new skill so that my improvement is concrete and visible to me and my family rather than invisible until a report card arrives",
+    "As a district curriculum coordinator responsible for evaluating supplemental programs, I want MathPath to generate an annual report showing each school's aggregate mastery growth compared to their enrollment demographics and initial skill baselines so that I can present a defensible ROI case to the school board using student outcome data rather than engagement metrics",
+    "As an elementary or middle school math teacher managing a class with widely varying skill levels, I want MathPath to surface a suggested small-group intervention for each week showing which 3–5 students share the same unmastered skill and what targeted activity I could run with them in a 15-minute pull-aside so that I can act on the diagnostic data without doing the grouping analysis myself"
+  ],
+  "acceptance_criteria": [
+    "Given a student completes the MathPath onboarding diagnostic, when the diagnostic is finished, then the system must generate an individual skill map showing mastered, partially mastered, and not-yet-attempted skills from the grade 2–8 skill progression, with the diagnostic completing in 20–35 minutes for a student working at a normal pace",
+    "Given a student has a current skill map, when MathPath selects the next problem set, then all assigned problems must target skills within one level above the student's current mastery frontier as defined by the skill graph; no problem may be assigned that requires an unmastered prerequisite skill more than one level below the current frontier",
+    "Given a teacher opens the class skill view, when the view loads, then it must display each skill in the class curriculum as a row with the number and names of students who have not yet mastered it, filterable by grade-level standard, with data refreshed to reflect the most recent student session within 4 hours",
+    "Given a student masters a skill (defined as 4 consecutive correct answers after at least 2 prior exposures), when mastery is recorded, then the student's skill map must update within 60 seconds and the mastery event must be reflected in the teacher's class view at the next data refresh",
+    "Given MathPath generates a weekly small-group intervention suggestion, when the suggestion is displayed to the teacher, then it must include: the shared unmastered skill, the list of students sharing that gap, and at least one suggested hands-on or discussion activity appropriate for a 10–20-minute small-group session",
+    "Given a district curriculum coordinator requests an annual district report, when the report is generated, then it must include: per-school average skills mastered per student per active week, a comparison of initial vs. current mastery distribution, and a breakdown by grade level, exportable as PDF and CSV within 5 minutes of request",
+    "Given a student uses MathPath on a school-issued Chromebook or iPad, when the student opens a problem, then the problem must render and accept input within 2 seconds on a device with 2GB RAM on a school WiFi connection at the 90th percentile latency for the building"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Average number of skills mastered per student per active week on MathPath",
+      "baseline": "TBD — established from first 8-week post-activation cohort per school; pre-MathPath mastery rate is not quantifiable without the diagnostic",
+      "target": "Average of 1.5 or more new skills mastered per student per active week by week 8 of use"
+    },
+    {
+      "metric": "Student daily active usage rate (percentage of licensed students who complete at least one MathPath session on a given school day)",
+      "baseline": "TBD — established from first 30-day post-activation cohort",
+      "target": "65% or higher daily active usage rate on school days within 30 days of classroom activation"
+    },
+    {
+      "metric": "Teacher weekly engagement rate (percentage of active teachers who open the class skill view at least once per week)",
+      "baseline": "0% pre-adoption — feature does not exist",
+      "target": "70% of active teachers open the class skill view at least once per week within 60 days of activation"
+    },
+    {
+      "metric": "State math assessment score improvement for MathPath cohort vs. comparison group (effect size, measured at end-of-year assessment)",
+      "baseline": "TBD — established from prior year's end-of-year assessment scores for the same student cohort as pre-MathPath baseline",
+      "target": "Statistically significant positive effect size (d ≥ 0.20) for students using MathPath at least 3 days per week vs. comparison students in the same school who did not use MathPath"
+    },
+    {
+      "metric": "Teacher-reported time spent on student skill-level diagnosis per week (hours)",
+      "baseline": "TBD — captured from teacher survey at onboarding",
+      "target": "50% reduction in teacher-reported weekly diagnostic time within 60 days of activation, measured against onboarding baseline"
+    }
+  ],
+  "risks_open_questions": [
+    "Skill mastery definitions (4 consecutive correct answers) may be gamed by students who guess strategically on a short problem set; does the mastery threshold need to incorporate response time, problem difficulty variance, and spaced-retrieval confirmation to reduce false mastery signals?",
+    "MathPath's skill graph must be aligned to state standards, which vary meaningfully between states; a single national skill progression may not match the sequencing required by Texas TEKS, California CCSS, or New York's specific standards — does MathPath need state-specific skill graphs at launch, or is a CCSS-aligned graph sufficient to win initial district deals?",
+    "COPPA compliance is required for students under 13; school deployments that share student data with MathPath require a FERPA-compliant data processing agreement with the district; who owns the DPA negotiation and what data fields does MathPath minimally require to function?",
+    "Teachers who do not integrate MathPath into their classroom routine consistently will generate low student usage and weak outcomes, creating a perception that the product does not work; what is the minimum teacher onboarding and ongoing support investment required to sustain 65% daily student active usage, and does our current customer success model support that?",
+    "MathPath's problem content library must cover grades 2–8 skills with sufficient variety to avoid students seeing the same problem twice within a 30-day period at normal usage rates; what is the minimum problem count per skill required to sustain engagement across a school year, and what is the content production cost to reach that threshold?",
+    "District procurement cycles for supplemental instructional technology commonly take 9 to 18 months from evaluation to purchase order; does MathPath have a pilot-to-purchase conversion model that generates revenue or covers costs during the evaluation period, and what evidence standard do curriculum coordinators require to move from pilot to district-wide purchase?",
+    "Students who reach grade-level mastery before the school year ends will exhaust the available skill graph; what does MathPath offer an on-grade-level or advanced student, and is acceleration content (pre-algebra, algebra) required for the product to retain those students through the full year?"
+  ],
+  "out_of_scope": [
+    "ELA, science, or social studies content — MathPath v1 is math-only, grades 3–8",
+    "Homework assignment or take-home practice tracking — MathPath is designed for in-school or teacher-supervised use; at-home use is not blocked but is not a supported workflow in v1",
+    "Parent-facing portals or parent progress notifications in v1 — student progress data is accessible to teachers and administrators only at launch",
+    "Live tutoring, teacher messaging, or student-teacher communication features within MathPath",
+    "IEP or 504 plan accommodation tracking or special education workflow integration",
+    "Standardized test preparation mode or test-format practice — MathPath is mastery-based skill development, not test prep",
+    "Integration with SIS (Powerschool, Infinite Campus) for roster sync in v1 — teacher-managed class setup only at launch"
+  ]
+}

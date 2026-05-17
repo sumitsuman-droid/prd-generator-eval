@@ -1,0 +1,73 @@
+{
+  "title": "ExpenseIQ",
+  "problem_statement": "Employees at mid-size companies submit expense reports through spreadsheet templates or legacy tools that require manual receipt attachment, category selection, and manager routing — a process that typically takes 20–40 minutes per report and delays reimbursement by 2–4 weeks. Finance teams spend a substantial share of their monthly close cycle manually auditing reports for policy violations that could have been caught at submission time. Duplicate reimbursements, missing receipts, and out-of-policy submissions are discovered late in the approval chain, requiring back-and-forth with employees who have already moved on. As companies scale past a few hundred employees, the absence of real-time policy enforcement creates audit exposure and inconsistent reimbursement timelines that erode employee trust.",
+  "target_users": [
+    "Traveling sales or field employee submitting 8–15 expense reports per month across multiple cost centers and projects",
+    "Finance operations analyst responsible for reviewing, approving, and processing reimbursements across a 300–2,000-person organization",
+    "Department head or direct manager responsible for approving team expense reports without visibility into policy rules",
+    "CFO or VP Finance at a 300–2,000-person company responsible for controlling discretionary spend and passing financial audits"
+  ],
+  "user_stories": [
+    "As a traveling sales or field employee submitting 8–15 expense reports per month, I want to photograph a receipt with my phone and have ExpenseIQ automatically extract the merchant name, amount, date, and suggested expense category so that I can submit a policy-compliant report in under 3 minutes without manual data entry",
+    "As a finance operations analyst responsible for reviewing and processing reimbursements across a large organization, I want ExpenseIQ to flag every out-of-policy submission at the time of employee submission — not at my review stage — with the specific policy rule violated and a required justification field so that I only review exceptions that the employee has already acknowledged and explained",
+    "As a department head responsible for approving team expense reports without visibility into policy rules, I want a one-screen approval view that shows me the receipt image, the policy check result, and the employee's project code alongside an Approve or Return button so that I can complete approvals in under 30 seconds per line item without toggling between systems",
+    "As a traveling sales or field employee submitting 8–15 expense reports per month, I want real-time feedback during submission when my entered amount exceeds the per-diem limit for the city I am in so that I can add a justification or split the report before submitting rather than learning about the violation from a finance rejection days later",
+    "As a CFO or VP Finance responsible for controlling discretionary spend and passing financial audits, I want a monthly spend analytics dashboard showing actual expense spend by department, category, and policy exception rate so that I can identify departments consistently exceeding policy limits before the quarterly board review",
+    "As a finance operations analyst responsible for reviewing and processing reimbursements, I want ExpenseIQ to detect duplicate submission attempts — same merchant, same amount, same date across two reports — and block the duplicate before it reaches my queue so that I do not need to manually cross-reference reports to catch double-submissions",
+    "As a CFO or VP Finance responsible for passing financial audits, I want every expense report and its approval chain to be exportable in a structured format compatible with our ERP system so that audit requests can be fulfilled without manual data assembly from multiple systems"
+  ],
+  "acceptance_criteria": [
+    "Given an employee photographs a receipt using the ExpenseIQ mobile app, when the image is submitted, then OCR must extract merchant name, transaction date, total amount, and currency with accuracy sufficient to pre-fill all required submission fields correctly for at least 90% of receipts from major card-accepting merchants, measured on a labeled test set of 500 varied receipts before launch",
+    "Given an employee submits an expense line item, when the submission is processed, then ExpenseIQ must evaluate the submission against all applicable policy rules — per-diem limits, category restrictions, receipt requirements — and surface any violations inline before the employee can complete submission, with zero violations reaching the manager approval queue without a logged employee acknowledgment",
+    "Given a manager opens the approval queue, when they view a pending expense report, then the view must display the receipt image, OCR-extracted line items, policy check result, employee justification for any flagged items, and project code in a single screen requiring no navigation to approve or return",
+    "Given ExpenseIQ detects two submitted expense line items with the same merchant name, same total amount, and the same transaction date within a 30-day window for the same employee, when the second submission is processed, then it must be flagged as a potential duplicate and held for finance review rather than routed to manager approval",
+    "Given a finance operations analyst triggers reimbursement processing for approved reports, when the batch is submitted to the connected payroll or ERP system, then ExpenseIQ must deliver a structured export (CSV and API) of all approved line items, associated policy check results, and approval timestamps within 5 minutes of batch initiation",
+    "Given a CFO opens the spend analytics dashboard, when the dashboard loads, then it must display actual spend by department and category for the current fiscal quarter with data no more than 24 hours stale, and must allow drill-down to individual report level from any category total",
+    "Given ExpenseIQ is connected to an ERP or HRIS system via API, when an employee's manager or cost center changes in the source system, then ExpenseIQ must reflect the updated routing and cost center assignment for new expense submissions within 4 hours of the change event without manual admin intervention"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Employee time-to-submit per expense report (minutes from receipt capture to report submitted)",
+      "baseline": "TBD — measured via time-study or employee survey at customer onboarding; current manual process expected in the 20–40 minute range based on commonly reported norms",
+      "target": "Median under 5 minutes per report within 60 days of go-live for reports with receipts captured via mobile OCR"
+    },
+    {
+      "metric": "Out-of-policy submission rate reaching manager approval queue (percentage of submitted line items that violate at least one policy rule and are not caught at submission)",
+      "baseline": "TBD — measured from customer's last 90 days of expense data at onboarding",
+      "target": "Less than 2% of submitted line items reach manager queue with an unacknowledged policy violation within 30 days of policy configuration"
+    },
+    {
+      "metric": "Mean time from report submission to employee reimbursement (calendar days)",
+      "baseline": "TBD — measured from customer's historical payroll or ERP data at onboarding; manual processes commonly range from 2–4 weeks",
+      "target": "Median reimbursement within 7 calendar days of report submission within 90 days of go-live"
+    },
+    {
+      "metric": "Finance analyst hours per month spent on expense report review and correction",
+      "baseline": "TBD — captured from customer's finance team time-tracking or self-report at onboarding",
+      "target": "50% reduction in finance analyst review hours within 90 days of go-live, measured against onboarding baseline"
+    },
+    {
+      "metric": "Duplicate submission detection rate (percentage of actual duplicate submissions caught before reimbursement, validated against a 90-day audit of historical data)",
+      "baseline": "0% automated detection pre-adoption — duplicates identified only through manual cross-referencing",
+      "target": "95% or higher duplicate detection rate within 30 days of launch, validated on labeled historical dataset"
+    }
+  ],
+  "risks_open_questions": [
+    "ERP and HRIS integrations (SAP, Oracle, Workday, BambooHR) vary widely in API maturity and access model — some require on-premises connectors or involve weeks of IT approval before data can flow; how do we set realistic integration timeline expectations without losing deals where IT gatekeeps ERP access?",
+    "OCR accuracy degrades on crumpled, low-light, or handwritten receipts; an employee who submits a misread receipt that is later rejected creates a worse experience than manual entry; what is the fallback UX when OCR confidence is below threshold, and who bears responsibility for a misread that causes a delayed reimbursement?",
+    "Expense policy configuration is owned by finance teams who may not have technical experience; complex policies with nested rules (e.g., city-specific per-diem with exception categories) need a no-code editor that non-technical finance administrators can maintain without engineering support — is that editor in v1 or do we rely on a setup call with ExpenseIQ's implementation team?",
+    "Some jurisdictions require expense reimbursements to flow through payroll for tax withholding purposes; non-payroll reimbursement workflows (direct ACH) may create tax compliance obligations for customers in those jurisdictions — what jurisdictions does ExpenseIQ support at launch and what is the legal disclosure requirement?",
+    "Employees who photograph receipts at restaurants may inadvertently capture images containing other people's financial information (itemized bills, table neighbors' cards); what PII scrubbing or storage restrictions apply to receipt images, and does GDPR require explicit consent for OCR processing of receipt images in EU deployments?",
+    "Per-diem limit databases for city-specific travel (GSA rates, international equivalents) require ongoing maintenance as rates change annually; who owns this data source and how are customers notified when limits are updated?",
+    "Pricing model is undecided: per-report, per-active-user-month, or flat platform fee with ERP integration add-on — per-report aligns with usage but is unpredictable for customers with seasonal expense spikes"
+  ],
+  "out_of_scope": [
+    "Corporate card issuance or direct card transaction feed ingestion — ExpenseIQ v1 processes employee-submitted receipt-based reimbursements only",
+    "Travel booking or pre-trip approval workflows — only post-trip expense submission and reimbursement are in scope",
+    "Mileage or personal vehicle reimbursement tracking via GPS — mileage claims require manual entry in v1",
+    "Vendor invoice processing or accounts payable automation — employee expense reimbursement only",
+    "Multi-currency or international reimbursement via cross-border payroll — single-currency, single-country deployments only in v1",
+    "Automated ERP journal entry creation — ExpenseIQ exports structured data for import; ERP posting logic is the customer's responsibility",
+    "Mobile offline mode — receipt capture and submission require an active internet connection in v1"
+  ]
+}

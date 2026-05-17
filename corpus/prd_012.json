@@ -1,0 +1,73 @@
+{
+  "title": "HireAlign",
+  "problem_statement": "Companies conducting more than a hundred interviews per month lack a consistent way to evaluate candidates against standardized criteria, resulting in hiring decisions that reflect interviewer familiarity bias, inconsistent scoring anchors, and undocumented rationale that cannot survive a legal or audit challenge. Individual interviewers calibrate their scorecards independently with no visibility into how colleagues scored the same candidate, producing panel debrief meetings that devolve into the loudest voice winning rather than a structured comparison of evidence. Interview loops designed to assess distinct competencies overlap unpredictably because interviewers freelance their questions, so candidates are assessed multiple times on one dimension and not at all on others. As hiring scale increases, these structural failures compound into consistently uneven offer rates across demographic groups and increasing legal exposure with no documentation to defend decisions.",
+  "target_users": [
+    "Recruiter managing 20 or more open roles simultaneously who coordinates interview loops across multiple hiring managers without a structured evaluation framework",
+    "Hiring manager conducting technical or behavioral interviews without formal training in structured evaluation or legal compliance guardrails",
+    "Head of Talent or Chief People Officer responsible for reducing time-to-fill, improving offer acceptance rate, and managing EEOC and audit risk across the organization",
+    "HR business partner or legal counsel responsible for reviewing hiring decisions for disparate impact risk and ensuring documented rationale exists for every hire and no-hire decision"
+  ],
+  "user_stories": [
+    "As a recruiter managing 20 or more open roles simultaneously, I want to select a role-specific interview template from HireAlign's library and assign each panel member a distinct competency to evaluate — with their scorecard and suggested questions pre-loaded — so that I can configure a compliant interview loop in under 10 minutes rather than building it from scratch in a spreadsheet",
+    "As a hiring manager conducting technical or behavioral interviews without formal training, I want HireAlign to show me my assigned competency, the behavioral indicators that distinguish a strong from a weak response, and 3 suggested questions I can use or customize so that I enter the interview with a structured plan rather than improvising",
+    "As a recruiter managing many open roles, I want to see every panel member's submitted scorecard for a candidate before the debrief meeting — with each interviewer's competency scores, supporting evidence quotes, and hire or no-hire signal — so that I can facilitate a debrief that compares documented evidence rather than starting from unstructured impressions",
+    "As a Head of Talent responsible for reducing time-to-fill and managing audit risk, I want a role-level analytics dashboard showing average time-in-stage, interviewer scorecard submission rate, offer acceptance rate, and demographic pass-through rate at each interview stage so that I can identify where our funnel is leaking and where our process may have disparate impact",
+    "As an HR business partner responsible for hiring compliance, I want HireAlign to require a written evidence note before a hire or no-hire recommendation can be submitted so that every final hiring decision has at least one documented behavioral example associated with the deciding competency, retrievable if the decision is challenged",
+    "As a hiring manager conducting structured interviews, I want to submit my scorecard within the HireAlign mobile app immediately after the interview ends — before I discuss the candidate with anyone — so that my independent assessment is recorded before group debrief dynamics can influence my recollection",
+    "As a Head of Talent responsible for reducing time-to-fill, I want HireAlign to send an automated reminder to an interviewer if they have not submitted their scorecard within 24 hours of their scheduled interview so that scorecards are not missing at the debrief and I don't need to chase interviewers manually"
+  ],
+  "acceptance_criteria": [
+    "Given a recruiter selects a role template and assigns panel members, when the interview loop is configured, then each panel member must receive a distinct competency assignment with no competency duplicated across the panel unless the template explicitly specifies parallel evaluation; the loop configuration must be completable in 10 minutes or less for a standard 4-person panel",
+    "Given a panel member opens their assigned interview preparation view, when the view loads, then it must display: the assigned competency name and definition, the behavioral indicators for Strong/Adequate/Weak responses, and at least 3 suggested interview questions, all tailored to the role type (technical, functional, leadership) selected for the loop",
+    "Given an interviewer submits a scorecard, when the submission is attempted without a written evidence note of at least 20 words for the hire or no-hire recommendation field, then HireAlign must block submission and display an inline prompt requiring evidence before the scorecard can be saved",
+    "Given all panel members have submitted scorecards for a candidate, when the recruiter opens the debrief view, then each interviewer's scores, evidence notes, and hire signal must be visible to all debrief participants simultaneously, with the order of display randomized so that the first name visible does not systematically anchor the discussion",
+    "Given an interviewer has not submitted their scorecard within 24 hours of their scheduled interview end time, when the reminder trigger fires, then the interviewer must receive an email and in-app notification specifying the candidate name, interview time, and a direct link to the scorecard, within 1 hour of the 24-hour window closing",
+    "Given a Head of Talent opens the role analytics dashboard, when the dashboard loads, then it must display for each active role: average days in each interview stage, scorecard submission rate per panel member type, offer acceptance rate, and demographic pass-through rate for each stage (where demographic data has been voluntarily provided by candidates), with data no more than 24 hours stale",
+    "Given HireAlign stores candidate evaluation data, when data is at rest, then all candidate personal information and scorecard content must be encrypted with AES-256 and access must be restricted to users with an active HireAlign workspace role for the relevant organization, confirmed by automated access-control tests before GA"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Scorecard submission rate (percentage of scheduled interview slots with a completed scorecard submitted before the debrief meeting)",
+      "baseline": "TBD — measured from customer's existing ATS data or manual tracking at onboarding; unstructured teams commonly lack submission rate data, so a brief audit at onboarding establishes the baseline",
+      "target": "90% scorecard submission rate before debrief within 60 days of go-live"
+    },
+    {
+      "metric": "Competency coverage completeness (percentage of interview loops where each defined competency is evaluated by at least one panel member with a submitted scorecard)",
+      "baseline": "0% structured competency tracking pre-adoption — no prior system enforces competency assignment",
+      "target": "95% of closed interview loops have every defined competency covered by at least one submitted scorecard within 60 days of go-live"
+    },
+    {
+      "metric": "Time-to-hire (calendar days from role open to offer accepted) for roles using HireAlign vs. roles managed without structured panels",
+      "baseline": "TBD — captured from customer's ATS at onboarding for roles closed in the prior 90 days",
+      "target": "15% reduction in median time-to-hire within 6 months of go-live for roles using HireAlign vs. the onboarding baseline"
+    },
+    {
+      "metric": "Interviewer scorecard quality score (percentage of submitted scorecards containing at least 2 behavioral evidence quotes, as opposed to scores-only entries)",
+      "baseline": "TBD — sampled from any existing scorecard records at onboarding",
+      "target": "80% of submitted scorecards contain at least 2 behavioral evidence quotes within 60 days of go-live"
+    },
+    {
+      "metric": "New interviewer onboarding time (minutes from account activation to first scorecard submitted in a live loop)",
+      "baseline": "TBD — established from first 30-day post-launch cohort",
+      "target": "Median new interviewer time-to-first-scorecard under 20 minutes from account activation, including template review and interview prep"
+    }
+  ],
+  "risks_open_questions": [
+    "Hiring managers who view structured interview requirements as bureaucratic overhead may submit scorecard check-the-box entries with minimal evidence to satisfy the submission requirement without engaging with the process; how does HireAlign distinguish a genuine evidence-supported scorecard from a compliant-but-meaningless one, and what is the right escalation path?",
+    "Demographic pass-through rate analytics involve processing candidate-disclosed demographic data in ways that could themselves create disparate impact liability if the data is misused; what EEOC guidance and legal review is required before this feature ships, and is voluntary self-identification sufficient or do we need affirmative consent language?",
+    "ATS integrations (Greenhouse, Lever, Workday Recruiting, iCIMS) are essential for HireAlign to receive candidate records and return scorecard data without requiring double-entry; which ATS integration is required to close the first 10 enterprise deals, and what is the depth of integration needed (read-only, bidirectional, or event-triggered)?",
+    "Interview templates must be maintained as roles and competency definitions evolve; a template last updated a year ago may no longer reflect current role requirements; who owns template governance in a customer organization, and does HireAlign provide a template audit or expiry mechanism?",
+    "HireAlign's mobile scorecard submission is a key behavioral change; if interviewers find the mobile experience clunky and defer to desktop after the fact, the independence-of-assessment benefit disappears; what usability standard (number of taps, time-to-submit, offline capability) is required for the mobile experience to support in-the-moment submission?",
+    "Some customers may want to use HireAlign's competency evaluation data to train internal hiring models or benchmark interviewers' scoring calibration over time; does storing and analyzing this data at the interviewer level create any employment law exposure if an interviewer is later terminated and claims their scorecard history was used against them?",
+    "Pricing model is undecided: per-seat for recruiters only, per-seat for all interviewers, or per-hire; per-hire aligns with value delivery but is hard to predict for customers with variable hiring volumes; which model do enterprise HR buyers budget for most naturally?"
+  ],
+  "out_of_scope": [
+    "ATS functionality (candidate tracking, pipeline management, job posting) — HireAlign is the evaluation layer only; it reads candidates from and writes scorecards back to the customer's existing ATS",
+    "Automated AI scoring or screening of candidates based on resume, video, or written response — HireAlign structures and captures human evaluation; it does not replace human judgment with automated screening",
+    "Offer management, compensation benchmarking, or letter generation",
+    "Background check or reference check workflow management",
+    "Onboarding or day-1 readiness workflows — HireAlign scope ends at offer acceptance",
+    "Self-serve template creation without an HireAlign-reviewed template library — all templates in v1 are created through a guided setup with an HireAlign implementation specialist to ensure compliance and coverage quality",
+    "Interview scheduling or calendar coordination — HireAlign expects interview times to be managed by the customer's existing ATS or calendar tool"
+  ]
+}

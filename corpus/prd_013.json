@@ -1,0 +1,73 @@
+{
+  "title": "ContractCheck",
+  "problem_statement": "Microservice teams that evolve APIs independently break downstream consumer services without knowing it until integration tests fail in staging environments or, in more costly cases, until production incidents surface the incompatibility after deployment. API contract testing exists as a practice that can catch these breaking changes in CI before they reach staging, but widely used tools like Pact require significant manual setup — broker infrastructure, provider verification jobs, consumer pact publication — that most engineering teams skip under delivery pressure. The result is that API compatibility is validated by integration environments that are expensive to maintain, slow to run, and chronically out of sync with what any single team has actually deployed. As microservice counts grow past a few dozen, the matrix of provider-consumer dependencies becomes unmanageable without automated contract enforcement at the CI layer.",
+  "target_users": [
+    "Backend software engineer who owns a provider service with multiple downstream consumer teams depending on its API",
+    "Frontend or mobile engineer whose client application breaks when a provider API changes a response schema or removes a field",
+    "Platform SRE or build engineer who owns the CI/CD pipeline and is responsible for preventing breaking changes from reaching production",
+    "Engineering manager tracking service reliability metrics and seeking to reduce integration-failure-related incidents per quarter"
+  ],
+  "user_stories": [
+    "As a backend software engineer who owns a provider service with multiple downstream consumer teams, I want ContractCheck to automatically detect when a proposed API change would break any registered consumer contract and fail my pull request CI check before merge so that I learn about the breaking change while I still own the branch rather than after consumers start filing incidents",
+    "As a frontend or mobile engineer whose client breaks when a provider API changes, I want to publish a ContractCheck consumer contract from my client's test suite that specifies exactly which API fields and response shapes my code depends on so that provider teams are automatically notified before they remove or rename a field I rely on",
+    "As a platform SRE who owns the CI/CD pipeline, I want ContractCheck to run as a CI step in both provider and consumer pipelines using a simple YAML configuration so that contract verification requires no broker infrastructure to deploy or maintain on our side",
+    "As a backend software engineer who owns a provider service, I want a dashboard showing which consumer contracts are currently passing and which would break if my latest branch were deployed so that I can see the compatibility matrix for my service without running integration tests manually",
+    "As an engineering manager tracking service reliability metrics, I want a weekly contract health report showing the number of breaking change attempts caught per service, the consumer services most frequently affected, and the mean time between a breaking change CI block and the provider's resolution so that I can identify which provider-consumer relationships need architectural attention",
+    "As a frontend or mobile engineer whose client breaks when a provider API changes, I want ContractCheck to notify me via Slack or email when a provider I depend on publishes a new API version that passes all my current consumer contracts so that I can plan to upgrade with confidence rather than discovering changes through test failures",
+    "As a platform SRE who owns the CI/CD pipeline, I want ContractCheck to generate a human-readable compatibility report as a pull request comment on every provider PR that shows which consumer contracts pass, which fail, and the specific field or endpoint causing each failure so that the provider engineer can understand the impact without leaving GitHub"
+  ],
+  "acceptance_criteria": [
+    "Given a provider service has at least one registered consumer contract in ContractCheck, when a pull request is opened against the provider's main branch, then ContractCheck must run compatibility verification against all registered consumer contracts and post a PR comment summarizing pass/fail status per consumer and per endpoint within 5 minutes of the CI trigger",
+    "Given a consumer team publishes a contract from their test suite using the ContractCheck CLI, when the contract is published, then it must be registered in the ContractCheck registry within 60 seconds, and all provider services referenced in the contract must receive a Slack or email notification that a new consumer contract has been registered",
+    "Given a provider API change causes a registered consumer contract to fail, when the failure is detected in CI, then the ContractCheck CI step must exit with a non-zero status code that blocks the pull request from merging, and the failure summary must identify the specific endpoint, HTTP method, field name, and expected vs. actual schema for each incompatibility",
+    "Given a provider publishes a new API version that is compatible with all registered consumer contracts, when the compatibility check passes, then each registered consumer team for that provider must receive a notification within 15 minutes of the check completing, including the provider version number and a link to the compatibility report",
+    "Given a ContractCheck YAML configuration file is added to a service repository, when the first CI run completes with the ContractCheck step enabled, then the step must execute without requiring any additional infrastructure provisioning, external broker setup, or manual registry configuration beyond the YAML file and a ContractCheck API key",
+    "Given an engineering manager opens the service compatibility dashboard, when the dashboard loads, then it must display for each provider service: the number of registered consumer contracts, the current pass/fail status of each consumer contract against the provider's latest main branch, and the date and PR number of the most recent breaking change attempt, with data no more than 1 hour stale",
+    "Given ContractCheck stores API schemas and consumer contract definitions, when data is stored, then all schema content must be encrypted at rest and accessible only to users with workspace membership for the relevant organization; cross-organization schema access must be confirmed absent by automated isolation tests before GA"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Breaking changes caught in CI before reaching staging or production (number of breaking change PR blocks per month across connected services)",
+      "baseline": "0 automated blocks pre-adoption — all breaking changes discovered in staging or production",
+      "target": "At least 5 breaking changes caught in CI per month per 10 active provider-consumer pairs within 60 days of go-live"
+    },
+    {
+      "metric": "Integration-environment-dependent test failure rate (percentage of staging integration failures attributable to API contract mismatches, measured from incident post-mortems)",
+      "baseline": "TBD — established from customer's prior 90-day staging failure log at onboarding",
+      "target": "50% reduction in API-mismatch-attributable staging failures within 90 days of go-live for services with active ContractCheck coverage"
+    },
+    {
+      "metric": "Consumer contract coverage (percentage of active provider-consumer API dependencies with at least one registered consumer contract in ContractCheck)",
+      "baseline": "0% coverage pre-adoption — no consumer contracts registered",
+      "target": "60% of known provider-consumer pairs have at least one registered consumer contract within 90 days of go-live"
+    },
+    {
+      "metric": "Time from breaking change CI block to provider resolution (hours from ContractCheck CI failure to a passing provider PR merged)",
+      "baseline": "TBD — established from first 60-day post-launch cohort",
+      "target": "Median resolution time under 4 hours within 90 days of go-live"
+    },
+    {
+      "metric": "CI configuration time for a new service (minutes from ContractCheck account creation to first passing CI run with contract verification enabled)",
+      "baseline": "TBD — established from first 30-day post-launch cohort with new team onboarding data",
+      "target": "Median new service onboarding under 30 minutes from account creation to first CI run with at least one consumer contract registered"
+    }
+  ],
+  "risks_open_questions": [
+    "Consumer contracts must be generated from the consumer's actual test suite to reflect real dependencies; contracts authored manually by hand tend to drift from actual client usage and produce false-positive compatibility checks; does ContractCheck need a client SDK that instruments consumer test calls automatically to generate contracts, or is a schema-declaration approach sufficient for initial adoption?",
+    "Teams with large numbers of provider-consumer pairs may discover they have undocumented dependencies that were invisible before ContractCheck — surfacing these may generate more contract failures than teams can resolve in parallel during onboarding; what is the recommended onboarding sequence to avoid overwhelming teams with a backlog of legacy breaking changes?",
+    "Microservice teams may own services in multiple languages (Go, Python, Java, TypeScript) and CI systems (GitHub Actions, GitLab CI, CircleCI, Jenkins); does ContractCheck need native CLI packages for each language ecosystem at launch, or is a single REST API and a generic CI shell step sufficient to cover the initial customer base?",
+    "API gateways and BFF (Backend for Frontend) patterns mean a single provider endpoint may be consumed through multiple intermediary layers, making consumer contract registration ambiguous — does the consumer contract represent the direct API caller or the end-user-facing client, and how does ContractCheck handle contracts at intermediary layers?",
+    "Some API changes are non-breaking but trigger consumer contract failures because the consumer contract is more restrictive than necessary (e.g., asserting exact field counts instead of field presence) — this creates false positives that cause teams to distrust ContractCheck; does the product need a contract linting step that warns contract authors about over-specification?",
+    "Pricing model is undecided: per-service, per-seat, or per-CI-run; per-service scales naturally with microservice proliferation and is easy for engineering managers to budget, but may discourage onboarding of low-priority services that would still benefit from coverage",
+    "Enterprise customers may require ContractCheck to run in their own infrastructure (self-hosted or VPC-isolated) rather than ContractCheck's cloud, due to concerns about API schema confidentiality; does a self-hosted deployment mode need to be in v1 scope to close enterprise deals?"
+  ],
+  "out_of_scope": [
+    "Load testing, performance contract enforcement, or latency SLA verification — ContractCheck validates schema compatibility only, not behavioral or performance contracts",
+    "Event-driven or async messaging contract testing (Kafka, RabbitMQ, SNS) in v1 — REST and GraphQL HTTP contracts only at launch",
+    "Mock server generation or provider stub hosting — ContractCheck validates against live provider test environments; it does not generate mocks for consumer testing",
+    "API gateway management, routing configuration, or traffic control",
+    "Automated contract migration or schema evolution tooling — ContractCheck detects incompatibilities; resolution is the provider team's responsibility",
+    "Security or authentication contract verification — ContractCheck validates data shape, not auth behavior",
+    "GraphQL subscription or streaming API contract support in v1"
+  ]
+}

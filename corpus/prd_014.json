@@ -1,0 +1,73 @@
+{
+  "title": "StudioMarket",
+  "problem_statement": "Mid-market B2B companies that need UI/UX design, brand identity, or motion graphics work spend weeks sourcing and vetting freelancers through LinkedIn, Dribbble, and agency referrals, with no standardized scoping, milestone-based payment protection, or revision management — leading to scope-creep disputes, unpaid work, and project failures that damage both buyer and creator. Independent creative professionals spend an unpaid share of their working hours on speculative pitches, unclear briefs, and scope-creep projects that erode their effective hourly rate and make client relationships adversarial. Platforms like Upwork and Fiverr serve commodity creative work at the low end, but B2B buyers seeking senior-level UI/UX or brand strategy work cannot reliably find, vet, and manage professionals at that level in a single workflow — so the market for mid-to-senior creative freelance remains fragmented and inefficient.",
+  "target_users": [
+    "Marketing director or head of design at a 100–1,000-person B2B company who needs senior-level freelance creative work delivered on a project basis without an in-house design team capable of handling surge capacity",
+    "Independent UX designer or brand strategist with 5 or more years of experience who takes on B2B client projects but loses time to unstructured client management and scope disputes",
+    "Startup founder or VP Marketing at a pre-Series B company who needs brand identity or product design work before a fundraise and lacks an internal creative team",
+    "Creative director managing a distributed freelance team and needing a single platform to scope projects, assign work, track milestones, and release payments to multiple contributors"
+  ],
+  "user_stories": [
+    "As a marketing director who needs senior-level freelance creative work, I want to post a structured creative brief using StudioMarket's guided brief template — deliverables, brand context, reference examples, revision rounds, and timeline — and receive curated applications from vetted senior designers within 72 hours so that I do not spend two weeks sourcing candidates before a project can begin",
+    "As an independent UX designer with 5 or more years of experience who loses time to scope disputes, I want to review a structured client brief and submit a milestone-based proposal — with defined deliverables, revision limits, and payment amounts per milestone — before the project begins so that scope and compensation are agreed in writing before I start any work",
+    "As a marketing director who needs senior-level freelance creative work, I want to release milestone payments from an escrow held by StudioMarket when I approve a deliverable rather than wiring money in advance to someone I have just met so that my company's finance team approves the project without a wire-transfer-to-stranger risk conversation",
+    "As an independent UX designer with 5 or more years of experience, I want StudioMarket to enforce the agreed revision limit on a project and prompt the client to initiate a change order with additional payment when the limit is reached so that I do not absorb unlimited revision cycles as unpaid work",
+    "As a startup founder who needs brand identity or product design before a fundraise, I want to filter the StudioMarket creator directory by portfolio category (brand identity, product UI, motion), years of experience, and previous B2B client type so that I can identify 5 strong candidates in under 30 minutes rather than browsing 200 Dribbble profiles",
+    "As a creative director managing a distributed freelance team, I want to create a project workspace in StudioMarket, invite multiple freelancers to contribute to specific milestones, and release milestone payments to each contributor individually so that I can manage a multi-contributor brand project from one place rather than maintaining separate contracts and bank transfers for each person",
+    "As an independent UX designer with 5 or more years of experience, I want my StudioMarket profile to display my verified portfolio work, verified past client reviews, and average response time so that my reputation is visible to buyers before they reach out and I am not competing solely on hourly rate against less experienced designers"
+  ],
+  "acceptance_criteria": [
+    "Given a buyer posts a creative brief using the guided brief template with all required fields completed (deliverables, timeline, revision rounds, and budget range), when the brief is submitted, then StudioMarket must surface curated creator applications from creators whose portfolio includes at least one verified project in the matching category within 72 hours of posting",
+    "Given a creator submits a milestone-based proposal, when the buyer accepts the proposal, then StudioMarket must generate a binding project agreement that includes: the agreed milestone list, deliverable descriptions, payment amounts per milestone, revision limit per milestone, and the dispute resolution process, displayed to both parties before work begins",
+    "Given a buyer and creator agree to a milestone-based project, when the project is accepted, then StudioMarket must collect the payment for the first milestone from the buyer's payment method and hold it in escrow before the creator begins work; the creator must not receive any milestone payment until the buyer approves the deliverable or a dispute resolution process determines the deliverable is complete",
+    "Given a creator submits a deliverable for a milestone, when the buyer reviews and approves it, then StudioMarket must release the escrowed milestone payment to the creator's connected bank account within 2 business days of approval",
+    "Given a creator has reached the agreed revision limit for a milestone, when the buyer requests an additional revision, then StudioMarket must block the revision request and prompt the buyer to initiate a change order with an additional payment amount before the creator is notified of the additional request",
+    "Given a buyer filters the creator directory by portfolio category, years of experience, and B2B client type, when the filter is applied, then the directory must return only creators with verified portfolio items in the selected category, verified experience range, and at least one verified past client in the selected client type, with results loading within 2 seconds",
+    "Given a dispute is filed by either party within 48 hours of a deliverable being submitted or a milestone payment being due, when the dispute is filed, then StudioMarket must freeze the escrowed funds and initiate a structured dispute review process with a maximum resolution window of 7 business days, during which neither party may withdraw the escrowed amount"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Time from brief posted to project agreement signed (days)",
+      "baseline": "TBD — established from buyer-reported sourcing time at onboarding; informal sourcing through LinkedIn and referrals commonly takes several weeks",
+      "target": "Median time from brief posted to signed agreement under 7 days within 90 days of launch"
+    },
+    {
+      "metric": "Scope dispute rate (percentage of completed projects with a formal dispute filed before final payment release)",
+      "baseline": "TBD — established from first 90-day post-launch cohort; scope disputes in unstructured freelance engagements are widely reported but unquantified pre-launch",
+      "target": "Scope dispute rate under 8% of completed projects within 6 months of launch"
+    },
+    {
+      "metric": "Creator repeat project rate (percentage of active creators who complete at least 2 projects in a 6-month period)",
+      "baseline": "Expected range: 30–50% based on freelance marketplace creator retention norms; exact baseline TBD from first 6-month post-launch cohort",
+      "target": "55% creator repeat project rate within the first 6-month cohort"
+    },
+    {
+      "metric": "Buyer repeat project rate (percentage of buyers who post a second project within 6 months of their first project completing)",
+      "baseline": "TBD — established from first 6-month post-launch cohort",
+      "target": "45% buyer repeat project rate within 6 months of first project completion"
+    },
+    {
+      "metric": "Milestone payment release rate (percentage of project milestones released without a dispute or escrow hold, indicating smooth deliverable approval)",
+      "baseline": "0% milestone tracking pre-launch — all payment structures are unmanaged pre-StudioMarket",
+      "target": "90% or higher clean milestone release rate (no dispute filed) within 90 days of launch"
+    }
+  ],
+  "risks_open_questions": [
+    "Brief quality is a primary driver of project success; vague or incomplete briefs submitted by buyers who skip the guided template lead to misaligned deliverables and disputes even when the creator performs well; does StudioMarket need a minimum brief completeness score or a human brief review step before creator applications are solicited?",
+    "Creator vetting depth determines whether StudioMarket delivers on its senior-talent promise; automated portfolio verification (links and screenshots) is easy to game with fabricated work; does StudioMarket need a manual portfolio review by an internal creative reviewer, a peer review mechanism, or a test project completion requirement before a creator is visible in the directory?",
+    "Escrow and payment holding require money transmission licenses in most US states and are treated as regulated financial activity; has StudioMarket engaged a legal firm to determine whether a Stripe Connect or similar third-party escrow provider can handle the regulatory exposure, or does StudioMarket need its own money transmitter license?",
+    "Buyers at mid-size companies often require vendor onboarding, W-9 or W-8 collection, and invoice generation before they can pay through a platform; StudioMarket's payment flow must be compatible with corporate procurement processes that expect net-30 invoicing, not instant card charges; what enterprise billing model is required to close mid-market deals?",
+    "StudioMarket's dispute resolution process requires either a human review of creative work quality — a subjective judgment — or a contractual standard against which the deliverable is evaluated; what dispute resolution model (third-party arbitration, internal creative review panel, buyer-favored default) minimizes both cost and creator churn?",
+    "International creator payments in non-USD currencies require foreign exchange and cross-border payment infrastructure; the most experienced senior freelancers are geographically distributed; does StudioMarket support international creators and buyers at launch, or is USD-only US-based the v1 constraint?",
+    "Motion graphics and video production projects have much longer timelines, larger payment amounts, and more complex milestone structures than brand identity or UI work; does the platform's contract and milestone framework accommodate projects exceeding 90 days and $50K in total value without modification?"
+  ],
+  "out_of_scope": [
+    "Commodity or entry-level creative work (logo packs, stock template customization, $50 gig economy tasks) — StudioMarket is positioned for senior-level B2B creative work; minimum project size will be enforced via brief minimum budget field",
+    "Photography, video production requiring physical crew, or on-site creative services — StudioMarket v1 is for remotely deliverable digital creative work only",
+    "Ongoing retainer or embedded team placements — StudioMarket v1 is project-based with defined start and end milestones; retainer arrangements are out of scope",
+    "AI-generated creative output submitted as original freelance work — creator terms of service prohibit AI-generated deliverables presented as human-created work; enforcement mechanism is TBD for post-v1",
+    "Intellectual property registration or copyright filing services",
+    "Buyer-side creative team management (internal employee timesheets, performance reviews) — StudioMarket is for freelance project management only",
+    "B2C or consumer creative projects — StudioMarket targets B2B buyers only; personal projects (wedding invitations, personal brand) are explicitly out of scope"
+  ]
+}

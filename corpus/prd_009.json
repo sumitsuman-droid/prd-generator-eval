@@ -1,0 +1,73 @@
+{
+  "title": "CareStream",
+  "problem_statement": "Patients discharged from hospital stays with congestive heart failure, COPD, or uncontrolled hypertension are given self-monitoring instructions they cannot consistently follow without active care team support, and hospital readmission rates within 30 days remain a persistent and costly clinical problem for health systems. Care managers carry patient panels large enough that proactive outreach to stable patients is structurally impossible — they respond to crises rather than preventing them. Connected health devices (blood pressure cuffs, pulse oximeters, weight scales) are increasingly inexpensive, but the data they generate sits in patient apps with no clinical workflow integration, so care teams cannot act on readings that signal deterioration until the patient calls in or arrives at the emergency department.",
+  "target_users": [
+    "Patient recently discharged with congestive heart failure, COPD, or Stage 2 hypertension who has been instructed to monitor vitals at home but lacks structured follow-up",
+    "RN care manager or chronic disease case manager carrying a panel of 80–150 high-risk patients and responsible for preventing avoidable readmissions",
+    "Cardiologist or pulmonologist who sees panel patients quarterly but needs asynchronous alert capability for between-visit deterioration",
+    "Hospital quality officer responsible for 30-day readmission rate metrics and CMS value-based care penalty exposure"
+  ],
+  "user_stories": [
+    "As a patient recently discharged with congestive heart failure who has been instructed to monitor vitals at home, I want CareStream to guide me through a daily check-in of my weight, blood pressure, and symptom status in under 3 minutes and confirm that my readings have been received by my care team so that I know someone is watching without calling my doctor's office every day",
+    "As an RN care manager carrying a panel of 80–150 high-risk patients, I want a prioritized worklist that surfaces only the patients whose readings today fall outside their individually configured alert thresholds — not every patient — so that I can direct my limited outreach time to the patients at highest deterioration risk rather than reviewing 150 clean charts",
+    "As a cardiologist seeing panel patients quarterly, I want to receive a push notification and a structured alert summary when any of my patients has two consecutive out-of-threshold readings within 48 hours so that I can review the trend and decide whether to call the patient before they deteriorate to an emergency visit",
+    "As a patient recently discharged with COPD who has been instructed to monitor vitals at home, I want CareStream to send me a medication reminder at the times my discharge instructions specify and record my acknowledgment so that my care team can see whether I am taking my medications on schedule without relying on my memory alone",
+    "As an RN care manager carrying a panel of high-risk patients, I want to document my outreach attempt — call made, no answer, message left, patient spoke with, action taken — directly in CareStream with a timestamp so that I have a complete patient contact log without duplicating entries in the EHR",
+    "As a hospital quality officer responsible for 30-day readmission rate metrics, I want a monthly report showing 30-day readmission rates for CareStream-enrolled patients vs. a matched control group of non-enrolled patients so that I can demonstrate the program's clinical and financial impact to CMO and board leadership",
+    "As a cardiologist seeing panel patients quarterly, I want to view a patient's full 30-day vital sign trend and alert history before their scheduled appointment so that appointment time is spent discussing patterns and care plan adjustments rather than reconstructing what happened since the last visit"
+  ],
+  "acceptance_criteria": [
+    "Given a patient completes a daily check-in by entering weight, blood pressure readings, and symptom responses, when the check-in is submitted, then CareStream must record the submission with a UTC timestamp, evaluate each reading against the patient's configured thresholds, and display a confirmation to the patient within 30 seconds of submission",
+    "Given a patient's reading for any monitored vital (weight, systolic BP, oxygen saturation) exceeds their individually configured alert threshold, when the threshold breach is detected, then the assigned care manager must receive an in-app notification and an email or SMS alert within 15 minutes of the reading submission",
+    "Given a care manager opens their patient worklist, when the worklist loads, then it must display only patients with at least one out-of-threshold reading in the past 24 hours, sorted by severity score (number and magnitude of threshold breaches), with no stable patients appearing in the active alert list; page load must complete within 3 seconds",
+    "Given a patient has two consecutive readings for the same vital that each exceed their alert threshold, when the second reading is submitted, then the patient's assigned cardiologist or pulmonologist must receive a push notification within 15 minutes, including the reading values, threshold values, and a link to the patient's 7-day trend chart",
+    "Given a care manager documents a patient outreach attempt in CareStream, when the note is saved, then it must be timestamped, associated with the patient record, and accessible to any other care team member with access to that patient's record within 60 seconds of saving",
+    "Given a hospital quality officer requests a 30-day readmission comparison report, when the report is generated, then it must include: enrolled patient count, 30-day readmission rate for enrolled patients, 30-day readmission rate for a propensity-matched control group sourced from the health system's ADT feed, and the statistical confidence interval on the difference, exportable as PDF and CSV",
+    "Given CareStream handles patient vital sign data, when any PHI is stored or transmitted, then all data must be encrypted in transit (TLS 1.2 or higher) and at rest (AES-256), and the system must operate as a HIPAA-compliant platform with a signed BAA in place before any patient data is collected"
+  ],
+  "success_metrics": [
+    {
+      "metric": "30-day all-cause hospital readmission rate for CareStream-enrolled patients vs. matched non-enrolled patients",
+      "baseline": "TBD — established from health system's historical ADT data for the target diagnosis categories at onboarding; national benchmarks for CHF and COPD 30-day readmission are well-documented in CMS literature as context",
+      "target": "15 percentage-point reduction in 30-day readmission rate for enrolled patients vs. matched controls within 12 months of program launch"
+    },
+    {
+      "metric": "Patient daily check-in completion rate (percentage of enrolled patients who complete the daily check-in on a given day, averaged across the first 60 days post-enrollment)",
+      "baseline": "TBD — established from first 60-day post-enrollment cohort; patient self-monitoring adherence without structured reminders is generally low and will serve as qualitative comparison",
+      "target": "70% average daily check-in completion rate for enrolled patients in the first 60 days"
+    },
+    {
+      "metric": "Care manager alert response time (median time from alert notification to care manager documented outreach attempt)",
+      "baseline": "TBD — established from care team's existing patient contact log data at onboarding; without structured alerting, response time depends on scheduled call cadence",
+      "target": "Median alert response time under 4 hours during business hours within 60 days of go-live"
+    },
+    {
+      "metric": "Care manager time per patient per week (hours spent on proactive monitoring, documentation, and outreach per enrolled patient)",
+      "baseline": "TBD — captured from care manager time-tracking or self-report survey at onboarding",
+      "target": "25% reduction in care manager time per patient per week within 90 days, as measured by care manager self-report, while maintaining or improving patient contact frequency"
+    },
+    {
+      "metric": "Patient-reported confidence in managing their condition at home (1–10 scale, collected at enrollment and at 60-day follow-up survey)",
+      "baseline": "TBD — captured at enrollment via onboarding survey per patient cohort",
+      "target": "Average 2-point improvement on the 10-point confidence scale from enrollment to 60-day follow-up for enrolled patients"
+    }
+  ],
+  "risks_open_questions": [
+    "Alert fatigue is a well-documented problem in clinical monitoring tools — if threshold configurations are too sensitive, care managers will receive too many low-signal alerts and start ignoring them, defeating the purpose of the product; how do we calibrate default thresholds by diagnosis category and provide care managers tools to tune them without requiring biostatistics expertise?",
+    "CareStream's alert system must operate reliably enough that a missed alert for a deteriorating patient constitutes a patient safety failure; what is the system uptime SLA required before a health system will go live with CareStream as part of their formal care management workflow, and what monitoring and incident response process do we need to meet that SLA?",
+    "EHR integration (Epic, Cerner, Oracle Health) is expected by most health systems for care manager notes to be recorded in the legal medical record; CareStream's patient contact log will have no legal standing if it is not reflected in the EHR; what is the minimum viable EHR integration at launch and what HL7 FHIR resources are required?",
+    "Medicare and Medicaid reimbursement for Remote Patient Monitoring (CPT codes 99453, 99454, 99457) requires specific documentation of device setup, daily readings, and care manager time — can CareStream generate the documentation required for RPM billing, and does billing support at launch meaningfully improve health system ROI and accelerate deals?",
+    "Patients with limited digital literacy, no smartphone, or poor home internet connectivity represent a significant share of high-risk chronic disease populations; a smartphone-only check-in experience excludes the most medically fragile patients; what is the minimum viable alternative (IVR phone check-in, LTE-connected device) required to serve the full enrolled patient population?",
+    "If a care manager receives an alert but fails to respond and a patient is harmed, what is CareStream's liability exposure, and does the contract with the health system include an indemnification clause that positions CareStream as a tool rather than a clinical decision-maker?",
+    "Weight scales and blood pressure cuffs require Bluetooth pairing with a smartphone or a hub device; device setup in a discharge workflow is a critical friction point; who owns device provisioning at the hospital, and how does CareStream support a bedside setup process that a floor nurse can complete in under 10 minutes?"
+  ],
+  "out_of_scope": [
+    "Inpatient monitoring or ICU/step-down unit use cases — CareStream is a post-discharge remote monitoring tool for ambulatory patients",
+    "Medication dispensing, prescription management, or e-prescribing — CareStream records medication adherence self-reports but does not manage prescriptions",
+    "Mental health or behavioral health monitoring — v1 is scoped to cardiovascular and pulmonary vital sign monitoring only",
+    "Direct-to-consumer enrollment without a health system or care team sponsor — all enrolled patients must be associated with a clinical care team using CareStream",
+    "Wearable or continuous monitoring integration (Apple Watch, Fitbit, ECG patches) in v1 — daily patient-entered readings from discrete devices only",
+    "Telehealth video or asynchronous messaging between patient and provider — CareStream surfaces alerts and trends; clinical communication occurs through the health system's existing telehealth or secure messaging platform",
+    "Pediatric or obstetric monitoring — adult chronic disease management only in v1"
+  ]
+}

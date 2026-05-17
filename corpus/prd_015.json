@@ -1,0 +1,73 @@
+{
+  "title": "PocketBase",
+  "problem_statement": "Teenagers aged 13 to 17 have no practical on-ramp to personal finance because traditional banks require parental co-ownership of accounts with no teen-facing controls, educational context, or age-appropriate interface. Existing allowance apps give teens a spending account but no structured savings framework, no spending analytics they can understand, and no financial literacy content that turns transactions into learning moments. Parents who want to teach financial responsibility lack a tool that gives their teenager meaningful autonomy while preserving parental visibility without full control — the current options are either unrestricted debit card access or no access at all. The consequence is a generation of young adults reaching 18 with no practical experience managing a budget, setting savings goals, or understanding the relationship between spending behavior and financial outcomes.",
+  "target_users": [
+    "Teenager aged 13–17 who earns allowance or part-time work income and wants to manage their own money with real autonomy and visible progress toward a savings goal",
+    "Parent of a teenager who wants to build their child's financial literacy through real money experience while maintaining visibility into spending and the ability to set category limits",
+    "High school personal finance teacher incorporating real-world money management tools into a semester course on budgeting and savings",
+    "Teenager aged 13–17 who is saving toward a specific near-term goal (first car, concert tickets, travel) and wants to track progress explicitly rather than guessing from a bank balance"
+  ],
+  "user_stories": [
+    "As a teenager who earns allowance and wants to manage money with real autonomy, I want to set up a named savings goal with a target amount and deadline and see a progress bar and a daily savings-required figure that updates as I spend so that I always know exactly how far I am from my goal and what my spending today costs me in goal progress",
+    "As a parent who wants to build my teenager's financial literacy while maintaining spending visibility, I want to set a monthly spending limit per category — food, entertainment, clothing — that my teenager can see but that I control, so that I give my teenager real decision-making within guardrails I define rather than either full control or no control",
+    "As a teenager who is saving toward a specific near-term goal, I want to see a breakdown of where my money went this week in a visual that shows which category I spent the most in and how much that spending delayed my goal target date so that I understand the tradeoff between spending today and reaching my goal in a concrete way",
+    "As a parent who wants to build my teenager's financial literacy, I want to send my teenager a scheduled allowance transfer on a configured day each week or month that arrives automatically so that our allowance practice is consistent without me needing to remember to Venmo manually each week",
+    "As a teenager who earns allowance and wants to manage money with real autonomy, I want PocketBase to show me a weekly summary of my spending vs. my self-set budget with a plain-English interpretation — 'You spent $18 more on food than last week; at this rate your goal date shifts by 3 days' — so that I understand the consequence of my spending in my own terms, not in financial jargon",
+    "As a high school personal finance teacher incorporating real-world money management into a semester course, I want to create a class challenge where all enrolled students work toward a shared savings rate goal and see an anonymized leaderboard so that students have a social motivation to stay engaged with their budget throughout the semester",
+    "As a parent who wants to build my teenager's financial literacy while maintaining spending visibility, I want to receive a weekly digest showing my teenager's spending by category and their savings goal progress so that I can have a grounded money conversation with my teenager each week rather than asking vague questions about whether they saved anything"
+  ],
+  "acceptance_criteria": [
+    "Given a teenager has linked their PocketBase account to a connected debit card or bank account, when a transaction posts, then PocketBase must categorize the transaction, update the teen's spending-by-category view, and recalculate the impact on all active savings goal timelines within 4 hours of the transaction posting at the financial institution",
+    "Given a teenager sets a savings goal with a name, target amount, and target date, when the goal is saved, then PocketBase must display a progress bar, the current amount saved toward the goal, and a daily-savings-required figure that updates each day based on current balance and remaining days, with the daily figure recalculated within 1 hour of any transaction posting",
+    "Given a parent configures a monthly category spending limit for their teenager, when the teenager's spending in that category reaches 80% of the limit in a given month, then both the teenager and the parent must receive an in-app notification within 4 hours of the threshold being crossed",
+    "Given a parent configures a recurring allowance transfer on a specific day and cadence (weekly or monthly), when that day arrives, then PocketBase must initiate the transfer from the parent's linked payment method to the teenager's PocketBase balance on the configured day without requiring manual action, and must send both parties a confirmation notification",
+    "Given a teenager opens their weekly spending summary, when the summary is displayed, then it must include: total spent this week vs. last week, top spending category by dollar amount, and at least one plain-English impact statement connecting this week's spending to the nearest active savings goal's timeline",
+    "Given a high school teacher creates a class challenge with an enrolled student group, when a student's savings rate for the week is calculated, then the anonymized class leaderboard must display each student's savings rate percentage (not dollar amounts) within 24 hours of the week ending, with no personally identifying information other than the student's self-selected display name",
+    "Given PocketBase stores financial transaction data and parent-teen account links, when any data is at rest, then all financial data must be encrypted with AES-256; parent and teen access to each other's data must be limited to the fields defined by the account relationship model (parent sees spending summary and goal progress; parent does not see unshared personal notes or messages); COPPA compliance for users under 13 must be confirmed by legal review before any user under 13 is permitted to create an account"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Savings goal completion rate (percentage of savings goals created by active teens that reach 100% of target amount before or by the target date)",
+      "baseline": "TBD — established from first 90-day post-launch cohort; no comparable pre-adoption goal-tracking data exists",
+      "target": "35% of created savings goals with a defined target date reach 100% completion within 6 months of platform launch"
+    },
+    {
+      "metric": "Teen weekly active rate (percentage of activated teen accounts that open PocketBase at least once in a given calendar week)",
+      "baseline": "Expected range: 25–40% based on teen-targeted consumer finance app category norms; exact baseline TBD from first 60-day post-launch cohort",
+      "target": "40% weekly active rate for teen accounts sustained from week 4 through week 16 post-activation"
+    },
+    {
+      "metric": "Parent weekly digest open rate (percentage of parents who receive the weekly digest and open it at least once per week)",
+      "baseline": "TBD — established from first 30-day post-launch cohort",
+      "target": "55% weekly digest open rate among parents who have completed account setup within 60 days of launch"
+    },
+    {
+      "metric": "Time from teen account creation to first savings goal set (minutes)",
+      "baseline": "TBD — established from first 30-day post-launch cohort",
+      "target": "Median time under 10 minutes from account activation to first savings goal created for teen accounts in the first session"
+    },
+    {
+      "metric": "Family pair retention at 90 days (percentage of parent-teen pairs where both accounts are active at the 90-day mark, defined as at least one login per account in the 90th-day week)",
+      "baseline": "Expected range: 30–50% based on family finance app category retention norms; exact baseline TBD from first 90-day post-launch cohort",
+      "target": "50% family pair retention at 90 days within 6 months of launch"
+    }
+  ],
+  "risks_open_questions": [
+    "COPPA compliance requires verifiable parental consent before collecting personal information from users under 13; if PocketBase's marketing or sign-up flow does not enforce the 13-year minimum age, the company faces FTC enforcement risk; what age verification mechanism is required, and does it need to be part of v1 launch or can a policy-only approach suffice for the initial cohort?",
+    "Debit card or bank account linking for teenagers requires a parent or guardian co-signer on the underlying financial account in most US states; PocketBase must partner with a bank or card issuer that supports minor-account structures with a co-signer model; what issuing partner options are available, and what is the lead time for a banking partner integration?",
+    "Category-based spending limit enforcement requires real-time transaction categorization accurate enough that teenagers trust the system and parents rely on it; a miscategorized restaurant purchase appearing under 'groceries' instead of 'food out' will create parent-teen disputes that undermine the product's role as a financial conversation tool; what categorization accuracy floor is acceptable?",
+    "Teenagers who are saving toward a goal may feel surveillance pressure from the parent visibility features and disengage rather than manage their budget authentically; how does PocketBase design the parent visibility model to feel supportive rather than monitoring, and what controls does the teenager have to mark certain transactions as private while still meeting the parent's category limit requirements?",
+    "The classroom challenge feature requires student data to be visible to a teacher in an educational context; FERPA requires parental consent for student data sharing with third parties; does PocketBase need a school-level FERPA agreement, and is teacher-initiated class enrollment sufficient consent for the anonymized leaderboard feature?",
+    "PocketBase's primary value is in the parent-teen pair dynamic; a teenager who signs up without parental participation has no allowance transfer or category limits and experiences a significantly weaker product; what is the minimum viable experience for a teen-only user who cannot get their parent to sign up, and does that experience justify standalone teen acquisition?",
+    "Monetization model is undecided: family subscription, school/classroom license, or freemium with premium goal features; a monthly family subscription price that parents find reasonable may not generate sufficient revenue to support the banking partnership and compliance costs; what subscription price is required to achieve unit economics, and does the target demographic support it?"
+  ],
+  "out_of_scope": [
+    "Investment accounts, stock or ETF purchases, or any securities product — PocketBase is a spending and savings management tool; investment is explicitly deferred",
+    "Credit products, BNPL, or any form of credit extension to minors",
+    "Peer-to-peer payments between teens outside the parent-approved allowance flow",
+    "Support for users under 13 — COPPA compliance requirements for under-13 users are deferred; minimum age at launch is 13",
+    "Adult accounts or financial management for users over 18 — PocketBase is scoped to the 13–17 age range with a parent co-management model",
+    "Tax reporting, 1099 generation, or income tracking for teenagers with self-employment income",
+    "International accounts or non-USD currencies — US-only, USD-denominated accounts at launch"
+  ]
+}

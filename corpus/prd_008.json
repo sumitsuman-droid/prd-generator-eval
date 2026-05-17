@@ -1,0 +1,73 @@
+{
+  "title": "FlowFund",
+  "problem_statement": "Small B2B services businesses with 5 to 50 employees routinely wait 30 to 90 days for invoice payment from enterprise customers while still owing employees, suppliers, and rent on 30-day cycles. This working capital gap forces owner-operators to use personal credit cards, draw on expensive lines of credit, or delay hiring decisions that would let them take on new contracts. Traditional invoice factoring requires 2 to 3 weeks of underwriting, minimum monthly volume commitments, and notice to the end customer — all of which are prohibitive for businesses billing fewer than $500K per year. Banks underwrite small business lines of credit slowly and conservatively against the same revenue these businesses are waiting to collect, creating a circular trap where the cash that could finance growth is locked inside unpaid invoices.",
+  "target_users": [
+    "Owner-operator of a B2B services firm with 5–50 employees who has strong enterprise customers but experiences recurring cash flow gaps between invoice issuance and payment receipt",
+    "Bookkeeper or controller at a small services firm managing accounts receivable aging and cash flow projections on behalf of an owner who is focused on delivery",
+    "Enterprise procurement or accounts payable manager whose payment terms create downstream cash stress for their smaller suppliers",
+    "Small business owner evaluating growth-limiting decisions — new hire, equipment purchase, contract acceptance — that depend on predictable near-term cash availability"
+  ],
+  "user_stories": [
+    "As an owner-operator of a B2B services firm experiencing recurring cash flow gaps, I want to upload an outstanding invoice and receive a funding offer within 24 hours showing the advance amount, fee, and expected repayment date so that I can decide whether to factor the invoice before I miss payroll rather than waiting weeks for a traditional factoring underwrite",
+    "As a bookkeeper managing accounts receivable for a small services firm, I want to connect FlowFund to our accounting software and see all outstanding invoices eligible for funding in one view — with each invoice's customer, amount, age, and estimated funding offer — so that I can present cash flow options to the owner without manually exporting and formatting aging reports",
+    "As an owner-operator of a B2B services firm experiencing recurring cash flow gaps, I want FlowFund to deposit the advance to my business bank account within 1 business day of accepting a funding offer so that I can meet a payroll or supplier obligation that falls before my customer's payment due date",
+    "As a small business owner evaluating growth-limiting decisions, I want to see a 13-week cash flow projection in FlowFund that shows my expected cash position with and without factoring selected invoices so that I can make a hire or contract acceptance decision with a realistic cash picture rather than a gut estimate",
+    "As a bookkeeper managing accounts receivable, I want FlowFund to automatically update my accounting software when an advance is issued and when the customer's payment is received and the advance is settled so that our books stay accurate without manual journal entries for factoring transactions",
+    "As an owner-operator of a B2B services firm, I want to factor individual invoices on demand without a minimum monthly volume commitment so that I can use FlowFund only in the months where my cash position requires it rather than paying for a factoring facility I don't need every month",
+    "As a small business owner evaluating growth-limiting decisions, I want to see the effective annualized cost of factoring each invoice alongside the flat fee so that I can compare the true cost of FlowFund against my existing credit line before accepting an offer"
+  ],
+  "acceptance_criteria": [
+    "Given an owner uploads an invoice PDF or connects an accounting integration, when an invoice is submitted for a funding offer, then FlowFund must return a funding offer including advance amount (up to 90% of invoice face value), flat fee in dollars, and expected repayment date within 24 hours for invoices from customers with at least 12 months of payment history in FlowFund's database or submitted reference data",
+    "Given an owner accepts a funding offer, when the acceptance is confirmed, then FlowFund must initiate an ACH transfer of the advance amount to the owner's verified business bank account by the end of the next business day",
+    "Given an owner connects a QuickBooks Online or Xero account, when the connection is established, then FlowFund must display all open invoices with a balance due greater than $1,000 in the invoice eligibility view within 30 minutes of initial sync, with each invoice showing customer name, invoice date, due date, amount, and estimated funding offer",
+    "Given a 13-week cash flow projection is requested, when the projection is calculated, then it must incorporate: confirmed account balances from the connected business bank account (fetched via Plaid or equivalent), all outstanding invoices and their due dates, and all factoring advances outstanding with their expected settlement dates; the projection must display side-by-side with and without factoring selected invoices",
+    "Given FlowFund issues an advance, when the advance is issued, then FlowFund must post a journal entry to the connected accounting software recording the advance as a liability and the fee as an expense, within 2 hours of the ACH initiation",
+    "Given an invoice that has been advanced against is paid by the end customer, when FlowFund receives the payment, then it must settle the advance, calculate any reserve amount owed back to the business, and initiate the reserve transfer to the business bank account within 1 business day of payment receipt",
+    "Given a business owner views the cost display for a funding offer, when the offer is presented, then FlowFund must display both the flat fee in dollars and the equivalent annualized percentage rate (APR) calculated against the invoice face value and the actual funding period, prior to any acceptance action"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Time from invoice submission to funding offer delivered (hours)",
+      "baseline": "TBD — traditional invoice factoring underwriting commonly requires 10–15 business days; exact pre-adoption baseline to be measured from customer's prior factoring experience at onboarding",
+      "target": "95% of funding offers delivered within 24 hours of invoice submission within 60 days of launch"
+    },
+    {
+      "metric": "Time from offer acceptance to ACH transfer initiated (business days)",
+      "baseline": "0% same-business-day settlement pre-adoption — all prior funding mechanisms (credit lines, factoring) required multiple days",
+      "target": "95% of accepted offers result in ACH initiation by end of next business day"
+    },
+    {
+      "metric": "Invoice default rate (percentage of factored invoices where the end customer fails to pay within 30 days of the invoice due date)",
+      "baseline": "TBD — established from first 6-month post-launch cohort and back-tested against customer's historical A/R aging data at onboarding",
+      "target": "Invoice default rate below 3% within 12 months of launch, maintained through underwriting model iteration"
+    },
+    {
+      "metric": "Repeat funding rate (percentage of businesses that factor at least one invoice per quarter for 3 consecutive quarters after onboarding)",
+      "baseline": "Expected range: 30–50% based on working capital product retention norms; exact baseline TBD from first 9-month post-launch cohort",
+      "target": "55% repeat quarterly funding rate among businesses onboarded for 9 or more months"
+    },
+    {
+      "metric": "Accounting software sync accuracy (percentage of factoring transactions correctly posted to the connected accounting system without manual correction by the bookkeeper)",
+      "baseline": "0% automated posting pre-adoption — all factoring transactions posted manually",
+      "target": "98% of factoring transactions posted to the accounting system without requiring manual correction within 30 days of accounting integration launch"
+    }
+  ],
+  "risks_open_questions": [
+    "FlowFund's underwriting model depends on the end customer's creditworthiness and payment history; if a business's customers are concentrated in a single industry experiencing sector distress (e.g., a retail slowdown), correlated defaults could exceed the model's assumptions — what portfolio concentration limits are built into the underwriting rules at launch?",
+    "Notification to the end customer that their invoice has been factored (a 'notice of assignment') is legally required in some factoring structures and can damage supplier relationships — does FlowFund operate as a non-notification factoring service, and if so, what legal structure supports it and who is on the hook if a customer pays the original supplier after the advance?",
+    "ACH transfer fraud and account takeover risk are heightened in small business lending; a compromised business bank account could redirect an advance to an attacker's account — what multi-factor authentication and bank account verification steps (micro-deposit or Plaid instant verification) are required before the first advance is disbursed?",
+    "QuickBooks and Xero API access requires OAuth tokens that expire; if a token lapses during a factoring cycle, the automatic journal entry posting will fail silently and the bookkeeper's books will be out of sync — how do we detect and surface token expiry before it causes a reconciliation problem?",
+    "State-level commercial lending regulations vary; some states classify invoice factoring as a loan and require a lending license, while others treat it as an asset purchase; has FlowFund obtained a legal opinion on the regulatory classification in each launch state and identified which states require a license before taking on customer invoices?",
+    "FlowFund's 13-week cash flow projection requires bank account balance data via Plaid; Plaid's access to some banks is intermittent or requires manual re-authentication; how does the projection degrade gracefully when bank balance data is stale or unavailable?",
+    "Pricing model decisions: flat fee as a percentage of invoice face value vs. a tiered rate based on customer creditworthiness vs. a dynamic rate based on invoice age — which model is most transparent to owner-operators with limited financial sophistication, and does our target segment anchor on absolute dollar cost or effective APR when evaluating offers?"
+  ],
+  "out_of_scope": [
+    "Consumer or personal loan products — FlowFund is a business-to-business working capital tool; personal guarantees may be required but consumer lending regulation does not apply",
+    "Equity or revenue-based financing — FlowFund purchases receivables only; dilutive or revenue-share financing is not in scope",
+    "Inventory or purchase order financing — FlowFund v1 advances only against invoices for services or goods already delivered",
+    "International invoices or multi-currency advances — USD-denominated US invoices only at launch",
+    "Invoices to government entities — government receivables factoring involves assignment restrictions and additional legal complexity deferred to post-v1",
+    "Direct payment collection from end customers — FlowFund does not contact or communicate with the business's customers; payment flows through existing customer payment processes",
+    "Accounts payable or bill payment services — FlowFund is an accounts receivable tool only"
+  ]
+}

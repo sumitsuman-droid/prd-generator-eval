@@ -1,0 +1,76 @@
+{
+  "title": "CallCoach",
+  "problem_statement": "B2B SaaS sales teams of 10–80 reps lose an estimated $1.2M–$4M annually in preventable deal slippage because managers cannot review more than 2–3% of recorded calls, leaving rep coaching entirely dependent on self-reporting and anecdote. Reps who join mid-year lack access to a curated best-practice call library and require 4–6 months to ramp to quota rather than the 90-day target most VPs of Sales plan to. Existing conversation intelligence platforms such as Gong require $150K+ annual contracts that are prohibitive for Series A/B companies, and their generic talk-track scores do not adapt to each company's specific product positioning or buyer objection patterns. The result is a performance distribution where the top 20% of reps close 60–70% of team revenue, a gap that widens with every hiring cycle.",
+  "target_users": [
+    "Sales manager at a 10–80 rep B2B SaaS team responsible for pipeline accuracy and rep performance coaching without a dedicated sales ops function",
+    "Mid-market AE at a Series A/B SaaS company carrying a $600K–$1.2M annual quota with infrequent access to structured coaching",
+    "Sales enablement lead responsible for onboarding new reps and maintaining the team's call library and objection-handling playbooks",
+    "VP of Sales at a growth-stage SaaS company managing board-level forecast accuracy and revenue predictability commitments"
+  ],
+  "user_stories": [
+    "As a sales manager at a 10–80 rep B2B SaaS team responsible for pipeline accuracy and rep performance coaching without a dedicated sales ops function, I want an automatically generated summary of every call that includes talk ratio, longest continuous monologue duration, competitor mentions, and objection type classifications so that I can review 100% of calls in under 3 minutes each rather than sampling the 2% I have time to fully listen to",
+    "As a mid-market AE at a Series A/B SaaS company carrying a $600K–$1.2M annual quota with infrequent access to structured coaching, I want CallCoach to flag the specific 60-second segment of my last call where the prospect's engagement dropped — measured by speech pace and question frequency — so that I can identify exactly where I lost momentum and rehearse an improved response before the next call",
+    "As a sales enablement lead responsible for onboarding new reps and maintaining the team's call library and objection-handling playbooks, I want to tag any call segment as a best-practice example and attach it to a specific sales stage and objection type in a searchable library so that new reps can study real examples of how top performers handle the pricing objection rather than reading a slide deck written in the abstract",
+    "As a VP of Sales at a growth-stage SaaS company managing board-level forecast accuracy and revenue predictability commitments, I want a deal risk score for each open opportunity that is recalculated after every discovery or demo call based on linguistic signals — unresolved objections, missing economic buyer, absent next-step commitment — so that I can identify slipping deals 3 weeks earlier than CRM stage progression would indicate",
+    "As a sales manager at a 10–80 rep B2B SaaS team responsible for pipeline accuracy and rep performance coaching without a dedicated sales ops function, I want a rep-by-rep leaderboard showing talk ratio, average handle time, and question rate across the past 30 days compared to the team median so that I can objectively prioritize which reps receive coaching time this week rather than relying on gut feel and recency bias",
+    "As a mid-market AE at a Series A/B SaaS company carrying a $600K–$1.2M annual quota with infrequent access to structured coaching, I want CallCoach to automatically detect when I mention a named competitor during a call and surface the approved competitive battlecard for that competitor in a sidebar within 10 seconds so that I can respond without breaking my flow to search Confluence mid-call",
+    "As a sales enablement lead responsible for onboarding new reps and maintaining the team's call library and objection-handling playbooks, I want each new rep's first 10 discovery calls automatically scored against a defined discovery checklist — budget qualified, champion identified, pain confirmed, next steps set — so that I can deliver written feedback within 24 hours of each call without personally listening to every recording"
+  ],
+  "acceptance_criteria": [
+    "Given a rep completes a call on a supported platform (Zoom, Google Meet, or Microsoft Teams), when the call ends, then CallCoach must deliver a structured summary including talk ratio, longest continuous monologue in seconds, any competitor names detected, and objection type classifications within 15 minutes of call completion for calls of 60 minutes or less",
+    "Given a call summary is generated, when a manager opens the Call Review view, then each classified segment — objection, competitor mention, next-step discussion — must be a clickable timestamp link that plays the recording from within ±5 seconds of the classified moment",
+    "Given a rep's talk ratio exceeds 65% or a monologue exceeds 90 continuous seconds on a call, when coaching insights are generated, then the output must include at least one timestamped coaching note naming the specific moment and a suggested alternative drawn from the playbook library rather than a generic reminder",
+    "Given a deal risk score changes by more than 15 points from the prior calculation after a call, when the score update completes, then the owning rep's manager must receive a Slack or email notification within 60 minutes identifying the specific linguistic signals that drove the change — not a generic risk alert",
+    "Given a sales enablement lead tags a call segment as a best-practice example and attaches it to an objection type, when any team member with rep or manager access searches that objection keyword in the call library, then the tagged segment must appear in results within 3 seconds",
+    "Given a competitor name is detected in real-time during a live call with recognition confidence ≥ 80%, when the detection fires, then the corresponding battlecard must appear in the CallCoach sidebar within 10 seconds without degrading call audio quality or interrupting the recording stream",
+    "Given a new rep's first 10 discovery calls are scored against the team's discovery checklist, when detection accuracy is validated pre-launch against a human-labeled reference dataset of 50 representative calls, then checklist item detection must achieve ≥ 85% precision and ≥ 80% recall on that dataset before the scoring feature ships to customers",
+    "Given a CRM integration (Salesforce or HubSpot) is configured, when a call summary is generated, then it must be written to the corresponding CRM opportunity's Activity log within 30 minutes of call completion without requiring manual action by the rep",
+    "Given any call recording or transcript stored by CallCoach, when the data is at rest, then it must be encrypted with AES-256 and accessible only to workspace members; cross-workspace data access must be confirmed absent by automated isolation tests before GA"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Percentage of completed calls per week that have a manager-opened summary within 72 hours of call completion",
+      "baseline": "Widely observed in sales operations: manual review reaches only a small fraction of recorded calls without tooling; exact customer-specific pre-activation baseline to be captured from call review logs at onboarding",
+      "target": "85% of calls have a manager-opened summary within 72 hours within 90 days of go-live for accounts with ≥5 active reps"
+    },
+    {
+      "metric": "New rep ramp time to first quota-attainment month (calendar months from hire date to first month at ≥100% of monthly quota)",
+      "baseline": "Expected range: 3–5 months based on target-segment norms for B2B SaaS AE hiring; exact baseline to be captured from each customer's HR records at contract signature",
+      "target": "2.8 months average ramp time for reps onboarded with CallCoach active from day 1, measured across the first cohort of 20 or more reps with 6 months of post-hire data"
+    },
+    {
+      "metric": "Deal risk score predictive precision (percentage of opportunities flagged high-risk 3+ weeks before close date that resulted in a slip or closed-lost outcome)",
+      "baseline": "Expected range: 60–75% manager forecast accuracy at the 3-week horizon without AI assistance; exact pre-activation baseline TBD from customer CRM data at onboarding",
+      "target": "75% precision on high-risk flags with less than 20% false-positive rate at the 3-week horizon within 6 months of launch"
+    },
+    {
+      "metric": "Talk ratio improvement for actively coached reps (change in average talk ratio from month 1 to month 3 post-activation)",
+      "baseline": "Expected range: 60–70% average talk ratio based on commonly observed B2B sales call patterns; top performers widely reported to average under 50%; exact baseline TBD from first 30 days of recorded calls per rep",
+      "target": "Coached reps reduce average talk ratio by 8 percentage points from their month-1 baseline to approximately 60% by month 3"
+    },
+    {
+      "metric": "Gross revenue retention at 6-month cohort mark across activated accounts",
+      "baseline": "Expected range: 80–90% GRR based on comparable SMB SaaS tooling category norms; exact baseline TBD at the 6-month cohort mark",
+      "target": "90% gross revenue retention at the 6-month cohort mark for accounts with 5 or more active users"
+    }
+  ],
+  "risks_open_questions": [
+    "Zoom, Google Meet, and Microsoft Teams each govern bot admission and recording consent via APIs that change with platform updates — a single policy change (as platform recording and bot-admission APIs have changed historically without advance notice) could block recording for an entire customer segment overnight; what is the graceful degradation path and how quickly can an emergency patch reach production?",
+    "Recording and AI transcription are subject to two-party consent laws in 11 US states and GDPR Article 6 in the EU; how does CallCoach surface and enforce consent obligations before recording begins, and who bears liability if a rep fails to obtain consent from a prospect?",
+    "AI-generated coaching notes may contradict how individual companies have trained their reps, creating manager-vs-tool confusion; do we need a per-workspace playbook configuration layer that lets enablement leads tune or suppress default coaching heuristics without involving ML engineering?",
+    "Real-time battlecard surfacing requires sub-10-second latency audio processing, which conflicts with standard post-call batch transcription architecture and adds significant infrastructure cost; is the battlecard feature worth a separate real-time ASR pipeline at Series A/B price points, or should it be a post-GA add-on?",
+    "Deal risk scores visible to VPs but not reps could create adversarial dynamics where reps optimize call behavior for score improvement rather than actual prospect engagement; what transparency model — full visibility, coaching-only, or manager-only — best serves team health across our target customer profiles?",
+    "Several target customers use RingCentral, 8x8, or Dialpad rather than Zoom or Meet; excluding those platforms in v1 locks out a meaningful share of addressable prospects; what is the v2 integration sequencing and does the v1 limitation need to be a selling-point disclosure in the pricing page?",
+    "Transcript quality for accented speech, domain-specific product names, and heavy technical jargon degrades generic ASR accuracy significantly; what transcript accuracy floor — expressed as word error rate — is acceptable before sales managers lose trust in AI-generated summaries, and do we offer per-account custom vocabulary tuning from day one?"
+  ],
+  "out_of_scope": [
+    "Outbound dialing, predictive dialer, or any call-initiation functionality — CallCoach is a recording, transcription, and analysis overlay only",
+    "Email, LinkedIn, or async messaging analysis — only voice and video call intelligence is in scope for v1",
+    "Aggregate revenue forecasting or pipeline-level prediction beyond individual deal risk scoring",
+    "Integrations with video or voice platforms beyond Zoom, Google Meet, and Microsoft Teams at launch",
+    "CRM write-back to objects other than Activity or Note on an Opportunity record — automated stage updates or close-date changes are out of scope",
+    "AI-generated post-call follow-up email drafting or action item extraction — transcript and insight are in scope; generative content creation is not in v1",
+    "Support for inbound support calls or customer success calls — v1 scope is new business and expansion sales calls only",
+    "Real-time manager override or call takeover features beyond passive battlecard surfacing"
+  ]
+}

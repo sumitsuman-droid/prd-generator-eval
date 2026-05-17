@@ -1,0 +1,73 @@
+{
+  "title": "TableLocal",
+  "problem_statement": "Independent restaurant discovery is dominated by platforms that prioritize sponsored listings, algorithmically boosted chain locations, and review aggregates from users with no neighborhood context, making it structurally difficult for community-minded diners to find genuinely local restaurants that their neighbors trust. Independent restaurant owners have no effective owned channel to reach new neighborhood customers without paying per-click advertising fees they cannot afford, relying instead on foot traffic and word-of-mouth that scales poorly. The result is a market where chain restaurants with advertising budgets consistently outrank better local alternatives in general discovery tools, while the hyperlocal restaurant knowledge that exists inside neighborhood communities is never surfaced or preserved.",
+  "target_users": [
+    "Urban or suburban diner who actively seeks independent restaurants and avoids chains but lacks a reliable neighborhood-specific discovery source",
+    "Independent restaurant owner or general manager operating one to three locations without a marketing budget for paid digital advertising",
+    "Food-forward neighborhood community member who regularly shares restaurant recommendations in local Facebook groups or NextDoor but wants a dedicated format for those recommendations",
+    "Visitor or recent transplant unfamiliar with a neighborhood's independent dining scene who wants trusted local guidance rather than tourist-optimized search results"
+  ],
+  "user_stories": [
+    "As an urban diner who actively seeks independent restaurants and avoids chains, I want to browse a feed of restaurants recommended by people who live within a 1-mile radius of my home address so that I see restaurants my actual neighbors trust rather than algorithm-boosted sponsored results or out-of-neighborhood reviewers",
+    "As an independent restaurant owner operating without a paid advertising budget, I want to claim my restaurant's TableLocal profile for free and post weekly updates — a new menu item, a specials board photo, a temporary closure — so that neighborhood customers who follow my restaurant see current information without me paying for a promoted post",
+    "As a food-forward neighborhood community member who shares restaurant recommendations regularly, I want to log a restaurant visit with a brief note and one or two photos directly from my phone within 2 minutes of leaving so that my neighborhood feed stays current without requiring the effort of a traditional written review",
+    "As a visitor unfamiliar with a neighborhood's independent dining scene, I want to enter a specific neighborhood name or drop a pin on a map and see only independently owned restaurants within a half-mile sorted by local recommendation recency so that I find the places neighbors actually go rather than the tourist traps optimized for out-of-towners",
+    "As an urban diner who actively seeks independent restaurants, I want to save restaurants I want to try to a personal list and be notified when someone I follow in my neighborhood adds a new recommendation for one of those saved restaurants so that social signal updates my wishlist without requiring me to check the app proactively",
+    "As an independent restaurant owner operating without a paid advertising budget, I want a weekly summary showing how many neighborhood residents viewed my profile, clicked my hours, or saved my restaurant to a list so that I can understand whether my TableLocal presence is generating awareness without needing to run a campaign",
+    "As a food-forward neighborhood community member who shares recommendations regularly, I want to see when a restaurant I have recommended closes permanently so that I can remove the recommendation and my reputation as a reliable neighborhood food guide is not undermined by outdated suggestions"
+  ],
+  "acceptance_criteria": [
+    "Given a user has set or confirmed their home neighborhood (by address, ZIP code, or map pin), when they open the neighborhood feed, then only restaurants with at least one recommendation from a user whose confirmed home neighborhood overlaps within 1 mile of the viewing user's home may appear in the default feed; chain restaurants (defined as brands with more than 10 locations nationally) must be excluded from the default feed",
+    "Given an independent restaurant owner claims a restaurant profile by verifying ownership (via business email domain match, postcard verification, or phone callback), when the claim is approved, then the owner must be able to post updates — text, photo, hours changes — to the restaurant profile, and each update must appear in the neighborhood feed for users who follow the restaurant within 30 minutes of posting",
+    "Given a community member taps the log-a-visit button after a restaurant visit, when they complete the quick-log flow (rating, one text note, optional photo), then the log must be submittable in 3 or fewer taps after the initial button press and must publish to the neighborhood feed within 60 seconds of submission",
+    "Given a visitor enters a neighborhood name or drops a map pin, when the restaurant list loads, then only independently owned restaurants (chains excluded) with at least one recommendation from a user who has their home set within 1 mile of the search center must appear, sorted by most recent recommendation, with results loading within 2 seconds",
+    "Given a restaurant has been marked as permanently closed by three or more distinct verified users, when the closure threshold is reached, then the restaurant's profile must be visually marked as Permanently Closed on all discovery surfaces within 4 hours, and all users who have the restaurant on a saved list must receive a notification within 24 hours",
+    "Given a restaurant owner has claimed their profile, when they open the weekly summary, then the summary must display: profile views, hours-click count, and saves-to-list count for the prior 7 days, with data current to within 24 hours of the report generation time",
+    "Given a user follows another user on TableLocal, when the followed user logs a visit to a restaurant on the first user's saved list, then the first user must receive an in-app notification within 15 minutes of the log being published"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Weekly active users (percentage of registered users who open TableLocal and view at least one restaurant profile or feed entry in a given calendar week)",
+      "baseline": "Expected range: 20–35% based on local social discovery app category norms; exact baseline TBD from first 90-day post-launch cohort",
+      "target": "30% weekly active rate sustained from week 4 through week 16 post-launch in initial pilot markets"
+    },
+    {
+      "metric": "New restaurant recommendation log rate (average number of visit logs submitted per active user per month)",
+      "baseline": "0 logs pre-launch — feature does not exist",
+      "target": "Average of 2 or more logs per monthly active user by month 3 post-launch"
+    },
+    {
+      "metric": "Independent restaurant profile claim rate (percentage of independently owned restaurants in a launched neighborhood with a claimed and active owner profile)",
+      "baseline": "0% pre-launch — no restaurant profiles exist",
+      "target": "30% of independently owned restaurants in each launched neighborhood have a claimed profile within 90 days of neighborhood launch"
+    },
+    {
+      "metric": "Visitor-to-follower conversion (percentage of first-time visitors to a neighborhood feed who create an account and set a home neighborhood within their first session)",
+      "baseline": "TBD — established from first 30-day post-launch cohort",
+      "target": "25% visitor-to-account conversion within the first session within 60 days of launch"
+    },
+    {
+      "metric": "Saved restaurant list size per active user (average number of restaurants saved per monthly active user)",
+      "baseline": "TBD — established from first 60-day post-launch cohort",
+      "target": "Average of 5 or more saved restaurants per monthly active user by month 2 post-launch"
+    }
+  ],
+  "risks_open_questions": [
+    "Neighborhood boundary definitions are subjective and contested — a user in a gentrifying area may identify with a different neighborhood than their address geocodes to; how does TableLocal resolve neighborhood boundary disputes and what happens when a restaurant sits on the boundary between two neighborhoods' feeds?",
+    "Content moderation for user-submitted photos and notes is unavoidable at scale; offensive content, fake competitive reviews, and spam posts from non-local accounts require a moderation policy and an enforcement workflow; does TableLocal need a human moderation function at launch or is a community-reporting model with automated flagging sufficient for pilot market density?",
+    "Restaurant chain classification at the boundary — regional chains with 10–50 locations that are locally beloved but technically chains — will create classification disputes with owners and users; what is the threshold definition for 'independent' and who has final authority over a restaurant's classification?",
+    "User-reported home neighborhoods can be falsified by users who want to be seen as local authorities in a neighborhood they do not live in; does TableLocal need address verification (e.g., a postcard or utility bill) to gatekeep neighborhood membership, and does that friction harm growth more than fake local authority harms trust?",
+    "Two-sided marketplace cold start: neighborhood feeds with fewer than 20 active recommenders produce a thin and stale experience that drives churn before word-of-mouth can build; what is the minimum community seeding strategy — ambassador program, press coverage, local food blogger partnerships — and what user density is required before a neighborhood launches?",
+    "Restaurant owners who receive negative logs may contact TableLocal to demand removal; what is the content moderation policy for owner disputes, and how do we distinguish a legitimate factual error correction request from an attempt to suppress a negative but honest community review?",
+    "Monetization model is undecided: restaurant owner subscriptions for enhanced profiles, featured placement in neighborhood feed, or event promotion; any placement-based revenue model risks replicating the pay-to-win dynamic TableLocal is positioned against — what monetization approach preserves the product's editorial integrity as a community-first discovery tool?"
+  ],
+  "out_of_scope": [
+    "Online ordering, delivery, or reservation booking — TableLocal is a discovery and recommendation platform; transactions occur through the restaurant's own channels",
+    "Bars, nightlife, or entertainment venues — food-serving restaurants only in v1",
+    "National or tourist discovery — TableLocal is neighborhood-scoped; city-wide or out-of-market discovery is not the designed use case",
+    "Influencer or professional critic content — TableLocal is community-driven; verified food media accounts are not a special content tier in v1",
+    "Menu display or menu aggregation — restaurant profiles include photos and owner-posted updates but do not host full menus",
+    "Real-time wait times or table availability — TableLocal is not a front-of-house operations tool",
+    "Ratings on a numeric scale — TableLocal uses recency and community endorsement signals rather than star ratings to avoid optimizing for rating inflation"
+  ]
+}

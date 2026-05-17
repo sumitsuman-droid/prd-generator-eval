@@ -1,0 +1,73 @@
+{
+  "title": "TradeLink",
+  "problem_statement": "Homeowners facing urgent plumbing, electrical, or HVAC failures spend hours making phone calls to contractors from outdated referral lists, unable to verify licensing, insurance, or real-time availability before committing to an appointment. Independent skilled trade contractors lose a significant share of revenue to dispatching inefficiency — missed calls, double-booking, and driving to jobs that were already filled by a competitor. Existing general-purpose platforms like Thumbtack and Angi blur the line between licensed professionals and unlicensed handymen, creating trust and liability exposure for homeowners who cannot distinguish credentials on their own. The combination of opaque licensing status, no real-time availability, and no transparent pricing leaves both homeowners and tradespeople underserved by a market that transacts primarily through word-of-mouth and yellow-page inertia.",
+  "target_users": [
+    "Homeowner facing an urgent repair failure (burst pipe, no heat, electrical trip) who needs a licensed, available contractor within hours",
+    "Independent licensed electrician, plumber, or HVAC technician running a solo or 2–5-person shop and losing leads to missed calls and scheduling friction",
+    "Homeowner planning a non-urgent renovation or replacement project who wants vetted contractor quotes before committing",
+    "Residential property manager overseeing 10–100 rental units who needs reliable trade contractor access across multiple properties"
+  ],
+  "user_stories": [
+    "As a homeowner facing an urgent repair failure who needs a licensed contractor within hours, I want to post a job description with photos of the problem and my ZIP code and receive responses only from licensed and insured contractors who have indicated same-day or next-day availability so that I am not calling contractors who cannot come until next week",
+    "As an independent licensed electrician running a 2–5-person shop losing leads to missed calls, I want TradeLink to show me new job postings in my trade category within a 25-mile radius as push notifications so that I can claim jobs immediately rather than losing them while returning phone calls",
+    "As a homeowner planning a non-urgent renovation project who wants vetted quotes, I want to post a project description and receive itemized quotes from at least 3 licensed contractors within 48 hours so that I can compare pricing and approach before making a commitment rather than accepting the first person who calls back",
+    "As an independent licensed electrician running a 2–5-person shop, I want my TradeLink profile to display my license number with a real-time verification badge pulled from my state's licensing database so that homeowners can confirm my credentials without leaving the app and I don't lose jobs to unverified competitors who undercut on price",
+    "As a residential property manager overseeing 10–100 rental units, I want to save a roster of my preferred licensed contractors per trade category with notes on their reliability and pricing so that I can dispatch jobs to trusted contractors first before opening to the broader marketplace",
+    "As a homeowner facing an urgent repair failure, I want to see a contractor's real-time availability calendar before I request a booking so that I don't waste time negotiating with a contractor who cannot arrive within my required window",
+    "As a residential property manager overseeing 10–100 rental units, I want a unified job history log showing every trade job across all my properties — contractor name, trade, date, cost, and outcome — so that I can track maintenance spend by property and identify contractors I should not rebook"
+  ],
+  "acceptance_criteria": [
+    "Given a homeowner posts a job with a trade category, ZIP code, and urgency level, when the job is submitted, then only contractors whose TradeLink profile includes a verified license in the matching trade category and who have marked availability overlapping the requested window may respond; unverified or unavailable contractors must not appear in the homeowner's response list",
+    "Given a licensed contractor has enabled push notifications, when a new job is posted within their configured service radius (up to 50 miles) in their registered trade category, then the contractor must receive a push notification within 5 minutes of job posting",
+    "Given a homeowner posts a non-urgent project request, when 48 hours have elapsed from posting, then TradeLink must notify the homeowner if fewer than 3 licensed contractors have submitted quotes, with an option to expand the service radius or adjust the job description",
+    "Given a contractor applies for a TradeLink profile listing a state license number, when the license is submitted, then TradeLink must verify the license status against the relevant state licensing board API or database within 24 hours and display a verified badge on the contractor's profile only if the license is confirmed active; expired or inactive licenses must not display as verified",
+    "Given a homeowner selects a contractor and confirms a booking, when the booking is confirmed, then both the homeowner and contractor must receive a confirmation notification including the job address, agreed time window, and contractor's license number within 5 minutes of confirmation",
+    "Given a job is marked complete by both parties, when the homeowner submits a review, then the review must be published to the contractor's profile within 24 hours, and the contractor's overall rating must be recalculated immediately upon publication",
+    "Given a residential property manager has saved a preferred contractor roster, when they post a job, then TradeLink must first notify all preferred contractors in the matching trade category before making the job visible to the general contractor pool, with a configurable preferred-contractor exclusive window of 30 minutes to 4 hours"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Median time from urgent job posted to first verified contractor response",
+      "baseline": "TBD — established from first 30-day post-launch cohort in pilot markets; homeowners commonly report waiting hours to days for callbacks through existing referral channels",
+      "target": "Median first response under 30 minutes for urgent jobs posted during business hours within 60 days of launch in pilot markets"
+    },
+    {
+      "metric": "Contractor job acceptance rate (percentage of posted jobs that result in a confirmed booking within 48 hours)",
+      "baseline": "TBD — established from first 60-day post-launch cohort",
+      "target": "75% of posted jobs result in a confirmed booking within 48 hours within 90 days of launch"
+    },
+    {
+      "metric": "Contractor license verification coverage (percentage of active contractor profiles with a verified license badge)",
+      "baseline": "0% at launch — no profiles exist pre-launch",
+      "target": "100% of active contractor profiles display a verified or explicitly unverifiable license status within 30 days of platform launch; no profile may be listed as verified without API confirmation"
+    },
+    {
+      "metric": "Contractor 30-day retention (percentage of contractors who claim at least one job in their first 30 days and claim at least one job in their second 30 days)",
+      "baseline": "Expected range: 40–60% based on gig platform contractor retention norms; exact baseline TBD from first 60-day post-launch cohort",
+      "target": "65% contractor 30-to-60-day retention within 6 months of launch"
+    },
+    {
+      "metric": "Homeowner repeat booking rate (percentage of homeowners who book a second job within 6 months of their first booking)",
+      "baseline": "TBD — established from first 6-month post-launch cohort",
+      "target": "40% repeat booking rate within 6 months of first booking, measured from 6-month cohort"
+    }
+  ],
+  "risks_open_questions": [
+    "State licensing board APIs vary widely in availability, update frequency, and data format; several states have no machine-readable database and require manual verification; how do we handle license verification in states without a usable API, and can we launch in those markets with a manual review process without creating a false sense of verification for homeowners?",
+    "Contractors who misrepresent their licensing status or insurance coverage create liability exposure for TradeLink if a homeowner is injured or property is damaged; what indemnification and background check requirements are in the contractor terms of service, and do we need a contractor bond or insurance-in-force verification before they can accept jobs?",
+    "Price transparency is a core homeowner expectation, but skilled trade pricing varies dramatically by job complexity; a fixed-price quote mechanism may discourage contractors who cannot scope jobs without a site visit, while hourly bidding creates post-job disputes; what booking model — fixed quote, hourly estimate, or site-visit-first — minimizes dispute rate?",
+    "Two-sided marketplace liquidity in new geographic markets requires simultaneous contractor supply and homeowner demand; launching city by city risks thin contractor supply in early markets creating a bad homeowner experience that burns the brand; what is the minimum contractor density per trade per ZIP code required before we open homeowner job posting in a market?",
+    "Homeowners posting emergency jobs may be in distressed situations vulnerable to price gouging; do we need surge pricing guardrails or contractor pricing transparency requirements to protect homeowners and avoid regulatory scrutiny in states with anti-price-gouging laws during declared emergencies?",
+    "Property managers managing large portfolios may want to bypass the marketplace and contract TradeLink as a managed service with guaranteed SLAs; should TradeLink offer a B2B property management tier with different pricing and SLA commitments, and does that require a separate go-to-market motion?",
+    "Disputed job quality — contractor claims work is complete, homeowner disputes quality — requires a resolution process; what is TradeLink's arbitration model and does it involve staff review, third-party inspection, or automated dispute triage?"
+  ],
+  "out_of_scope": [
+    "General handyman or home cleaning services — TradeLink v1 is scoped to licensed trade categories: electrical, plumbing, and HVAC only",
+    "Contractor payroll, invoicing, or accounts receivable tools — TradeLink facilitates job matching and booking; payment processing and invoicing are the contractor's responsibility in v1",
+    "Materials sourcing, supply chain, or parts ordering for contractors",
+    "Commercial or industrial property jobs — residential properties only in v1",
+    "New construction or general contracting project management — TradeLink is scoped to repair, replacement, and renovation within existing structures",
+    "Background check or criminal history screening in v1 — license verification and reviews are the trust mechanisms at launch; background checks are a post-launch addition",
+    "In-app messaging between homeowner and contractor — job details and communication flow through the TradeLink job thread; external contact information is not shared before booking is confirmed"
+  ]
+}

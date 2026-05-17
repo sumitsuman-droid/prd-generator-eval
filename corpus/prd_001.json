@@ -1,0 +1,75 @@
+{
+  "title": "SleepArc",
+  "problem_statement": "Adults aged 30–50 who wear fitness trackers accumulate 6–8 weeks of sleep data they cannot interpret without clinical training, yet their wearables surface only aggregate scores with no actionable guidance. Existing sleep apps deliver generic tips unconnected to the user's actual biometric trends, while clinical sleep medicine is inaccessible for the large majority of people whose sleep issues do not meet the diagnostic threshold for a formal disorder. The result is a growing segment of chronically under-rested adults — particularly shift workers, new parents, and high-output knowledge workers — who accept poor sleep as unavoidable despite having the sensor data needed to meaningfully improve it.",
+  "target_users": [
+    "High-output knowledge worker in their 30s–40s carrying chronic sleep debt from early meetings, late deliverables, and screen use",
+    "New parent experiencing fragmented sleep architecture and seeking to recover consolidated sleep within infant care constraints",
+    "Competitive amateur athlete optimizing sleep timing and duration to maximize next-day HRV and training recovery",
+    "Rotating shift worker (nurse, factory technician) managing circadian disruption across alternating day and night schedules"
+  ],
+  "user_stories": [
+    "As a high-output knowledge worker in their 30s–40s carrying chronic sleep debt from early meetings, late deliverables, and screen use, I want a weekly sleep debt report that translates my wearable's HRV and sleep stage data into a plain-English deficit figure so that I understand exactly how much cumulative rest I owe my body rather than guessing from a single-night score",
+    "As a new parent experiencing fragmented sleep architecture and seeking to recover consolidated sleep within infant care constraints, I want SleepArc to detect my longest uninterrupted sleep window each night and recommend the optimal bedtime for tomorrow based on my infant's feeding schedule so that I can maximize consolidated rest without ignoring caregiving obligations",
+    "As a competitive amateur athlete optimizing sleep timing and duration to maximize next-day HRV and training recovery, I want an automatic correlation between my training load logged in Strava or Garmin and my recovery-readiness score the following morning so that I can adjust training intensity when sleep-driven recovery is insufficient before a workout begins",
+    "As a rotating shift worker managing circadian disruption across alternating day and night schedules, I want a shift-aware sleep plan generated from my submitted shift calendar that recommends light exposure times and pre-sleep wind-down windows for each shift type so that my body clock adjusts proactively rather than reactively",
+    "As a high-output knowledge worker in their 30s–40s carrying chronic sleep debt from early meetings, late deliverables, and screen use, I want to log specific evening behaviors — alcohol, caffeine, screen use — and see a rolling regression showing which behaviors correlate most strongly with my own sleep quality so that I build habits grounded in my personal physiology rather than population averages",
+    "As a competitive amateur athlete optimizing sleep timing and duration to maximize next-day HRV and training recovery, I want a race-week sleep taper plan generated 7 days before an entered event so that my sleep patterns peak at race day rather than being disrupted by pre-race schedule changes",
+    "As a rotating shift worker managing circadian disruption across alternating day and night schedules, I want an alert when my predicted circadian nadir falls within my upcoming shift window so that I can schedule lower-cognitive-load tasks during that period and reduce error risk"
+  ],
+  "acceptance_criteria": [
+    "Given a user has connected a supported wearable (Apple Watch Series 4+, Fitbit Charge 5+, or Oura Ring Gen 3), when nightly sleep data syncs, then SleepArc must display an updated sleep debt figure, sleep stage breakdown, and at least one personalized recommendation within 30 minutes of sync completion for 95% of sync events",
+    "Given a user has 14 or more nights of wearable sleep data and has logged at least 5 entries for a given behavior (alcohol, caffeine, or screen use), when they open the Behavior Correlations view, then the Pearson correlation coefficient between that behavior and next-night sleep quality score must be displayed with a confidence interval and sample size",
+    "Given a user has submitted a shift calendar with at least 7 future shifts, when SleepArc generates a shift-aware sleep plan, then the plan must produce a distinct recommended bedtime, wake time, and light exposure window for each shift type that is consistent with established chronobiology guidelines for circadian phase advancement and delay",
+    "Given a user has linked Strava or Garmin Connect and the previous night's sleep data is available, when the Recovery Readiness score is calculated by 07:00 local time, then the score must incorporate training load from the prior 48 hours and HRV from the prior night, and the score component breakdown must be viewable by the user",
+    "Given a user has entered a race or competition event 7 days in the future, when the sleep taper plan is generated, then it must specify a nightly recommended sleep duration and bedtime adjustment for each of the 7 nights that converges on the user's calculated optimal sleep window by race eve, with at least a 15-minute progressive adjustment from the current baseline",
+    "Given SleepArc detects a pattern consistent with moderate-to-severe sleep apnea indicators (oxygen desaturation events combined with fragmented sleep across 5 or more nights in any 14-day window), when the pattern is confirmed, then it must surface an in-app prompt to consult a clinician within 24 hours of detection, not deferred to next login",
+    "Given a user's cumulative sleep debt exceeds 10 hours, when SleepArc sends a re-engagement notification, then the notification must include the specific deficit in hours and one concrete recovery action — not a generic prompt to open the app — and must respect the user's configured Do Not Disturb window",
+    "Given any sleep metric is displayed, when the underlying wearable data was estimated rather than directly measured (e.g., due to a sync gap), then the value must be visually marked as estimated and the confidence basis must be accessible within one tap"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Self-reported sleep quality score (1–10 scale, collected nightly in-app) among users active for 30+ days",
+      "baseline": "TBD — onboarding survey will capture self-reported sleep quality as the week-0 anchor; to be established from first 30-day post-launch cohort",
+      "target": "7.2 average or higher at day-60 for users who complete at least 4 weekly recommendations per month"
+    },
+    {
+      "metric": "Wearable connection retention rate (percentage of activated users who keep their wearable connected and syncing at day-30)",
+      "baseline": "Expected range: 30–50% based on companion health app category norms; exact baseline TBD from the first 60-day post-launch cohort",
+      "target": "65% of activated users retain a connected wearable at day-30 within 6 months of GA"
+    },
+    {
+      "metric": "Weekly active usage rate (percentage of activated users who open SleepArc and view a recommendation on at least 3 days in a given calendar week)",
+      "baseline": "Expected range: 15–25% based on health app category norms; exact baseline TBD from first 90-day post-launch cohort",
+      "target": "35% weekly active rate sustained from week 4 through week 12 post-activation"
+    },
+    {
+      "metric": "Recommendation follow-through rate (percentage of surfaced actionable recommendations that users mark as attempted within 48 hours of delivery)",
+      "baseline": "0% pre-launch — no prior recommendation system exists to establish a baseline",
+      "target": "40% follow-through rate on personalized recommendations within 90 days of public launch"
+    },
+    {
+      "metric": "Free-to-paid conversion rate for users completing the 14-day trial",
+      "baseline": "Expected range: 15–25% based on consumer subscription app category norms; exact baseline TBD from first full trial cohort",
+      "target": "28% trial-to-paid conversion within 6 months of public launch"
+    }
+  ],
+  "risks_open_questions": [
+    "Apple HealthKit and Google Health Connect data access policies have historically restricted third-party sleep data access without warning — a post-launch policy change could break core functionality overnight with no platform-independent fallback; what is the minimum viable data path if wearable API access is revoked?",
+    "Sleep coaching recommendations that do not account for undiagnosed clinical conditions (sleep apnea, restless legs syndrome) could delay appropriate medical care; what is the regulatory boundary between wellness guidance and medical advice, and does a symptom-based escalation prompt satisfy FDA digital health guidance for our risk classification?",
+    "Consumer wearable sleep stage classification has well-documented accuracy limitations — particularly for REM detection — acknowledged across published sleep research; personalized behavioral correlations built on misclassified stage labels could mislead users and erode trust — how do we communicate data confidence limits without overwhelming non-technical users?",
+    "Shift workers in healthcare and transportation may act on sleep recommendations in safety-critical contexts; does SleepArc require occupational safety review or specific disclaimer language before marketing to nurses, pilots, or heavy equipment operators?",
+    "Behavior correlation features surfacing alcohol or medication use in relation to sleep quality could feel surveilling or trigger adverse reactions in users with substance use histories — what content sensitivity guardrails are needed and who owns edge-case review?",
+    "Garmin, Whoop, and Oura all offer first-party sleep coaching features — is multi-device aggregation and behavioral correlation alone a sufficient competitive moat, or do we need a proprietary biomarker or clinician network to differentiate at acquisition?",
+    "Pricing model is undecided: annual subscription vs. monthly vs. freemium with feature gates — which model maximizes LTV for the athlete segment (high engagement, willing to pay) while preserving growth for the shift worker segment (price-sensitive, higher churn risk)?"
+  ],
+  "out_of_scope": [
+    "Medical diagnosis, clinical sleep study replication, or any output that constitutes a treatment recommendation under FDA digital health guidance for Software as a Medical Device",
+    "Sleep tracking without a connected wearable — manual sleep log entry is not supported in v1",
+    "Smart home integrations (smart lights, thermostat, sound machine automation) — SleepArc is advisory only; actuating external devices is deferred to v2",
+    "Partner or multi-user household sleep coordination and shared-schedule features",
+    "Pediatric sleep tracking or recommendations for users under 18",
+    "Insurance reimbursement submissions or employer wellness program API integrations in v1",
+    "Support for wearable devices not in the explicitly certified launch set (Apple Watch Series 4+, Fitbit Charge 5+, Oura Ring Gen 3)",
+    "Real-time intervention during an active sleep session — SleepArc analyzes past sleep and plans future sleep only"
+  ]
+}
