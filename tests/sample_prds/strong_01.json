@@ -1,0 +1,73 @@
+{
+  "title": "PagerRoute",
+  "problem_statement": "Mid-size engineering teams spend an average of 4-6 hours per major incident on manual triage because alerts land on a generic on-call rotation rather than the engineer who owns the affected service. Existing tools like PagerDuty require weeks of configuration and a dedicated SRE function that teams under 50 engineers cannot staff. When pages reach the wrong person, MTTR compounds as engineers wake colleagues and hunt for runbooks across Confluence and Slack. A lightweight service-ownership routing layer that auto-assigns PagerDuty and CloudWatch alerts with inline runbook links can close this gap for the long tail of SaaS engineering teams priced out of enterprise incident tooling.",
+  "target_users": [
+    "On-call software engineers at mid-size SaaS companies (20-200 engineers) paged for services outside their domain",
+    "Engineering managers who define on-call schedules and need MTTR and repeat-incident visibility without a dedicated SRE",
+    "Platform or SRE engineers responsible for configuring alert routing rules and maintaining service ownership registries",
+    "Engineering directors who need incident trend data to justify reliability investments to leadership"
+  ],
+  "user_stories": [
+    "As an on-call software engineer, I want incoming alerts routed to me only when the triggered service is one I own so that I am not paged for incidents outside my domain",
+    "As an engineering manager, I want a tiered escalation policy (primary -> secondary -> manager) per service so that incidents are never silently dropped when the primary is unavailable",
+    "As a software engineer during an incident, I want a direct runbook link inline in the alert notification so that I can begin diagnosis without searching Confluence",
+    "As an SRE, I want to declare service ownership in a .pagerroute.yml file committed to each repo so that the ownership registry stays in sync without manual dashboard updates",
+    "As an engineering manager, I want MTTR broken down by service and on-call engineer over trailing 30 days so that I can identify reliability hotspots and coaching opportunities",
+    "As an on-call engineer, I want to acknowledge or reassign an alert from Slack with a single button click so that I do not need to open a separate dashboard during an incident",
+    "As an engineering director, I want a weekly digest of total incident count, median MTTR, and repeat-incident rate per service so that I can assess whether reliability investments are working"
+  ],
+  "acceptance_criteria": [
+    "When an alert fires in PagerDuty or CloudWatch, PagerRoute identifies the owning engineer from the service registry and pages them within 60 seconds; alerts with no registered owner fall through to the team-level rotation",
+    "An on-call engineer can acknowledge, reassign, or escalate an alert via Slack action button; the action is reflected in the PagerRoute dashboard within 10 seconds",
+    "Service ownership defined in .pagerroute.yml on the main branch is reflected in live routing rules within 5 minutes via webhook after a push",
+    "If the primary on-call does not acknowledge within the admin-configured timeout (5-60 minutes), PagerRoute escalates to the secondary and sends a Slack DM to the engineering manager",
+    "The MTTR dashboard shows median and p90 acknowledge-time and resolve-time per service for trailing 7, 30, and 90 day windows, refreshing every 5 minutes",
+    "PagerRoute sustains at least 500 concurrent active alerts with p99 routing latency under 10 seconds, verified in load testing before GA",
+    "A new team can complete setup (connect PagerDuty, link Slack, register one service) in under 20 minutes via the self-serve onboarding flow, validated with 5 usability test participants"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Median MTTR (alert fire to incident resolved) for workspaces active for 60+ days",
+      "baseline": "47 minutes — industry benchmark for mid-size SaaS teams (PagerDuty State of Incidents 2023)",
+      "target": "Median MTTR under 28 minutes within 60 days of adoption across all active workspaces"
+    },
+    {
+      "metric": "Alert misrouting rate (pages sent to an engineer who does not own the triggered service)",
+      "baseline": "Estimated 35% based on pre-launch interviews with 12 teams using manual rotation tools",
+      "target": "Below 5% misrouting rate across all active workspaces within 30 days of onboarding"
+    },
+    {
+      "metric": "Weekly active workspaces (at least one alert acknowledged via PagerRoute in a 7-day period)",
+      "baseline": "0 at launch",
+      "target": "150 active workspaces within 6 months of GA"
+    },
+    {
+      "metric": "30-day workspace retention (workspace routes at least one alert in week 5 after signup)",
+      "baseline": "0% at launch",
+      "target": "65% 30-day retention within 4 months of GA"
+    },
+    {
+      "metric": "Time-to-first-alert (minutes from completing onboarding to first alert correctly routed to a registered service owner)",
+      "baseline": "No existing benchmark; target derived from usability testing with 8 engineering managers",
+      "target": "Median time-to-first-alert under 25 minutes for new workspaces"
+    }
+  ],
+  "risks_open_questions": [
+    "PagerDuty API rate limits may throttle ingestion for large workspaces with high alert volume; need burst capacity validation and exponential backoff before GA",
+    "Ownership YAML may drift from reality when teams reorganize; need staleness detection (e.g., flag services with no git activity from the listed owner in 90 days)",
+    "OpsGenie and VictorOps users represent ~30% of the TAM — is multi-provider alert ingestion required at launch or is PagerDuty-first acceptable?",
+    "GDPR: on-call schedules and response-time data are employee records; legal review required before enabling EU workspaces",
+    "Per-seat pricing may discourage adoption in large orgs; per-workspace and per-service models need validation with 15+ prospective customers before GA",
+    "Services with multiple co-owners: should PagerRoute page all owners simultaneously or require a primary/secondary designation at the service level?",
+    "Engineering managers who are non-technical may reject YAML-based ownership configuration — need usability research to determine if a GUI fallback is required at launch"
+  ],
+  "out_of_scope": [
+    "Building a native alerting or monitoring system; PagerRoute routes alerts from existing tools and does not replace PagerDuty or CloudWatch",
+    "Integration with OpsGenie or VictorOps in v1",
+    "Incident postmortem creation or management workflows",
+    "AI-generated incident summaries or automated root cause analysis",
+    "Native mobile app; Slack is the mobile surface for alert acknowledgment",
+    "Customer-facing status page generation or SLA tracking",
+    "On-call compensation tracking or schedule fairness analytics"
+  ]
+}

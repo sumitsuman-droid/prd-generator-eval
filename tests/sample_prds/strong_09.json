@@ -1,0 +1,74 @@
+{
+  "title": "DataGate",
+  "problem_statement": "Analytics and data engineering teams at mid-size companies (200-2,000 employees) are caught between two failure modes: either access to production data is so restricted that analysts wait 2-3 weeks for a data request ticket to be fulfilled, or it is so open that sensitive customer PII lands in shared Jupyter notebooks and personal S3 buckets, creating SOC 2 and GDPR audit findings. The root cause is that data access is managed ad-hoc through Jira tickets and Slack messages with no consistent approval workflow, no automatic provisioning or expiry, and no audit trail that satisfies a security auditor. A self-serve data access request portal with role-based approval routing, time-bounded access grants, and automatic Snowflake/BigQuery permission provisioning can reduce analyst wait times from weeks to hours while giving security and compliance teams the access log they need for certification audits.",
+  "target_users": [
+    "Data analysts and data scientists who need time-bounded access to specific tables to complete a project and currently wait days to weeks for Jira tickets to be fulfilled",
+    "Data engineering and platform engineers who receive and manually process data access requests and want to eliminate the Slack/Jira coordination overhead",
+    "Security and compliance officers who need a complete audit trail of who had access to which tables, when access was granted, and when it expired, for SOC 2 Type II and GDPR audits",
+    "Analytics managers who approve access requests for their team and need a simple UI to review, approve, or deny requests with context rather than forwarding Jira tickets"
+  ],
+  "user_stories": [
+    "As a data analyst, I want to submit a data access request specifying the database, schema, table, access level (read/read-write), duration (1 day to 90 days), and business justification so that I can get the access I need for a project without opening a Jira ticket",
+    "As an analytics manager, I want to receive a Slack message when my team member submits an access request with a one-click approve or deny action so that I can fulfill approvals within minutes on mobile without logging into a dashboard",
+    "As a data platform engineer, I want approved access grants to automatically provision the corresponding Snowflake or BigQuery permission without my manual involvement so that analyst wait time drops from days to minutes after approval",
+    "As a security officer, I want all access grants to automatically expire at the requested end date and permissions to be revoked automatically without any human action so that access creep is eliminated by design",
+    "As a data analyst, I want to view all my current access grants, their expiry dates, and their approval status in a single dashboard so that I can plan my project timeline around when access expires",
+    "As a compliance officer, I want to generate a SOC 2 access review report showing every table accessed by every user in the past 365 days, including business justification and approver, in PDF or CSV format within 5 minutes so that I can respond to auditor requests without involving engineering",
+    "As a data platform engineer, I want to define access policies that automatically flag requests for tables tagged as 'PII' or 'restricted' unless both the requester's manager and the data owner approve so that sensitive data always has a two-level approval gate"
+  ],
+  "acceptance_criteria": [
+    "Access request submission, approval, and automatic Snowflake or BigQuery permission provisioning completes end-to-end within 10 minutes of manager approval for standard (non-PII) table access; provisioning failure sends an alert to the data platform team",
+    "Access grants expire automatically at the end of the approved duration; Snowflake/BigQuery permissions are revoked within 5 minutes of expiry via scheduled job, verified by querying the target warehouse permission API after expiry",
+    "PII-tagged tables require two approvers (manager + data owner); requests for PII tables with only one approval cannot be provisioned and surface a clear error to the requester",
+    "Approval Slack notifications include the request details (requester, table, duration, justification) and approve/deny buttons that function without requiring the approver to log into the DataGate web UI; action is reflected in DataGate within 30 seconds of the Slack button click",
+    "The audit report for any specified date range and user filter generates within 5 minutes for datasets covering up to 10,000 access events; report includes grant date, expiry date, approver name, and business justification for every event",
+    "DataGate integrates with Okta (and Azure AD as fallback) for SSO; all DataGate actions are associated with the authenticated SSO identity, not a separate DataGate account",
+    "A data platform engineer can define a new access policy (table tag, required approvers, access duration cap) in the DataGate policy UI in under 15 minutes without writing code or YAML",
+    "DataGate maintains an immutable access log; no DataGate user, including administrators, can delete or modify historical access request or grant records"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Median analyst time-to-access (hours from request submission to active Snowflake/BigQuery permission granted)",
+      "baseline": "Average 11 days based on pre-launch Jira ticket analysis across 3 beta customers",
+      "target": "Median time-to-access under 4 hours within 60 days of DataGate adoption"
+    },
+    {
+      "metric": "Open access audit findings in SOC 2 Type II review (number of access-related findings flagged as control deficiencies)",
+      "baseline": "3.2 access-related findings per audit on average across 3 beta customers before DataGate",
+      "target": "Zero access-related audit findings in the first post-adoption SOC 2 audit cycle for customers using DataGate for 6+ months"
+    },
+    {
+      "metric": "Access creep rate (percentage of access grants not revoked within 24 hours of their expiry date)",
+      "baseline": "Estimated 40% of manually managed access grants are never explicitly revoked based on customer Snowflake permission audits",
+      "target": "Access creep rate below 0.5% within 30 days of DataGate adoption"
+    },
+    {
+      "metric": "Monthly active requesters (users who submit at least one access request per month)",
+      "baseline": "0 at launch",
+      "target": "500 monthly active requesters across all customer workspaces within 6 months of GA"
+    },
+    {
+      "metric": "Platform engineer time spent on manual access provisioning per week",
+      "baseline": "Estimated 4 hours per week per data platform engineer based on pre-launch customer time-tracking",
+      "target": "Under 30 minutes per week per data platform engineer within 60 days of adoption (87% reduction)"
+    }
+  ],
+  "risks_open_questions": [
+    "Snowflake and BigQuery permission APIs have different data models for row-level vs. column-level vs. table-level access; the initial implementation should define clearly which granularity levels are supported at launch to avoid scope creep",
+    "Automatic permission revocation is high-stakes: a revocation job failure could leave access open past expiry (compliance risk) or revoke access too early (operational risk); need robust failure alerting and manual override UI",
+    "Some companies use dbt or Apache Ranger for data access management; DataGate must not conflict with permissions managed by these tools — need a conflict detection mechanism",
+    "SSO integration via Okta requires customer IT cooperation; companies using custom SAML providers may need a longer integration timeline — need a SAML-generic fallback in addition to the Okta-specific integration",
+    "Customers in the EU with GDPR obligations need to know where DataGate stores access logs (region, provider); data residency options must be defined before EU go-to-market",
+    "Business justification quality: if analysts learn that any text in the justification field results in approval, the field becomes noise; need guidance on minimum justification standards and consider requiring manager to add an approval comment",
+    "How should DataGate handle emergency access requests that need to bypass the normal approval workflow — need a break-glass access mode with automatic post-grant notification to the security team"
+  ],
+  "out_of_scope": [
+    "Data masking, tokenization, or dynamic data obfuscation within query results",
+    "Integration with Databricks, Redshift, or databases other than Snowflake and BigQuery in v1",
+    "Row-level or column-level security configuration at launch; table-level access grants only",
+    "Data lineage tracking or impact analysis of access grants on downstream dashboards",
+    "Automated data classification (PII tagging); DataGate reads existing tags from the connected data catalog — it does not generate them",
+    "Access request workflows for non-data systems (AWS IAM, GitHub repositories)",
+    "Built-in data previews or query execution within DataGate; analysts use their existing data tools after access is provisioned"
+  ]
+}

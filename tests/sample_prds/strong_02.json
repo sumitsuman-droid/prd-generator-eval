@@ -1,0 +1,74 @@
+{
+  "title": "ClearLedger",
+  "problem_statement": "Americans aged 25-40 routinely underestimate their monthly spending by 20-35% because subscription charges, automatic renewals, and recurring transfers are spread across 3-5 bank and card accounts with no unified view. Manual budgeting in spreadsheets breaks down within two months for 70% of users (Bankrate 2023), and existing apps like Mint require re-authentication weekly and surface ads rather than actionable guidance. The result is that households exceed self-reported budgets by an average of $312 per month while believing they are on track. A read-only bank-linked ledger that surfaces recurring charges, flags anomalies, and projects month-end balance from actual transaction patterns can close the visibility gap without requiring manual data entry.",
+  "target_users": [
+    "Adults aged 25-40 with 2+ financial accounts who have tried and abandoned spreadsheet budgeting due to maintenance burden",
+    "Dual-income households tracking shared expenses across accounts from different banks",
+    "Individuals with multiple subscription services who want to audit and cancel recurring charges",
+    "First-time earners transitioning from college who have no baseline sense of their monthly spending patterns"
+  ],
+  "user_stories": [
+    "As a user with accounts at two different banks, I want to see all my transactions in a single chronological feed so that I do not have to log into multiple apps to understand my spending",
+    "As a user, I want recurring charges automatically detected and categorized so that I can see exactly how much I spend on subscriptions each month without manually tagging transactions",
+    "As a user, I want a month-end balance projection based on my confirmed recurring expenses and historical spending patterns so that I can decide whether I can afford a discretionary purchase before making it",
+    "As a user, I want an alert when a subscription charge increases by more than $1 compared to last month so that I catch price hikes from streaming services and SaaS tools immediately",
+    "As a user, I want to set a monthly spending limit per category and receive a push notification when I reach 80% of that limit so that I can adjust behavior before the month ends",
+    "As a user, I want to see my net worth (assets minus liabilities across all linked accounts) updated daily so that I can track whether I am building or depleting savings over time",
+    "As a user who just got paid, I want a one-tap post-paycheck summary showing fixed obligations already deducted and discretionary budget remaining so that I know exactly what I have available to spend"
+  ],
+  "acceptance_criteria": [
+    "Users can link a checking, savings, or credit card account from any of the 10,000+ US financial institutions supported by Plaid; initial transaction sync covers the trailing 90 days and completes within 3 minutes for accounts with fewer than 500 transactions",
+    "Recurring charges are automatically detected within 2 billing cycles; detection accuracy must exceed 90% precision and 85% recall on a labeled test set of 1,000 transactions from beta users before launch",
+    "Month-end balance projection is displayed on the home screen and updates within 60 seconds of any new transaction syncing; projection methodology (fixed recurring + 30-day rolling average for variable) is disclosed in a tooltip",
+    "Push notifications for category limit alerts (80% and 100% thresholds) are delivered within 10 minutes of the triggering transaction appearing in the feed",
+    "Subscription price-change alerts are sent within 24 hours of the anomalous charge posting; alert includes the previous charge amount, new charge amount, and a link to the merchant's cancellation page if available",
+    "All financial data is encrypted at rest (AES-256) and in transit (TLS 1.3); the app holds read-only Plaid tokens and cannot initiate transactions; verified by third-party security audit before public launch",
+    "The app launches to the home dashboard in under 2 seconds on a mid-range device (iPhone SE 2022, Pixel 6a) with iOS 16 or Android 12 on a cold start",
+    "New users complete account linking and see their first unified transaction feed in under 5 minutes; validated with 10 unmoderated usability test participants before App Store submission"
+  ],
+  "success_metrics": [
+    {
+      "metric": "D30 retention rate (users who open the app at least once in days 25-30 after install)",
+      "baseline": "Industry median for personal finance apps: 18% D30 retention (AppsFlyer Finance Benchmark 2023)",
+      "target": "28% D30 retention by end of month 3 post-launch, averaged across the first 10,000 installs"
+    },
+    {
+      "metric": "Linked accounts per active user (users who opened the app in the trailing 7 days)",
+      "baseline": "0 at launch; users with 2+ linked accounts retain at 2.4x the rate of single-account users in comparable apps",
+      "target": "Average of 2.1 linked accounts per active user within 60 days of launch"
+    },
+    {
+      "metric": "Subscription audit completion rate (active users who view the recurring charges screen and cancel or confirm at least one subscription within 14 days of account linking)",
+      "baseline": "No baseline; metric proxies the core value proposition of finding wasted spend",
+      "target": "40% of new users complete a subscription audit within 14 days of linking their first account"
+    },
+    {
+      "metric": "App Store / Google Play rating",
+      "baseline": "No existing rating at launch",
+      "target": "Maintain 4.4 stars or above based on at least 500 ratings within 90 days of launch"
+    },
+    {
+      "metric": "Weekly notification opt-out rate (users who disable push notifications within 7 days of enabling a budget limit)",
+      "baseline": "Finance app median opt-out rate: 41% within 30 days (internal estimate from competitor analysis)",
+      "target": "Notification opt-out rate below 20% within 7 days of first alert, indicating alerts are perceived as useful rather than noisy"
+    }
+  ],
+  "risks_open_questions": [
+    "Plaid connection failures affect 8-12% of bank links on first attempt; need a graceful re-authentication flow and fallback to manual CSV import to avoid losing users at the critical onboarding step",
+    "Recurring charge detection based on amount and merchant matching may produce false positives for variable-amount subscriptions (utility bills, usage-based SaaS); need a user correction flow to train the model",
+    "Privacy perception risk: users may abandon onboarding when asked for bank credentials via Plaid; need copy and UX testing on consent screens before finalizing onboarding flow",
+    "Monetization model not yet validated — freemium with $4.99/month for projections and alerts vs. one-time $9.99 purchase; requires A/B testing with 500+ users before committing to pricing page",
+    "iOS App Store review may flag read-only financial data access under guideline 5.1.1; legal and compliance review of App Store submission strategy required 6 weeks before planned launch",
+    "How should ClearLedger handle joint accounts shared between partners — should both partners be able to link the same account, and if so, how are budget limits reconciled?",
+    "International expansion is out of scope for v1 but Plaid coverage outside the US is limited — if international users discover the app organically, what is the messaging strategy?"
+  ],
+  "out_of_scope": [
+    "Initiating payments, transfers, or any write access to financial accounts",
+    "Tax preparation, tax categorization, or integration with TurboTax or H&R Block at launch",
+    "Investment portfolio tracking or brokerage account linking in v1",
+    "Shared household budget management with multi-user roles and permissions",
+    "Credit score monitoring or credit report integration",
+    "International bank account support (US-only at launch via Plaid)",
+    "Bill negotiation or cancellation automation on behalf of the user"
+  ]
+}

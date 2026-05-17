@@ -1,0 +1,48 @@
+{
+  "title": "SalesHub CRM",
+  "problem_statement": "Sales teams need better tools to manage their pipeline and close more deals. Current CRM solutions are often too complex or not suited to modern sales workflows. SalesHub will provide a simple, intuitive CRM that helps sales teams be more productive and close deals faster.",
+  "target_users": [
+    "Sales representatives who want to manage their deals",
+    "Sales managers who need visibility into team performance",
+    "Business owners looking to grow their revenue"
+  ],
+  "user_stories": [
+    "As a sales rep, I want to track my deals in one place so that I don't lose track of opportunities",
+    "As a sales manager, I want to see how my team is performing so that I can coach them better",
+    "As a business owner, I want better sales reporting so that I can make informed decisions",
+    "As a sales rep, I want to log my calls and emails so that I have a record of all customer interactions"
+  ],
+  "acceptance_criteria": [
+    "Users should be able to add and update deals in the system",
+    "The CRM should have a dashboard with key sales metrics",
+    "Email integration should work reliably",
+    "The system should be fast and responsive"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Sales team adoption rate",
+      "baseline": "No current baseline",
+      "target": "Good adoption across the sales team"
+    },
+    {
+      "metric": "Deal close rate improvement",
+      "baseline": "Current close rates unknown",
+      "target": "Improvement over current performance"
+    },
+    {
+      "metric": "User satisfaction score",
+      "baseline": "Not measured currently",
+      "target": "High satisfaction from users"
+    }
+  ],
+  "risks_open_questions": [
+    "Competing with Salesforce and HubSpot will be challenging",
+    "User adoption might be slow if the product is not intuitive enough",
+    "Data migration from existing tools may be complex"
+  ],
+  "out_of_scope": [
+    "Features that are out of scope for this version",
+    "Enterprise features for very large companies",
+    "Advanced AI and automation features"
+  ]
+}

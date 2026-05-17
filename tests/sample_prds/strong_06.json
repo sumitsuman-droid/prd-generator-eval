@@ -1,0 +1,74 @@
+{
+  "title": "FloodSentry",
+  "problem_statement": "Water damage is the second most common home insurance claim in the US, averaging $11,098 per incident (Insurance Information Institute 2022), and 93% of water damage events are preventable if detected within the first hour (EPA). Homeowners with vacation properties or investment rentals are disproportionately exposed: properties unoccupied for 2+ weeks between visits average 19 hours of undetected water intrusion per event, turning a $200 burst fitting into a $30K mold remediation. Existing smart leak detectors (Moen Flo, Phyn) rely on Wi-Fi and fail silently when the internet goes down — the exact scenario most likely during a storm that also causes a pipe burst. A water leak sensor with cellular backup, 72-hour battery life, and SMS alerting independent of home Wi-Fi can close the coverage gap for the 6.5 million US vacation and rental property owners who cannot rely on a neighbor to check in.",
+  "target_users": [
+    "Vacation homeowners who leave their property unoccupied for 2+ weeks at a time and have experienced or fear water damage during absences",
+    "Residential landlords managing 1-10 rental units who need property damage alerts without requiring tenants to manage smart home technology",
+    "Property managers overseeing 10-100 short-term rental properties who need centralized water damage alerts across their portfolio",
+    "Insurance carriers offering premium discounts for policyholders who install certified water leak detection systems"
+  ],
+  "user_stories": [
+    "As a vacation homeowner, I want to receive an SMS alert within 5 minutes of any sensor detecting moisture so that I can call a plumber before water damage spreads, even if my home's internet is down",
+    "As a rental property landlord, I want to receive a mobile push notification showing which specific sensor triggered and its battery level so that I know where in the property to direct a repair technician",
+    "As a vacation homeowner, I want the sensor to automatically shut off the main water supply valve via a connected motorized valve within 2 minutes of detecting sustained moisture so that I can minimize damage if I cannot reach a plumber",
+    "As a property manager, I want a single dashboard showing the status (normal, alert, offline, low battery) of all sensors across all my properties so that I can monitor a 50-property portfolio without calling each tenant",
+    "As a homeowner, I want the sensor to report its battery level monthly and alert me when it drops below 20% so that I can replace the battery before a gap in coverage",
+    "As a rental landlord, I want to add and remove sensors from my account by scanning a QR code on the device so that I can manage turnover between tenants without a technical setup process",
+    "As a homeowner, I want to test the sensor alert chain (sensor -> hub -> cellular -> SMS) with a single button press so that I know the system will work during an actual event"
+  ],
+  "acceptance_criteria": [
+    "When a sensor detects moisture (resistive detection threshold >= 1mOhm conductivity change), an SMS alert is sent to all configured phone numbers within 5 minutes; tested by placing the sensor in 3mm of tap water with home Wi-Fi disabled",
+    "The hub switches from Wi-Fi to cellular (LTE-M) within 60 seconds of Wi-Fi becoming unavailable, without any user action; switchover verified by physically disconnecting the router during testing",
+    "On cellular connectivity alone (Wi-Fi disabled), sensor-to-SMS alert latency is under 5 minutes for 95% of tests in areas with Verizon LTE-M coverage, measured in 20 field tests across 5 US geographic markets",
+    "Hub battery backup sustains cellular alerting for a minimum of 72 hours after AC power loss, measured via discharge test at 68F ambient temperature",
+    "The motorized shutoff valve (sold separately, compatible models listed) receives a close command from the hub within 2 minutes of sustained moisture detection (30+ continuous seconds); valve closure is confirmed via position feedback before the alert is sent",
+    "Sensor battery life exceeds 18 months under normal operating conditions; battery level is reported to the app within plus or minus 10% accuracy",
+    "A new property can be added to a landlord's portfolio dashboard and its first sensor registered via QR code scan in under 5 minutes, validated by 5 unmoderated usability test participants",
+    "The system detects sensor removal from its installed location (tamper detection) and sends an in-app alert within 10 minutes; relevant for rental properties where tenants may accidentally dislodge sensors"
+  ],
+  "success_metrics": [
+    {
+      "metric": "P95 detection-to-notification latency (minutes) under Wi-Fi-disabled LTE-M conditions across 5 US markets",
+      "baseline": "Wi-Fi-dependent competitors average 2.1 minutes under normal conditions but fail silently without internet; no cellular-backup product exists for comparison",
+      "target": "P95 detection-to-notification latency under 5 minutes in field tests across 5 US markets before GA"
+    },
+    {
+      "metric": "30-day system availability rate (percentage of sensor-hours during which the hub maintains connectivity to the cloud across the installed fleet)",
+      "baseline": "No baseline at launch; target informed by cellular IoT platform SLA benchmarks",
+      "target": "99.5% 30-day system availability rate across the active fleet within 6 months of GA"
+    },
+    {
+      "metric": "Hub units sold in first 12 months post-launch",
+      "baseline": "0 at launch; TAM estimate: 6.5M vacation/rental homeowners in the US, serviceable via direct and insurance channel partnerships",
+      "target": "25,000 hub units sold within 12 months of retail availability"
+    },
+    {
+      "metric": "Insurance carrier partnerships (carriers offering FloodSentry discount as a named smart home device)",
+      "baseline": "0 at launch; 3 carriers in LOI discussion pre-launch",
+      "target": "4 insurance carrier partnerships with named FloodSentry discounts by end of year 1"
+    },
+    {
+      "metric": "False alert rate (alerts triggered without verified moisture, measured by user dispute submissions per 1,000 alert events)",
+      "baseline": "Industry standard for resistive leak detectors: approximately 3% false alert rate",
+      "target": "False alert rate below 1% per 1,000 alert events in field deployment within 6 months of GA"
+    }
+  ],
+  "risks_open_questions": [
+    "LTE-M coverage gaps exist in rural vacation home markets (mountain, lake, coastal); need coverage map validation against the top 50 US vacation destination zip codes before finalizing carrier selection",
+    "Cellular data plan cost: each hub requires a dedicated SIM with recurring monthly data fees; need to model whether to bundle this into a subscription fee or absorb it in hardware margin, with unit economics analysis at 25K and 100K unit scale",
+    "FCC Part 15 and Part 90 certification timelines for the LTE-M module may add 8-12 weeks to hardware production schedule; confirm with hardware CM by end of sprint 3",
+    "Motorized shutoff valve compatibility: main water valves range from half-inch to 2-inch diameter across US residential housing stock; FloodSentry can only certify compatibility with the 3 most common valve sizes — need to communicate unsupported configurations clearly at checkout",
+    "Rental property use case requires tenant consent for monitoring in some states; need legal review of whether moisture-only sensor data constitutes monitoring under state tenant privacy laws",
+    "Hub tamper detection may produce false alerts if sensors are moved by tenants for cleaning; need adjustable tamper sensitivity or a grace period before alerting",
+    "What is the repair network strategy? If a homeowner gets an alert at midnight, they need a plumber who can respond to an unoccupied property — is an emergency plumber referral network a v1 or post-GA feature?"
+  ],
+  "out_of_scope": [
+    "Mold or humidity monitoring beyond moisture-at-sensor-point detection",
+    "Integration with third-party smart home platforms (Alexa, Google Home, SmartThings) in v1",
+    "Commercial or multifamily building applications; designed for single-family residential and small multifamily up to 4 units",
+    "Water flow rate monitoring or leak prediction via machine learning on flow patterns",
+    "Video surveillance integration",
+    "Insurance claims processing or automated claims submission on behalf of the homeowner",
+    "Battery-powered hub; AC power required for hub while sensor is battery-powered"
+  ]
+}

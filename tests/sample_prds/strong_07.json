@@ -1,0 +1,74 @@
+{
+  "title": "OnboardOS",
+  "problem_statement": "Mid-size companies (100-1,000 employees) lose an average of $4,000 per new hire to productivity drag in the first 90 days because onboarding is orchestrated through a combination of email chains, manually assigned Jira tickets, and ad-hoc Slack messages that vary by manager and break down with remote hires (Gallup 2022). IT provisioning, HR documentation, and role-specific training happen in parallel across 4-7 disconnected systems with no single view of completion status, leaving new hires confused and HR teams unable to audit compliance. When a key stakeholder is on leave, entire onboarding tracks stall because there is no automated escalation. A structured onboarding workflow platform that unifies task assignment, progress tracking, and automatic escalation can reduce time-to-productivity for new hires while giving HR the compliance audit trail required for SOC 2 and ISO 27001 certification.",
+  "target_users": [
+    "HR business partners and People Operations managers at companies of 100-1,000 employees who design and monitor onboarding programs",
+    "IT administrators who provision software access, hardware, and system credentials for new hires across 5-10 SaaS tools",
+    "Hiring managers who are assigned onboarding tasks (introductions, 30-60-90 day check-ins) and need reminders without manual calendar management",
+    "New employees in their first 90 days who need a single source of truth for what they need to complete and by when"
+  ],
+  "user_stories": [
+    "As an HR business partner, I want to create an onboarding template with tasks, owners, due-date offsets from start date, and dependencies so that every new hire in a given role gets a consistent onboarding experience without me manually recreating it each time",
+    "As an HR administrator, I want a completion dashboard showing every active new hire's onboarding progress as a percentage broken down by category (IT, HR, role-specific) so that I can identify who is falling behind without emailing managers",
+    "As an IT administrator, I want to receive an automated task to provision software access for a new hire 3 business days before their start date so that accounts are ready on day one without HR manually forwarding the hire email",
+    "As a hiring manager, I want to receive a Slack reminder 24 hours before my onboarding task is due so that I complete check-ins on time without maintaining a separate calendar reminder",
+    "As a new employee, I want a single checklist view showing all my outstanding onboarding tasks with due dates and instructions so that I know exactly what I need to complete without digging through email",
+    "As an HR business partner, I want to generate a compliance report showing completion timestamps and e-signature records for mandatory policy acknowledgment tasks for any hire in the past 12 months so that I can respond to an auditor request within 2 hours",
+    "As an HR administrator, I want overdue tasks to automatically escalate to the task owner's manager after 48 hours so that critical onboarding steps don't stall when a single stakeholder is unavailable"
+  ],
+  "acceptance_criteria": [
+    "HR admins can create an onboarding template with unlimited tasks; each task supports a title, description, owner (by role or individual), due-date offset from start date (-10 to +90 days), optional dependency on another task, and optional file upload or e-signature collection",
+    "When a new hire is created in OnboardOS (manually or via HRIS sync from BambooHR or Workday), all tasks from the assigned template are automatically created, assigned, and due dates computed within 5 minutes of hire creation",
+    "Task owners receive an email and Slack notification (if Slack is connected) at task creation and a reminder 24 hours before the due date; notification preferences are configurable per account",
+    "The HR dashboard shows completion percentage per hire, days since start, and a list of overdue tasks sorted by days overdue, updated in real time as task owners mark tasks complete",
+    "Mandatory policy acknowledgment tasks support PDF display and e-signature collection within OnboardOS; signature timestamps are stored and exportable in PDF audit format",
+    "Overdue tasks automatically escalate by sending a Slack DM and email to the task owner's manager (as defined in the org chart) after 48 hours; escalation is logged in the task history",
+    "The compliance report for a specified hire and date range generates as a PDF within 30 seconds and includes task name, owner, due date, completion date, and e-signature record where applicable",
+    "OnboardOS syncs new hire data from BambooHR and Workday via API; new hires created in the HRIS appear in OnboardOS within 15 minutes of the HRIS record being saved"
+  ],
+  "success_metrics": [
+    {
+      "metric": "New hire 30-day task completion rate (percentage of onboarding tasks due in the first 30 days marked complete within 2 business days of their due date)",
+      "baseline": "Estimated 58% on-time task completion based on pre-launch customer audit of 3 beta companies using email-based onboarding",
+      "target": "82% on-time task completion rate across all active OnboardOS customers within 60 days of adoption"
+    },
+    {
+      "metric": "IT provisioning lead time (days from HRIS hire record created to all software access tasks marked complete)",
+      "baseline": "Average 4.2 days across 3 beta customers measured before OnboardOS",
+      "target": "Median IT provisioning lead time under 1 business day (all access provisioned before hire start date) within 60 days of adoption"
+    },
+    {
+      "metric": "HR admin time per new hire onboarding (hours spent by HR on onboarding coordination tasks per hire, excluding template setup)",
+      "baseline": "Estimated 6.5 hours per hire for manual coordination, based on time-tracking study with 4 HR teams",
+      "target": "HR admin time below 1.5 hours per hire within 90 days of OnboardOS adoption"
+    },
+    {
+      "metric": "Monthly recurring revenue (MRR) from paying customers",
+      "baseline": "$0 at launch",
+      "target": "$150K MRR within 9 months of GA"
+    },
+    {
+      "metric": "90-day customer retention (customers still on a paid plan in month 4 after their first invoice)",
+      "baseline": "0% at launch",
+      "target": "85% 90-day customer retention within 6 months of GA"
+    }
+  ],
+  "risks_open_questions": [
+    "BambooHR and Workday API access requires customer IT approval and credentials sharing; onboarding friction at the HRIS integration step may cause customers to use manual mode only, reducing the product's core value proposition",
+    "E-signature legality varies by country: qualified electronic signatures (QES) required in EU under eIDAS may not be satisfied by a click-to-sign approach; need legal review before enabling EU customers",
+    "Template flexibility vs. guardrails: customers want highly customizable templates but overly complex templates lead to poor completion rates and support burden; need to define a maximum task limit per template and test with beta customers",
+    "Org chart data needed for escalation: many customers do not maintain a clean org chart in an HRIS; need a fallback mechanism (manual manager mapping in OnboardOS) for companies without structured reporting chains",
+    "Pricing model: per-seat (per active employee) vs. per-hire (per onboarding cycle started) — per-hire aligns value delivery but creates unpredictable monthly costs for customers with lumpy hiring schedules",
+    "How should OnboardOS handle contractor onboarding, which often has different compliance requirements and shorter timelines than full-time employee onboarding?",
+    "What is the migration path for customers with existing onboarding checklists in Notion, Confluence, or Google Docs — do we offer a template import tool or manual re-entry only?"
+  ],
+  "out_of_scope": [
+    "Performance management or 90-day review workflows beyond task tracking",
+    "Payroll or compensation management",
+    "Learning management system (LMS) or course authoring; OnboardOS links to external training resources but does not host video or course content",
+    "Offboarding workflows in v1 (post-GA roadmap item)",
+    "Integration with ATS (Greenhouse, Lever) for pre-hire onboarding in v1",
+    "Multi-language localization beyond English at launch",
+    "Analytics on onboarding program effectiveness (correlation with retention or ramp time) at launch"
+  ]
+}

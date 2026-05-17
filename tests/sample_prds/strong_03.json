@@ -1,0 +1,73 @@
+{
+  "title": "ShipBoard",
+  "problem_statement": "Engineering teams at companies with 5-50 microservices have no single place to see deployment health across the stack: deploy frequency, rollback rate, and lead time live in separate CI/CD tools (GitHub Actions, Jenkins, ArgoCD) with no aggregated view. Engineering managers spend 30-60 minutes per week manually compiling deploy metrics from disparate dashboards to answer reliability questions in leadership reviews. When a cascading rollback occurs, identifying which service broke the chain requires log spelunking across 3+ systems with no timeline correlation. A read-only deployment intelligence layer that aggregates CI/CD events, surfaces DORA metrics per service, and provides a correlated incident timeline can give engineering leaders the visibility they need without requiring a platform engineering headcount to maintain it.",
+  "target_users": [
+    "Engineering managers at companies with 5-50 services who compile deploy metrics manually for weekly leadership reviews",
+    "Staff engineers and tech leads who need to correlate deployment events with incident timelines during or after an outage",
+    "VP Engineering and CTO at Series A-C companies who need DORA benchmark data to assess engineering effectiveness",
+    "DevOps or platform engineers who configure CI/CD pipelines and want a read-only audit trail of who deployed what and when"
+  ],
+  "user_stories": [
+    "As an engineering manager, I want to see deploy frequency, change failure rate, and median lead time per service over the trailing 30 days so that I can track DORA metrics without running manual queries",
+    "As a staff engineer, I want a correlated timeline showing all deployments across all services within a 2-hour window so that I can identify which deploy preceded an incident without log spelunking",
+    "As an engineering manager, I want to receive a Slack alert when any service's change failure rate exceeds 15% in a rolling 7-day window so that I can investigate before the problem compounds",
+    "As a VP Engineering, I want a weekly digest comparing this week's DORA metrics against the prior 4-week average per team so that I can identify teams trending toward lower velocity or higher failure rate",
+    "As a DevOps engineer, I want to connect a new GitHub Actions workflow to ShipBoard via a webhook token so that new services appear in the dashboard without modifying shared infrastructure",
+    "As an engineering manager, I want to export 90 days of deploy history for any service as CSV so that I can include quantitative evidence in quarterly engineering reviews",
+    "As a staff engineer during an incident, I want to annotate a deployment event with a postmortem link so that future team members can trace rollback decisions to their documented root cause"
+  ],
+  "acceptance_criteria": [
+    "ShipBoard ingests deployment events from GitHub Actions, Jenkins, and ArgoCD via webhook; a new integration is operational within 15 minutes of a DevOps engineer configuring the webhook token in the ShipBoard UI",
+    "DORA metrics (deploy frequency, lead time for changes, change failure rate, time to restore service) are calculated and displayed per service for trailing 7, 30, and 90 day windows following the DORA research definitions",
+    "The correlated deployment timeline view renders all deployments across all connected services within any user-selected 24-hour window within 3 seconds, for workspaces with up to 50 services and 500 daily deployments",
+    "Slack alerts for change failure rate exceeding the configured threshold (default 15%, admin-adjustable per service) are delivered within 10 minutes of the triggering deployment event being ingested",
+    "CSV export for any service covers the full 90-day retention window and downloads within 30 seconds for services with up to 10,000 deployment events",
+    "ShipBoard stores read-only webhook payloads and does not require write access to source code repositories or CI/CD systems; enforced at the integration layer and documented in the security model",
+    "A new workspace admin can connect at least one CI/CD integration and see their first deployment event in the dashboard within 25 minutes of signup, validated through usability testing with 6 DevOps engineers"
+  ],
+  "success_metrics": [
+    {
+      "metric": "Weekly active workspaces (workspaces where at least one user views a DORA metric dashboard in a 7-day period)",
+      "baseline": "0 at launch",
+      "target": "200 active workspaces within 6 months of GA"
+    },
+    {
+      "metric": "Integrations per active workspace (number of distinct CI/CD sources connected per workspace, averaged across active workspaces)",
+      "baseline": "0 at launch; workspaces with 2+ integrations retain at 3x the rate of single-integration workspaces based on analogous tooling benchmarks",
+      "target": "Average of 2.2 integrations per active workspace within 60 days of launch"
+    },
+    {
+      "metric": "Time-to-first-metric (minutes from workspace creation to viewing a populated DORA metric for the first connected service)",
+      "baseline": "No existing benchmark; target derived from internal usability testing during beta",
+      "target": "Median time-to-first-metric under 20 minutes across new workspaces"
+    },
+    {
+      "metric": "Engineering manager NPS (Net Promoter Score from in-app survey triggered at 30 days of use)",
+      "baseline": "No baseline at launch",
+      "target": "NPS of 45 or above from engineering manager respondents at 90 days post-GA"
+    },
+    {
+      "metric": "90-day workspace retention (workspaces that view at least one dashboard in week 13 after signup)",
+      "baseline": "0% at launch",
+      "target": "55% 90-day retention by end of month 6 post-GA"
+    }
+  ],
+  "risks_open_questions": [
+    "GitHub Actions webhook rate limits may drop events during high-frequency deploy bursts; need event buffering with at-least-once delivery semantics and an idempotency key before GA",
+    "DORA metric definitions vary across organizations — some teams count hotfix deployments differently; need to document the exact calculation methodology and consider exposing configuration knobs for change failure rate classification",
+    "Jenkins integration requires a plugin installed on the Jenkins server, which may require IT approval in enterprise environments and limit the addressable TAM",
+    "ArgoCD sync events do not map 1:1 to deployments in multi-env setups; need to clarify what constitutes a deployment event for GitOps-based workflows before finalizing the data model",
+    "Data residency: customers in the EU may not be able to send CI/CD payloads containing commit author names to a US-hosted service; need GDPR data residency analysis before EU go-to-market",
+    "Pricing model — per-seat vs. per-service vs. per-workspace — not yet validated; the right unit of value is unclear because deployers and viewers of metrics are different personas",
+    "How should ShipBoard handle monorepo setups where a single GitHub Actions run deploys 5 services simultaneously — should each service deploy be a separate event or a single grouped event?"
+  ],
+  "out_of_scope": [
+    "Writing or modifying CI/CD pipeline configurations on behalf of users",
+    "Real-time log streaming or error monitoring (ShipBoard tracks deployment events, not runtime application health)",
+    "Integration with GitLab CI, CircleCI, or Buildkite in v1; GitHub Actions, Jenkins, and ArgoCD only",
+    "Alerting on infrastructure metrics (CPU, memory, latency) — that is the domain of existing APM tools",
+    "Code review or pull request analytics",
+    "Automated rollback triggering based on failure rate thresholds",
+    "Compliance reporting or SOC 2 evidence generation at launch"
+  ]
+}
