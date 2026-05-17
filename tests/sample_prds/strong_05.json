@@ -1,74 +1,86 @@
 {
   "title": "CallIntel",
-  "problem_statement": "B2B sales reps spend 30-45 minutes after each discovery or demo call manually writing CRM notes, action items, and follow-up emails — time that reduces daily call capacity by 20-30% and degrades note quality as memory fades. Sales managers cannot coach effectively because they have no consistent record of what was said in calls they did not attend; they rely on rep self-reporting, which under-reports objections and overreports positive signals. Existing tools like Gong require 6-figure enterprise contracts that put them out of reach for sales teams of 5-30 reps. An AI-powered call recorder that transcribes, summarizes, and extracts CRM fields automatically — with Salesforce and HubSpot sync — can give mid-market sales teams enterprise-grade call intelligence at a price point that scales with headcount.",
+  "problem_statement": "B2B sales reps on teams of 5\u201330 people spend 30\u201345 minutes after every discovery or demo call manually writing CRM notes, action items, and follow-up emails, reducing daily call capacity by 20\u201330% and degrading note quality as memory fades. Sales managers lack consistent, objective call records and must rely on rep self-reporting, which systematically under-reports objections and over-reports positive signals, making coaching ineffective. Enterprise-grade call intelligence tools like Gong require six-figure contracts that price out mid-market teams. The convergence of affordable speech-to-text APIs, LLM summarization, and CRM webhook support now makes it feasible to deliver equivalent intelligence at a per-seat price mid-market teams can absorb.",
   "target_users": [
-    "B2B sales representatives on teams of 5-30 reps who conduct 3-8 calls per day and spend significant post-call time on manual CRM data entry",
-    "Sales managers who need to coach reps based on actual call content rather than self-reported summaries",
-    "Revenue operations professionals who need consistent CRM field coverage to build reliable pipeline forecasts",
-    "VP Sales and CROs who want win/loss pattern analysis across the full call corpus without manual tagging"
+    "Mid-market B2B sales rep (individual contributor on a 5\u201330 person team) who runs 4\u20138 discovery or demo calls per day and manually logs notes into Salesforce or HubSpot",
+    "Sales manager overseeing a 5\u201330 rep team who needs objective call data to coach reps and forecast pipeline without listening to every recording",
+    "Revenue Operations analyst responsible for CRM data hygiene, pipeline reporting accuracy, and sales process compliance across the team",
+    "Sales enablement lead who designs onboarding and coaching programs and needs consistent call data to identify skill gaps and winning talk tracks"
   ],
   "user_stories": [
-    "As a sales rep, I want CallIntel to automatically join my calendar-linked calls as a silent participant so that I can focus on the conversation instead of taking notes",
-    "As a sales rep, I want a structured call summary (key pain points, next steps, objections raised, deal timeline) emailed to me within 5 minutes of the call ending so that I can review and send my follow-up while the conversation is still fresh",
-    "As a sales rep, I want extracted CRM fields (MEDDIC components, close date, deal size) automatically pushed to the Salesforce opportunity record so that I do not need to open Salesforce after every call",
-    "As a sales manager, I want to search across all my team's call transcripts for a specific competitor name or objection phrase so that I can identify patterns and build coaching playbooks",
-    "As a sales manager, I want to see talk-time ratio (rep vs. prospect) and monologue frequency per rep per week so that I can identify reps who are pitching instead of discovering",
-    "As a revenue operations professional, I want a Salesforce report showing CRM field completion rate before and after CallIntel adoption so that I can quantify the data quality improvement for the business case",
-    "As a sales rep, I want to add a correction to any section of the AI-generated summary before it is pushed to Salesforce so that inaccurate field values do not pollute the CRM"
+    "As a mid-market B2B sales rep who runs 4\u20138 discovery or demo calls per day, I want CallIntel to automatically join my calls, transcribe the conversation, and push a structured summary with action items and CRM field values to HubSpot or Salesforce within 5 minutes of the call ending so that I can move directly to the next call without spending 30\u201345 minutes on manual note entry",
+    "As a mid-market B2B sales rep who runs 4\u20138 discovery or demo calls per day, I want a one-click draft follow-up email generated from the call summary so that I can review, lightly edit, and send a personalized follow-up within 10 minutes rather than composing it from scratch",
+    "As a sales manager overseeing a 5\u201330 rep team, I want a call library where I can filter recordings and transcripts by rep, deal stage, objection type, and date so that I can review actual call content before 1:1 coaching sessions without relying on the rep's self-reported account",
+    "As a sales manager overseeing a 5\u201330 rep team, I want automated objection and competitor mention flags surfaced in a weekly digest email so that I can identify patterns across the team and update talk tracks or battlecards proactively",
+    "As a Revenue Operations analyst responsible for CRM data hygiene and pipeline accuracy, I want CallIntel to map extracted call data \u2014 BANT fields, next steps, close date mentions, stakeholder names \u2014 directly to the correct Salesforce or HubSpot fields via a configurable field-mapping UI so that CRM completeness scores improve without requiring reps to manually update records",
+    "As a Revenue Operations analyst responsible for CRM data hygiene and pipeline accuracy, I want an audit log showing which CRM fields were updated by CallIntel, when, and from which call so that I can validate data provenance and correct mis-mapped values",
+    "As a sales enablement lead who designs onboarding and coaching programs, I want to tag and playlist curated call clips by competency (e.g., discovery questioning, objection handling, pricing conversation) so that new reps can self-study real examples during onboarding without the enablement lead manually editing recordings"
   ],
   "acceptance_criteria": [
-    "CallIntel auto-joins Zoom, Google Meet, and Microsoft Teams calls that appear on the rep's Google Calendar or Outlook calendar within 30 seconds of the scheduled start time; the join is indicated by a visible bot participant named 'CallIntel Notetaker'",
-    "A structured call summary (pain points, next steps, objections, timeline, deal metadata) is delivered to the rep's email and in-app inbox within 5 minutes of the call ending for calls up to 90 minutes long",
-    "Transcript word-error rate (WER) is below 8% for standard US English in a quiet environment, measured on a 50-call labeled test set before GA; WER is displayed to users in account settings as a system health indicator",
-    "CRM field sync pushes extracted MEDDIC fields to the linked Salesforce opportunity or HubSpot deal within 2 minutes of the rep confirming or editing the summary; sync failures surface as in-app errors with retry",
-    "Reps can correct any summary section or extracted CRM field via inline editing in the CallIntel UI before or after Salesforce sync; corrections are versioned and the original AI output is preserved for comparison",
-    "Call transcript search returns results across the full team corpus within 3 seconds for queries on teams with up to 30 reps and 6 months of call history",
-    "Talk-time ratio and monologue frequency metrics are available in the manager dashboard within 24 hours of each call recording being processed",
-    "CallIntel provides a privacy disclosure to prospects via an audible announcement at the start of recording; recording does not proceed if the rep has not enabled consent disclosure in account settings"
+    "CallIntel's meeting bot joins a scheduled call (Google Meet, Zoom, or Microsoft Teams) within 60 seconds of the call start time using a calendar integration, with no manual action required from the rep after initial OAuth setup",
+    "A structured call summary including talk-time ratio, key topics, identified objections, competitor mentions, agreed next steps, and extracted BANT field values is available in the CallIntel dashboard within 5 minutes of the call ending for calls up to 90 minutes in length",
+    "CRM sync pushes extracted field values to the correct Salesforce or HubSpot contact and opportunity record within 5 minutes of summary generation; the rep receives an in-app confirmation with a link to the updated CRM record",
+    "Transcript accuracy (word error rate) must be \u22648% on English calls recorded at \u226516kHz across a benchmark set of 100 diverse sales call recordings",
+    "A one-click follow-up email draft is generated and pre-populated in the rep's default email client (Gmail or Outlook via OAuth) within 5 minutes of summary availability, referencing at least 3 specific details from the call",
+    "The field-mapping configuration UI allows a RevOps admin to map any CallIntel extracted field to any standard or custom CRM field without engineering support, and changes take effect on the next processed call",
+    "Sales managers can filter the call library by rep name, call date range, deal stage, detected objection category, and competitor name, with results loading in under 3 seconds for libraries up to 10,000 calls",
+    "Clip creation allows any user with manager or enablement permissions to highlight a transcript segment, generate a shareable video clip with transcript overlay, and add it to a named playlist within 4 clicks",
+    "All call recordings, transcripts, and summaries are encrypted at rest (AES-256) and in transit (TLS 1.2+); customers can trigger deletion of all data for a specific call or rep via a self-serve UI",
+    "CallIntel must support per-user consent notifications compliant with two-party consent recording laws by automatically announcing bot presence and providing a join link to all participants before recording begins",
+    "Pricing tiers must be configurable per seat per month with no minimum seat commitment below 5 seats, and customers can add or remove seats mid-billing-cycle with prorated charges"
   ],
   "success_metrics": [
     {
-      "metric": "Post-call CRM entry time (minutes a rep spends on Salesforce data entry per call, measured via Salesforce session time)",
-      "baseline": "Estimated 32 minutes per call based on pre-launch time-tracking study with 8 sales reps",
-      "target": "Post-call CRM entry time below 8 minutes per call within 30 days of adoption (75% reduction)"
+      "metric": "Average post-call admin time per rep per call (measured via in-app time-tracking prompt at call end)",
+      "baseline": "35 minutes per call (self-reported during onboarding survey)",
+      "target": "\u22648 minutes per call within 90 days of activation"
     },
     {
-      "metric": "CRM field completion rate (percentage of required opportunity fields populated within 24 hours of a call logged in Salesforce)",
-      "baseline": "52% field completion rate in customer Salesforce instances before CallIntel, measured via RevOps audit of 500 opportunities",
-      "target": "85% field completion rate within 30 days of CallIntel adoption across all connected Salesforce instances"
+      "metric": "CRM field completeness rate \u2014 percentage of required opportunity fields populated within 24 hours of a logged call",
+      "baseline": "42% completeness (measured from customer CRM export at onboarding)",
+      "target": "\u226585% completeness within 60 days of activation"
     },
     {
-      "metric": "Weekly active reps (reps who have at least one call recorded and summarized by CallIntel in a 7-day period)",
-      "baseline": "0 at launch",
-      "target": "500 weekly active reps within 6 months of GA"
+      "metric": "Weekly active usage rate \u2014 percentage of licensed reps who process at least 3 calls through CallIntel in a given week",
+      "baseline": "0% (pre-launch)",
+      "target": "\u226570% of licensed reps within 30 days of team activation"
     },
     {
-      "metric": "30-day rep retention (reps who use CallIntel in week 5 after their first call recording)",
-      "baseline": "0% at launch",
-      "target": "72% 30-day rep retention within 3 months of GA"
+      "metric": "Manager coaching session preparation time (measured via quarterly survey)",
+      "baseline": "45 minutes per rep per 1:1 session spent reviewing notes and asking reps to recall call details",
+      "target": "\u226415 minutes per rep per 1:1 session within 90 days"
     },
     {
-      "metric": "Summary accuracy rating (percentage of auto-generated summaries rated 4 or 5 out of 5 by reps in post-call feedback prompt)",
-      "baseline": "No baseline; targeting quality benchmark from comparable transcription tools",
-      "target": "78% of summaries rated positively by reps within 60 days of GA"
+      "metric": "Net Revenue Retention (NRR) at 12 months post-activation",
+      "baseline": "N/A (new product)",
+      "target": "\u2265115% NRR at the 12-month cohort mark"
+    },
+    {
+      "metric": "Transcript word error rate on English calls",
+      "baseline": "Industry baseline for generic ASR: ~15% WER",
+      "target": "\u22648% WER on benchmark call set of 100 recordings"
     }
   ],
   "risks_open_questions": [
-    "Consent to record laws vary by state and country: two-party consent states (California, Florida) require audible disclosure; GDPR imposes additional requirements for EU calls — need legal review of consent framework before GA and per-call consent configuration at the account level",
-    "Bot detection: Zoom and Microsoft Teams periodically update their admission flows; bot joins may break without warning after platform updates — need a monitoring alert for bot join failures and a human-readable error for reps when the bot cannot join",
-    "Transcript accuracy degrades significantly for non-native English speakers, heavy accents, and calls with background noise; need to set user expectations via accuracy disclosure and offer a review-before-sync gate for low-confidence transcripts",
-    "Salesforce API rate limits: large teams with high call volume may hit Salesforce's 15,000 API calls/day limit; need to batch CRM sync jobs with a priority queue for same-day calls and batch processing for older calls",
-    "Prospect recording objections: some prospects may refuse recording; reps need a graceful way to disable recording mid-call without losing the meeting bot — need a one-click 'stop recording' accessible from any device",
-    "Pricing model: per-seat monthly vs. per-call volume vs. usage-based; sales reps have highly variable call volume, making per-seat simplest but potentially poor value for low-volume reps",
-    "What is the data retention policy for call recordings and transcripts given GDPR right-to-erasure requirements — need configurable retention windows (30/90/180 days) and a per-call deletion API"
+    "Two-party and all-party consent recording laws vary by US state and country \u2014 how do we ensure the bot announcement mechanism is legally sufficient in all jurisdictions where customers operate, and do we need legal review per market before launch?",
+    "Bot admission to calls depends on being invited via calendar or dial-in; if a rep books a call outside their synced calendar or uses a personal conferencing link, the bot will not join \u2014 what is the fallback (manual upload, mobile recording) and how do we minimize missed calls?",
+    "LLM hallucination risk: the summarization model may fabricate CRM field values (e.g., invent a budget number not discussed) and push incorrect data to a deal record \u2014 what confidence thresholds, human-review prompts, or field-level flags are needed before auto-syncing high-stakes fields like close date or deal value?",
+    "Salesforce and HubSpot API rate limits and schema variability across customer orgs may cause sync failures for heavily customized CRM instances \u2014 how do we surface sync errors to RevOps admins in real time and queue retries without data loss?",
+    "Competitive response risk: Gong, Chorus (ZoomInfo), and Clari Copilot could introduce lower-tier pricing to defend mid-market \u2014 what is our sustainable cost and feature moat beyond price?",
+    "Speaker diarization accuracy degrades on calls with more than 4 participants or poor audio quality \u2014 what is the minimum acceptable diarization accuracy and how do we communicate limitations to customers?",
+    "Customer data residency requirements: some prospects in the EU or regulated industries (financial services, healthcare) may require data to remain in specific regions \u2014 do we need multi-region infrastructure at launch or can we gate those segments?",
+    "What is the right pricing model \u2014 per seat per month, per call minute consumed, or a hybrid \u2014 to align unit economics with customer value and avoid sticker shock for high-volume teams?"
   ],
   "out_of_scope": [
-    "Outbound dialer or calling functionality; CallIntel records calls made through the rep's existing tools (Zoom, Teams, Meet)",
-    "Integration with Pipedrive, Zoho CRM, or other CRMs beyond Salesforce and HubSpot in v1",
-    "Real-time coaching cues or battle cards surfaced during live calls at launch",
-    "AI-generated follow-up email drafts at launch (post-GA roadmap item)",
-    "Win/loss analysis dashboards with ML-driven deal outcome predictions at launch",
-    "Video recording or screen capture; audio transcript only",
-    "Support for languages other than English in v1"
+    "Outbound dialer or auto-dialing functionality \u2014 CallIntel records and analyzes calls but does not initiate them",
+    "Real-time in-call guidance or live coaching overlays during the call \u2014 all intelligence is post-call",
+    "Support for languages other than English at initial launch",
+    "Native mobile app for iOS or Android at initial launch \u2014 web-responsive dashboard only",
+    "Integration with CRMs other than Salesforce and HubSpot (e.g., Pipedrive, Microsoft Dynamics, Zoho) at initial launch",
+    "Video recording or screen capture of calls \u2014 audio and transcript only at launch",
+    "Automated deal scoring or AI-generated pipeline forecasts \u2014 managers receive call intelligence but forecasting remains in the CRM",
+    "Direct LinkedIn or email sequencing tool integrations (e.g., Outreach, Salesloft, Apollo) at initial launch",
+    "Sentiment analysis scores displayed to reps about individual prospects \u2014 limited to aggregate team-level patterns to reduce misuse risk at launch",
+    "Internal meeting recording (e.g., team standups, QBRs) \u2014 product is scoped exclusively to external-facing sales calls"
   ]
 }

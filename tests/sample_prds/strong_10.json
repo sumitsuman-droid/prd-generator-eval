@@ -1,74 +1,86 @@
 {
   "title": "HarvestLink",
-  "problem_statement": "Independent restaurants and food co-ops spend 4-6 hours per week across phone calls and email threads sourcing fresh produce from local farms because there is no digital marketplace that aggregates availability, prices, and ordering for small farms within a 150-mile radius. Farms lose 15-25% of harvestable produce to waste because they have no reliable demand signal until the week of harvest, forcing them to over-grow as insurance against under-selling. Meanwhile, farm-to-table restaurants that want to source locally cannot plan their menus more than 48 hours in advance because farm availability updates are communicated informally and inconsistently. A B2B marketplace where farms list weekly available inventory with 7-day forward visibility and restaurants place standing or one-time orders with delivery routing can eliminate 80% of the phone-and-email coordination overhead on both sides.",
+  "problem_statement": "Independent restaurants and food co-ops spend 4-6 hours per week manually sourcing fresh produce from local farms via phone calls and fragmented email threads because no digital marketplace aggregates availability, pricing, and ordering for small farms within a 150-mile radius. Small and mid-size local farms lose 15-25% of harvestable produce to waste annually because they lack reliable demand signals until the week of harvest, forcing costly over-growing as insurance. Farm-to-table restaurants cannot plan menus more than 48 hours in advance due to informal, inconsistent farm availability updates. The convergence of post-pandemic local-food demand, farm financial fragility, and restaurateur margin pressure makes a structured B2B procurement solution urgently valuable now.",
   "target_users": [
-    "Independent restaurant owners and executive chefs at farm-to-table restaurants that source 30%+ of produce locally and spend significant time on supplier coordination",
-    "Food co-op purchasing managers who place weekly bulk produce orders from 5-15 farms and track delivery schedules across a spreadsheet",
-    "Small to mid-size farm operators (5-500 acres) within 150 miles of a major metro area who sell to restaurants but lack the digital infrastructure to post availability or receive online orders",
-    "Regional food distributors who aggregate farm supply for last-mile delivery and want a digital order consolidation tool to replace phone order intake"
+    "Independent restaurant owner-operator sourcing locally and managing menus week-to-week",
+    "Farm-to-table head chef planning seasonal menus with locally sourced ingredients",
+    "Small-to-mid-size local farm operator managing weekly harvest inventory and sales channels",
+    "Food co-op purchasing manager coordinating bulk produce orders for member households",
+    "Multi-location independent restaurant group buyer consolidating produce orders across locations"
   ],
   "user_stories": [
-    "As an executive chef, I want to browse available produce from all farms within 100 miles filtered by item, quantity, and earliest delivery date so that I can build my menu 5 days in advance instead of 48 hours",
-    "As a farm operator, I want to post my available harvest quantities for the coming week by Sunday evening so that restaurant buyers see my inventory when they plan their orders on Monday morning",
-    "As a restaurant purchasing manager, I want to place a standing weekly order for a specific quantity of an item that auto-renews unless I cancel so that I don't re-order routine items every week",
-    "As a farm operator, I want to receive aggregated order totals by item by midnight Sunday so that I know exactly what to harvest on Monday and can minimize field waste",
-    "As a food co-op purchasing manager, I want a single consolidated delivery manifest for all farms in a given week sorted by delivery date so that I can coordinate receiving without cross-referencing five separate emails",
-    "As a restaurant owner, I want to rate each delivery on freshness and accuracy (1-5 stars) within 24 hours of receipt so that other buyers can see the farm's quality track record before ordering",
-    "As a farm operator, I want to send an availability update to all buyers with pending orders for a specific item with a single broadcast message so that buyers can adjust their orders without individual calls"
+    "As an independent restaurant owner-operator sourcing locally and managing menus week-to-week, I want to view a consolidated feed of available produce from farms within 150 miles with current prices and estimated harvest dates so that I can reduce sourcing time from 4-6 hours to under 30 minutes per week",
+    "As a farm-to-table head chef planning seasonal menus with locally sourced ingredients, I want 7-day forward visibility into farm inventory availability so that I can design and publish menus at least 5 days in advance rather than only 48 hours out",
+    "As a small-to-mid-size local farm operator managing weekly harvest inventory and sales channels, I want to post weekly available inventory with quantities, prices, and harvest dates so that I receive confirmed buyer commitments early enough to plant and harvest to actual demand and reduce produce waste by at least 15%",
+    "As a food co-op purchasing manager coordinating bulk produce orders for member households, I want to place standing weekly orders with automatic quantity adjustments based on farm availability so that I can guarantee consistent supply to members without manual renegotiation each week",
+    "As a multi-location independent restaurant group buyer consolidating produce orders across locations, I want to aggregate produce orders from all locations into a single cart and split delivery routing by location so that I eliminate duplicate vendor communications and reduce per-unit procurement costs",
+    "As a small-to-mid-size local farm operator managing weekly harvest inventory and sales channels, I want automated demand-signal alerts when buyer interest in a specific crop exceeds my listed quantity so that I can make informed planting and harvesting decisions 2-3 weeks ahead of harvest",
+    "As an independent restaurant owner-operator sourcing locally and managing menus week-to-week, I want to receive push notifications when a preferred farm lists a new product matching my saved ingredient preferences so that I can act on limited-availability items before they sell out"
   ],
   "acceptance_criteria": [
-    "Farm operators can post available inventory (item name, variety, quantity in lbs or units, unit price, earliest available date, and notes) for the coming 7 days via web or mobile; inventory is visible to restaurant buyers within 5 minutes of posting",
-    "Restaurants can search available inventory by item, farm, distance (up to 150 miles from restaurant zip code), and earliest delivery date; search results return within 2 seconds for a catalog of up to 500 active farm listings",
-    "Standing orders are created with item, quantity, frequency (weekly or biweekly), and delivery day; they generate a confirmed order automatically each cycle unless the restaurant cancels at least 48 hours before the delivery day or the farm's inventory for that item is exhausted",
-    "Farm operators receive a consolidated order summary (total units per item across all buyers) at midnight on the order cutoff day (configurable, default Sunday); the summary is sent via email and in-app notification",
-    "Delivery manifests are generated per restaurant per week, listing all ordered items, farms, quantities, unit prices, total, and confirmed delivery date; manifests update automatically if a farm adjusts availability",
-    "Farm quality ratings (1-5 stars, plus optional text) submitted within 24 hours of a marked delivery are published on the farm's profile within 1 hour of submission; the farm's rolling 90-day average rating is displayed on all their inventory listings",
-    "Farm availability broadcast messages reach all buyers with pending orders for the affected item within 10 minutes of the farm sending the message; buyers with affected orders see an in-app alert and can modify or cancel within 12 hours at no penalty",
-    "HarvestLink processes payments via Stripe; farms receive payouts within 3 business days of a delivery being marked complete by the restaurant, minus the 8% platform fee disclosed at farm onboarding"
+    "Farm operators can create a weekly inventory listing including crop name, variety, quantity available, unit of measure, price per unit, harvest date, and pickup or delivery options in 5 or fewer steps and under 3 minutes",
+    "Buyers can search and filter available inventory by crop type, farm name, distance radius (up to 150 miles), price range, and harvest date window with results returning in under 2 seconds",
+    "7-day forward inventory visibility is displayed to buyers for every listed item, showing projected availability by day with a confidence indicator set by the farm",
+    "Buyers can place a one-time order or configure a standing weekly order with defined quantity, frequency, and auto-cancel threshold; standing orders require no manual reconfirmation unless farm availability drops below the threshold",
+    "Order confirmation is sent to both farm and buyer within 60 seconds of order placement, including itemized quantities, agreed price, delivery or pickup schedule, and contact details",
+    "Delivery routing tool generates an optimized multi-stop route for farms or third-party drivers fulfilling orders to multiple buyers on the same day, accepting up to 10 stops per route",
+    "A farm dashboard displays real-time sold vs. available quantity per SKU and cumulative weekly revenue, updating within 5 minutes of each new order",
+    "Buyers receive an in-app notification and email when a farm updates availability on a saved product or when a standing order cannot be fulfilled due to insufficient harvest, at least 72 hours before scheduled delivery",
+    "Platform enforces a minimum order value configurable by each farm (default $50) and rejects checkout if the cart falls below that threshold with a clear inline error message",
+    "All financial transactions are processed through the platform with funds held in escrow and released to the farm within 48 hours of confirmed delivery or pickup, with dispute initiation available for 24 hours post-delivery"
   ],
   "success_metrics": [
     {
-      "metric": "Gross merchandise volume (total value of produce orders transacted through HarvestLink per month)",
-      "baseline": "$0 at launch; TAM estimate: $2.1B in local farm-to-restaurant direct sales in top 10 US metro areas",
-      "target": "$500K monthly GMV within 12 months of launch in the first metro market (Portland, OR)"
+      "metric": "Weekly sourcing time per buyer (hours spent on phone, email, and manual coordination)",
+      "baseline": "4-6 hours per week per buyer",
+      "target": "Under 1 hour per week per buyer within 90 days of activation"
     },
     {
-      "metric": "Farm produce waste rate (percentage of posted harvest quantity that goes unsold through HarvestLink, self-reported by farm operators at end of week)",
-      "baseline": "Estimated 18% waste rate based on pre-launch interviews with 15 farm operators",
-      "target": "Average farm produce waste rate below 8% within 6 months of farm onboarding"
+      "metric": "Farm produce waste rate (percentage of harvestable inventory not sold)",
+      "baseline": "15-25% of harvestable produce wasted per farm",
+      "target": "Under 10% waste rate per active farm within one full growing season (approximately 6 months)"
     },
     {
-      "metric": "Buyer weekly order frequency (average number of weeks per month a restaurant account places at least one order)",
-      "baseline": "0 at launch",
-      "target": "Average of 3.5 weeks per month for restaurant accounts active for 60+ days"
+      "metric": "Menu planning lead time for farm-to-table restaurant buyers",
+      "baseline": "48 hours in advance",
+      "target": "At least 5 days in advance for 70% of weekly menus within 60 days of activation"
     },
     {
-      "metric": "Standing order adoption rate (percentage of active restaurant accounts that have at least one active standing order)",
+      "metric": "Gross merchandise value (GMV) processed through the platform monthly",
+      "baseline": "$0 at launch",
+      "target": "$250,000 GMV per month by end of month 6 and $1,000,000 GMV per month by end of month 12"
+    },
+    {
+      "metric": "Buyer order repeat rate (percentage of buyers placing orders in 2 consecutive weeks)",
+      "baseline": "0% at launch (new product)",
+      "target": "60% week-over-week repeat order rate among buyers active for more than 30 days"
+    },
+    {
+      "metric": "Farm inventory listing completion rate (farms that listed inventory at least once in the prior 7 days divided by total active farm accounts)",
       "baseline": "0% at launch",
-      "target": "55% of restaurant accounts active for 30+ days have at least one standing order by month 6"
-    },
-    {
-      "metric": "Farm onboarding rate (farms that post available inventory at least once in their first 14 days after account creation)",
-      "baseline": "0% at launch",
-      "target": "70% farm activation rate within 3 months of launch"
+      "target": "75% of onboarded farms posting at least one inventory update per week within 60 days of farm onboarding"
     }
   ],
   "risks_open_questions": [
-    "Cold-start supply-demand problem: restaurants won't order without farm supply, and farms won't post without buyer demand — need to pre-sign 15+ farms and 20+ restaurant buyers before launching in the first metro market",
-    "Farm internet connectivity: many small farm operators work from mobile and may have poor connectivity in fields; the mobile posting interface must work on 3G and handle offline draft saving",
-    "Food safety liability: if a buyer receives contaminated produce ordered through HarvestLink, the platform's role in the supply chain creates potential legal exposure; need terms of service and liability framework reviewed by legal before launch",
-    "Delivery logistics: HarvestLink connects buyers and farms but does not operate delivery in v1; if farms cannot reliably deliver, order fulfillment breaks down — need to vet farm delivery capability at onboarding",
-    "Produce grading standards: 'heirloom tomatoes' means different quality grades to different farms; need a minimum description standard (including grade where applicable) to reduce buyer disputes",
-    "Seasonality: in northern markets, farm activity drops 60%+ in winter months — what is the strategy to retain restaurant buyers during low-supply periods to prevent churn?",
-    "How should HarvestLink handle order disputes (wrong quantity delivered, quality below listing description) — is the platform the mediator, or does it stay out of disputes beyond facilitating communication?"
+    "Cold-chain and last-mile delivery: HarvestLink does not own logistics infrastructure; will the platform integrate with third-party refrigerated delivery providers, or will farms and buyers self-arrange pickup, and how will delivery reliability and product quality in transit be guaranteed?",
+    "Farm technology adoption: Many small farm operators have limited smartphone or internet access and minimal comfort with software; what onboarding support, offline fallback mechanisms, or SMS-based listing flows are needed to reach sufficient farm-side supply density?",
+    "Demand signal reliability: If buyer demand forecasts on the platform are inaccurate (e.g., restaurants cancel orders last-minute), farms may still over- or under-harvest; what cancellation policy and financial penalties balance buyer flexibility against farm planning needs?",
+    "Geographic supply density: The marketplace requires simultaneous critical mass of farms and buyers within each 150-mile radius cluster; what is the minimum viable density (farms and buyers per region) and what is the sequenced launch market strategy?",
+    "Pricing transparency tension: Displaying real-time prices from competing farms may trigger a race-to-the-bottom on price that harms small farm viability; should the platform implement price floors, hide competitor pricing, or surface value attributes beyond price?",
+    "Regulatory and food safety compliance: B2B food transactions may require specific labeling, traceability documentation, or state-level agricultural broker licenses depending on jurisdiction; which compliance requirements apply in launch markets and who is responsible for ensuring them?",
+    "Payment terms mismatch: Restaurants typically expect net-30 payment terms with vendors while farms need cash flow within days of delivery; how will the platform structure payment timing and who absorbs the working capital gap?",
+    "Seasonal supply volatility: Produce availability is inherently seasonal and weather-dependent, making 7-day forward visibility inherently uncertain; how will confidence intervals be communicated to buyers and what SLA applies when farm availability falls short of commitments?"
   ],
   "out_of_scope": [
-    "Operating delivery vehicles or last-mile logistics in v1; farms arrange their own delivery or use existing regional distributors",
-    "Consumer-facing marketplace (B2C); HarvestLink is B2B only in v1",
-    "Meat, dairy, or non-produce farm categories at launch (fresh produce only)",
-    "Integration with restaurant POS systems or food cost management platforms",
-    "USDA organic certification verification or food safety audit documentation",
-    "Multi-metro launch; Portland, OR is the only market at launch",
-    "Financing or net-30 payment terms for restaurant buyers; all orders are prepaid at checkout"
+    "Business-to-consumer (B2C) sales directly from farms to individual household shoppers",
+    "Retail grocery chains, large food distributors, or any buyer with more than 10 locations",
+    "Platform-owned or platform-operated delivery vehicles or cold-chain logistics infrastructure",
+    "Livestock, dairy, eggs, meat, or any non-produce agricultural product categories at launch",
+    "Financial lending, invoice factoring, or working capital products for farm operators",
+    "Crop planning software, soil management tools, or any farm operations management features beyond inventory listing",
+    "International farms or buyers outside the continental United States",
+    "Private-label or white-label product offerings sourced through the marketplace",
+    "Nutrition labeling, recipe generation, or consumer-facing menu publishing tools for restaurants",
+    "Sustainability certifications, carbon tracking, or ESG reporting features"
   ]
 }

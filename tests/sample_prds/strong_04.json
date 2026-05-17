@@ -1,74 +1,87 @@
 {
   "title": "DesignBid",
-  "problem_statement": "Product and engineering teams at seed and Series A startups need high-quality product design for 2-8 week sprints but lack the runway to hire a full-time designer at $130-160K/year. Existing freelance platforms like Upwork surface 200+ unvetted candidates per post and require 10-15 hours of portfolio review and test assignment coordination before a team can start work. Agencies charge $15-25K retainers that are out of reach for pre-Series B companies. The result is that product teams either hire too slowly and ship without design, or default to a generalist agency and receive work that doesn't fit their product aesthetic. A curated marketplace of pre-vetted product designers with standardized portfolio reviews, transparent sprint-based pricing, and async trial projects can cut hiring time from 3 weeks to 3 days for early-stage product teams.",
+  "problem_statement": "Seed and Series A startup product and engineering teams require high-quality product design for short 2-8 week sprints but cannot justify a full-time designer hire at $130-160K per year. Existing freelance platforms like Upwork surface 200+ unvetted candidates per post, consuming 10-15 hours of portfolio review and test coordination before work begins, while agencies charge $15-25K retainers that exceed pre-Series B budgets. This forces teams to either ship without design or accept work from generalist agencies that miss their product aesthetic. The gap is acute now because the post-2022 funding environment demands capital efficiency while design quality directly impacts user retention and fundraising narratives.",
   "target_users": [
-    "Product managers and founders at seed-to-Series A startups (5-50 employees) hiring product designers for 2-8 week sprints",
-    "CTOs and engineering leads at early-stage companies who make design hiring decisions without a dedicated talent function",
-    "Freelance product designers with 3+ years of experience who want consistent project flow without self-marketing on Upwork",
-    "Design team leads at mid-size companies backfilling design capacity during peak product cycles without adding headcount"
+    "Seed-stage startup founder who is actively shipping product without a dedicated designer",
+    "Series A VP of Product managing a 3-6 person engineering team needing sprint-scoped design work",
+    "Contract product designer with 4+ years of SaaS or consumer app experience seeking vetted short-term engagements",
+    "Series A engineering lead who coordinates design handoffs and needs Figma-ready assets within sprint cycles",
+    "Seed-stage CTO who evaluates and approves contractor spend under $10K without board approval"
   ],
   "user_stories": [
-    "As a product manager at a startup, I want to browse a curated list of pre-vetted product designers filtered by specialty (mobile, web, design systems) and availability so that I can shortlist 3 candidates in under an hour without reading 200 Upwork profiles",
-    "As a startup founder, I want to see a designer's case studies formatted to show problem, process, and outcome — not just final screens — so that I can assess their thinking before scheduling a call",
-    "As a hiring product manager, I want to post a brief 4-hour paid trial task and receive completed work from up to 3 candidates before committing to a sprint engagement so that I can evaluate actual work quality rather than relying on portfolio alone",
-    "As a freelance product designer, I want to set my available sprint slots and rate per week and be matched with inbound client briefs rather than bidding on open posts so that I spend time designing instead of writing proposals",
-    "As a startup founder, I want transparent sprint-based pricing (weekly rate x sprint length) with no hidden agency fees so that I can budget a design engagement without negotiating over scope",
-    "As a hiring product manager, I want to extend a sprint engagement by 1 or 2 weeks mid-sprint with a single click so that I don't lose momentum when the project scope grows",
-    "As a freelance designer, I want payment released automatically 48 hours after each weekly deliverable is approved or the approval window expires so that I am not chasing invoices at the end of a sprint"
+    "As a seed-stage startup founder who is actively shipping product without a dedicated designer, I want to browse pre-vetted designer profiles filtered by SaaS or consumer app vertical so that I can shortlist three candidates in under 30 minutes without reviewing unqualified portfolios",
+    "As a Series A VP of Product managing a 3-6 person engineering team needing sprint-scoped design work, I want to post a sprint brief with defined deliverables and a 2-8 week timeline so that I receive matched designer proposals within 24 hours and can start work within 3 business days",
+    "As a contract product designer with 4+ years of SaaS or consumer app experience seeking vetted short-term engagements, I want to complete a standardized async trial project during onboarding so that my skills are verified once and I avoid redundant test requests from every new client",
+    "As a Series A engineering lead who coordinates design handoffs and needs Figma-ready assets within sprint cycles, I want all project deliverables submitted through a structured handoff checklist inside the platform so that I receive annotated Figma files with component specs without back-and-forth clarification",
+    "As a seed-stage CTO who evaluates and approves contractor spend under $10K without board approval, I want transparent sprint-based pricing packages displayed before I contact a designer so that I can approve engagements independently and predict monthly design spend",
+    "As a Series A VP of Product managing a 3-6 person engineering team needing sprint-scoped design work, I want to view a designer's past sprint outcomes including client ratings and before-and-after screens so that I can assess aesthetic fit with our product before committing to a paid engagement",
+    "As a contract product designer with 4+ years of SaaS or consumer app experience seeking vetted short-term engagements, I want a dashboard showing upcoming sprint availability and client pipeline so that I can maintain a steady utilization rate of at least 80% without cold outreach"
   ],
   "acceptance_criteria": [
-    "Designer applicants complete a structured vetting process: portfolio submission, a 2-hour paid design exercise, and a 30-minute video screen; fewer than 20% of applicants receive marketplace access, with acceptance criteria documented and applied consistently by a DesignBid reviewer",
-    "The marketplace displays only designers with confirmed availability in the client's requested sprint window; availability is updated by designers weekly and flagged as stale if not updated in 7 days",
-    "Clients can post a trial task brief, receive completed submissions from up to 3 matched designers, and select one to start a sprint — all within 5 business days of posting; SLA is displayed to clients at brief submission",
-    "Sprint pricing is shown as a flat weekly rate; the total engagement cost (rate x weeks) is displayed before the client confirms a booking, with no additional charges except a 12% platform fee disclosed at checkout",
-    "Sprint extension (1 or 2 additional weeks at the same weekly rate) can be confirmed by the client with a single button click before the final day of the current sprint; designer must accept or decline within 24 hours",
-    "Designer payment is released automatically 48 hours after the client approves a weekly deliverable or the 48-hour approval window expires without client action; payment appears in the designer's Stripe balance within 2 business days of release",
-    "A new client can complete signup, post a brief, and receive their first designer shortlist within 30 minutes of account creation, excluding vetting pipeline time for the designers themselves",
-    "All designer-client communication occurs through the DesignBid messaging thread; off-platform contact details may not be exchanged until after the first completed sprint, enforced by moderation policy"
+    "A startup client can create a sprint brief, receive at least 3 matched designer proposals, and confirm an engagement in 3 calendar days or fewer from initial post",
+    "Designer profiles display vertical tags (e.g., SaaS, fintech, consumer mobile), years of experience, sprint availability calendar, and at least 5 rated past sprint outcomes before a client can contact them",
+    "All designers on the platform have completed a standardized async trial project scored by DesignBid reviewers on a published rubric before their profile is made visible to clients",
+    "Sprint-based pricing tiers ($2,500 / $5,000 / $8,000 per sprint) are displayed on each designer profile without requiring account creation or a sales call",
+    "The platform enforces a structured handoff milestone: designers must upload annotated Figma files with a completed component-spec checklist before the sprint is marked complete and payment is released",
+    "Clients can filter the designer marketplace by vertical, sprint duration, price tier, availability within 7 days, and tool stack (Figma, Framer, etc.) with results updating in under 2 seconds",
+    "A built-in async messaging thread is scoped per sprint engagement and retains all files, decisions, and feedback for 12 months post-sprint for both parties",
+    "Dispute resolution workflow routes unresolved handoff quality complaints to a DesignBid review team with a 48-hour SLA and escrow-held payment protection",
+    "Designer onboarding funnel accepts application, completes async trial, and returns an approval or rejection decision within 5 business days",
+    "Client time-to-hire is tracked per engagement and displayed in aggregate on an internal ops dashboard with a p50 and p90 breakdown"
   ],
   "success_metrics": [
     {
-      "metric": "Median time from brief submission to sprint start (business days)",
-      "baseline": "Client interviews report 3-week average to hire a freelance designer via Upwork including trial tasks",
-      "target": "Median brief-to-sprint-start under 5 business days within 3 months of launch"
+      "metric": "Median client time-to-hire (sprint brief posted to engagement confirmed)",
+      "baseline": "21 days (current freelance platform average reported by target users)",
+      "target": "3 calendar days or fewer by end of Q2 post-launch"
     },
     {
-      "metric": "Sprint completion rate (sprints that reach the agreed end date without early termination by either party)",
-      "baseline": "No baseline; early termination signals poor matching quality; freelance platform norms suggest 85-90% completion for curated marketplaces",
-      "target": "Sprint completion rate above 88% within 6 months of launch"
+      "metric": "Client portfolio-review hours eliminated per hire",
+      "baseline": "10-15 hours spent reviewing unvetted candidates on Upwork",
+      "target": "Under 2 hours of active review time per hire within 6 months of launch"
     },
     {
-      "metric": "Sprint repeat rate (clients who book a second sprint within 60 days of completing a first sprint)",
-      "baseline": "0% at launch",
-      "target": "45% sprint repeat rate among clients with at least one completed sprint by month 6"
+      "metric": "Designer utilization rate (percentage of onboarded designers active on a paid sprint in any given month)",
+      "baseline": "0% at launch (no designers onboarded)",
+      "target": "70% average monthly utilization across active designer roster by month 6"
     },
     {
-      "metric": "Designer supply-demand ratio (active verified designers available in a given week vs. active client briefs)",
-      "baseline": "0 at launch; minimum 3:1 supply:demand needed to prevent brief backlog",
-      "target": "Maintain at least 2.5:1 designer-to-brief ratio across all specialty categories by month 4"
-    },
-    {
-      "metric": "Gross marketplace volume (total sprint fees transacted through the platform per month)",
+      "metric": "Gross Merchandise Volume (GMV) from completed sprint engagements",
       "baseline": "$0 at launch",
-      "target": "$200K monthly GMV by month 9 post-launch"
+      "target": "$500K cumulative GMV within 12 months of public launch"
+    },
+    {
+      "metric": "Client repeat engagement rate (clients who book a second sprint within 90 days of completing their first)",
+      "baseline": "0% at launch",
+      "target": "40% repeat engagement rate by end of month 9"
+    },
+    {
+      "metric": "Designer acceptance rate through vetting funnel (applicants who pass async trial and are approved)",
+      "baseline": "Unknown at launch",
+      "target": "Calibrate to 25-35% acceptance rate to maintain quality signal; adjust rubric if rate exceeds 50% or falls below 15%"
     }
   ],
   "risks_open_questions": [
-    "Designer supply bootstrapping is the critical constraint: clients won't convert without robust supply, but designers won't apply without visible client demand — need at least 40 vetted designers before opening client signups",
-    "Trial task quality is subjective: without standardized evaluation rubrics per design specialty, trial results may still require significant client judgment and not reduce vetting friction as intended",
-    "Off-platform relationship risk: after one completed sprint, clients and designers may transact directly to avoid the 12% fee; need to assess whether a post-first-sprint fee reduction reduces off-platform leakage",
-    "IP ownership of trial task deliverables: clients need work product rights for paid trials; designers may submit generic work to avoid IP transfer — policy and legal review required before launch",
-    "Pricing sensitivity: weekly rate transparency may expose that designer effective hourly rates exceed early-stage budget expectations; may need tiered pricing or an emerging-market designer pool",
-    "How do we handle disputes about deliverable quality at the end of a sprint week? Need a defined escalation and mediation process before launch",
-    "Geographic concentration risk: if most vetted designers and clients are US-based, international expansion requires re-running the vetting pipeline in each market"
+    "Supply-side cold start: How do we onboard enough pre-vetted designers across key verticals (SaaS, fintech, consumer) before launching to clients to avoid empty search results degrading trust on day one?",
+    "Pricing floor viability: Will $2,500 per sprint attract experienced designers with 4+ years of SaaS experience, or will price-sensitive clients depress designer quality expectations over time?",
+    "Async trial project bias: Does the standardized trial project format favor designers with strong UI execution but miss strategically strong designers who excel at problem framing and research synthesis?",
+    "Payment timing risk: If escrow is released only on handoff completion, how do we handle scope creep where clients delay approval to extract additional work without triggering a formal dispute?",
+    "Marketplace disintermediation: What contractual and UX mechanisms prevent clients and designers from moving off-platform after an initial introduction to avoid the platform fee on repeat engagements?",
+    "Vertical coverage gaps: The MVP must prioritize which verticals to vet designers against first \u2014 which 3-4 verticals represent the highest concentration of seed and Series A clients?",
+    "Designer churn from inconsistent sprint pipeline: If DesignBid cannot guarantee steady sprint volume, top designers may treat the platform as a secondary channel, reducing availability and response times",
+    "Legal classification risk: How does the platform ensure all engagements are structured to classify designers as independent contractors in compliance with state and federal labor laws across all U.S. jurisdictions?",
+    "Quality consistency at scale: As designer roster grows beyond 200, how does the ongoing quality audit process (re-scoring past work, monitoring client ratings) scale without a large internal ops team?"
   ],
   "out_of_scope": [
-    "Full-time or part-time salaried designer placement; DesignBid is sprint-only, not a recruiting firm",
-    "Design agency or studio accounts; only individual freelance designers in v1",
-    "Integrated design tool access (Figma, Sketch) or asset handoff infrastructure",
-    "Automated design quality scoring using AI at launch",
-    "Non-product design specialties (graphic design, illustration, brand identity) in v1",
-    "Client team accounts with multi-seat billing and role management",
-    "Built-in video conferencing; clients and designers use their preferred tools for calls"
+    "Full-time or permanent designer placement or recruitment services",
+    "Design agency or multi-designer team engagements; platform is scoped to individual designer-to-startup matches only",
+    "User research, usability testing facilitation, or research ops services beyond visual and interaction design deliverables",
+    "Development or engineering services; platform does not match or vet front-end engineers or no-code builders",
+    "International designer or client onboarding in the MVP; launch is limited to U.S.-based designers and startups",
+    "Proprietary design tooling, whitelabeled Figma plugins, or in-platform prototyping or design creation tools",
+    "Enterprise or post-Series B company accounts with procurement workflows, MSAs, or volume licensing",
+    "Mobile app (iOS or Android) for the DesignBid platform in the initial release; web-only at launch",
+    "Automated AI-based portfolio scoring or generative design assistance features",
+    "Invoice factoring, designer income advances, or financial services beyond standard escrow-based sprint payments"
   ]
 }

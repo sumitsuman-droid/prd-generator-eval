@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-05-17T07:16:32.450087+00:00",
-  "mean_strong": 8.86,
-  "mean_weak": 2.98,
-  "separation": 5.88,
+  "timestamp": "2026-05-17T08:12:52.833941+00:00",
+  "mean_strong": 8.87,
+  "mean_weak": 2.5,
+  "separation": 6.37,
   "dim_separations": {
-    "specificity": 6.6,
-    "measurability": 7.4,
-    "testability": 6.2,
-    "user_centricity": 4.4,
-    "completeness": 3.9
+    "specificity": 6.9,
+    "measurability": 7.9,
+    "testability": 6.4,
+    "user_centricity": 4.6,
+    "completeness": 5.6
   },
   "verdict": "PASS",
   "results": [
@@ -19,30 +19,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include precise numeric thresholds (60s routing, 10s dashboard reflection, 5-min YAML propagation, p99 latency under 10s) and concrete integration targets, leaving very little ambiguity."
+            "reason": "Requirements include precise thresholds (60-second routing, 10-second dashboard reflection, 5-minute YAML sync), named integrations, and concrete fallback behaviors with no ambiguous language."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five success metrics include a named metric, a sourced or interview-derived baseline, and a time-bound numeric target, enabling clear before/after comparison."
+            "reason": "Every success metric has a quantified baseline with a cited source or research method, a numeric target, and a defined time horizon for achievement."
           },
           "testability": {
             "score": 9,
-            "reason": "Every acceptance criterion specifies an observable action, a measurable outcome, and a numeric threshold (e.g., latency, timeout window, onboarding time with sample size), making automated or manual verification straightforward."
+            "reason": "Each acceptance criterion specifies an observable action, a measurable outcome, and a numeric threshold (latency, timeout range, participant count) that can be verified in a test environment."
           },
           "user_centricity": {
             "score": 8,
-            "reason": "Four distinct personas are defined with role-specific jobs-to-be-done and all seven user stories follow the canonical format with clear motivations, though pain-severity evidence for non-engineer personas (directors, managers) relies on inference rather than cited research."
+            "reason": "Personas are role-specific and context-grounded (mid-size SaaS, under-50-engineer teams), each story captures a distinct pain point with a meaningful outcome clause, though persona names remain role labels rather than named individuals with richer situational context."
           },
           "completeness": {
             "score": 9,
-            "reason": "The PRD covers problem statement, personas, user stories, acceptance criteria, success metrics, risks/open questions, and out-of-scope exclusions, with the only notable gap being the absence of a monetization or go-to-market section beyond a brief pricing risk mention."
+            "reason": "All standard sections are present with substantive content \u2014 the problem statement cites a quantified pain point, risks include non-obvious issues like GDPR employee-record classification and YAML staleness drift, and out-of-scope entries reflect deliberate strategic decisions rather than filler."
           }
         },
         "overall_score": 8.9,
         "top_3_improvements": [
-          "Add a pricing and go-to-market section that documents validated pricing model(s), target customer acquisition channels, and competitive positioning against PagerDuty and Grafana OnCall so launch readiness decisions can be made from the PRD alone.",
-          "Strengthen persona evidence for engineering managers and directors with cited qualitative or quantitative research (e.g., interview quotes, survey data) to justify feature prioritization decisions for non-technical stakeholders.",
-          "Resolve the open question on multi-provider support (OpsGenie/VictorOps) before finalizing v1 scope, as leaving ~30% of the TAM unaddressed without a documented decision risks mid-sprint scope creep and delays GA."
+          "Add a named competitive differentiation section or pricing model sketch to surface how PagerRoute wins against PagerDuty Starter and FireHydrant, since the PRD identifies the pricing gap but leaves the business model as an open question rather than a resolved input.",
+          "Enrich persona context with situational specifics \u2014 for example, distinguishing an on-call engineer in a follow-the-sun rotation from one carrying a solo weekend rotation \u2014 to sharpen story prioritization and surface edge cases like timezone-aware escalation windows.",
+          "Define a data retention and deletion policy for on-call response-time records before the GDPR risk materializes, as the current document flags the legal concern but defers resolution, leaving engineering and legal without a clear acceptance bar for EU workspace enablement."
         ]
       }
     },
@@ -53,30 +53,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include precise thresholds (90% precision, 85% recall, AES-256, TLS 1.3, sub-2-second load), named data sources (Plaid, AppsFlyer), and exact numeric bounds throughout, leaving minimal room for ambiguity."
+            "reason": "Requirements include precise thresholds (90% precision, 85% recall, 2-second cold start, AES-256, TLS 1.3, 10-minute notification delivery) leaving little room for ambiguity."
           },
           "measurability": {
             "score": 9,
-            "reason": "Every success metric has a named baseline with a cited source, a quantified target, a time horizon, and a defined population, enabling rigorous post-launch evaluation."
+            "reason": "Every success metric has a named baseline source, a numeric target, a time horizon, and a cohort definition, enabling unambiguous pass/fail evaluation post-launch."
           },
           "testability": {
             "score": 9,
-            "reason": "Acceptance criteria specify measurable pass/fail conditions (e.g., sync completes in under 3 minutes for <500 transactions, notifications delivered within 10 minutes) that can be verified through automated tests, audits, or usability studies."
+            "reason": "Acceptance criteria specify measurable conditions, test set sizes, device models, OS versions, and validation methods (third-party audit, 10-participant usability test) that testers can execute without interpretation."
           },
           "user_centricity": {
-            "score": 8,
-            "reason": "Four distinct, realistic personas are paired with seven concrete user stories using proper As-a/I-want/So-that format, though emotional context and pain-severity weighting across personas could be deepened."
+            "score": 6,
+            "reason": "Personas are situationally described (dual-income household, subscription auditor, first-time earner) but user stories collapse all of them into the generic 'As a user' label, losing persona differentiation and leaving outcome clauses functional rather than emotionally or contextually resonant."
           },
           "completeness": {
             "score": 9,
-            "reason": "The PRD covers problem statement, target users, user stories, acceptance criteria, success metrics, risks/open questions, and out-of-scope items, with the only notable gap being the absence of a timeline, milestones, or go-to-market section."
+            "reason": "All standard sections are present with substantive content \u2014 the problem statement cites data, risks include non-obvious issues like App Store guideline 5.1.1 and joint-account reconciliation, and out-of-scope entries reflect deliberate product decisions rather than filler."
           }
         },
-        "overall_score": 8.9,
+        "overall_score": 8.5,
         "top_3_improvements": [
-          "Add a release timeline with milestones (alpha, beta, launch) and owner assignments so stakeholders can track progress and dependencies, particularly around the 6-week App Store compliance review.",
-          "Define the monetization model earlier in the PRD and include an explicit hypothesis for the freemium vs. one-time-purchase A/B test, including sample size, success criteria, and decision timeline, rather than leaving it as an unresolved risk.",
-          "Expand persona depth by including at least one qualitative insight or research quote per segment and clarify how joint-account and dual-income household use cases will be handled in v1 versus deferred, since it appears in both target users and open questions without resolution."
+          "Map each user story to a named, differentiated persona (e.g., 'As Maya, a dual-income household manager\u2026') so that design and engineering can trace features to distinct user contexts rather than a monolithic 'user'.",
+          "Add a monetization section or formally elevate the freemium vs. one-time-purchase open question into a structured decision framework with a timeline, owner, and decision criteria, since pricing model ambiguity is a launch blocker.",
+          "Define a fallback and recovery SLA for Plaid connection failures (the 8-12% first-attempt failure rate) within the acceptance criteria, including the manual CSV import path's scope and format support, so QA can validate the full onboarding funnel."
         ]
       }
     },
@@ -87,30 +87,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include named integrations, numeric thresholds (15% CFR, 25-minute onboarding, 3-second render), explicit retention windows, and precise performance bounds with little ambiguity."
+            "reason": "Requirements are highly concrete with named integrations, numeric thresholds (15% CFR, 25-minute onboarding, 50 services, 500 daily deployments), and explicit DORA metric windows leaving minimal ambiguity."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five success metrics include a numeric baseline, a quantified target, and a time horizon, with one metric even citing an analogous retention benchmark for context."
+            "reason": "All five success metrics include a baseline state, a quantified target, and a time bound, with the retention metric even citing an analogous benchmark for the integration-count hypothesis."
           },
           "testability": {
             "score": 9,
-            "reason": "Acceptance criteria are largely objectively verifiable with specific numeric SLAs, integration counts, time limits, and a call for usability testing with six participants, though 'operational within 15 minutes' needs a defined test harness."
+            "reason": "Each acceptance criterion specifies an observable outcome with measurable conditions (e.g., 3-second render limit, 10-minute alert delivery, 30-second CSV download, 6-participant usability test) that can be verified without interpretation."
           },
           "user_centricity": {
-            "score": 9,
-            "reason": "Four distinct, role-specific personas are defined with realistic job contexts, and all seven user stories follow a consistent job-to-be-done format with clear motivation clauses."
+            "score": 8,
+            "reason": "Personas are role- and context-specific (engineering manager compiling metrics for leadership reviews, staff engineer during an incident, VP at Series A-C) with distinct pain points and non-circular outcomes, though persona names remain labels rather than vivid archetypes and a few stories share overlapping motivations."
           },
           "completeness": {
-            "score": 8,
-            "reason": "All major PRD sections are present and well-developed; the only notable gaps are the absence of a monetization or pricing decision, a defined technical architecture sketch, and launch/rollout milestones."
+            "score": 9,
+            "reason": "All standard sections are present with substantive content: the problem statement quantifies time waste and workflow friction, risks surface non-obvious technical and legal issues (GDPR residency, monorepo event ambiguity, ArgoCD sync mapping), and out-of-scope entries reflect deliberate v1 deferral decisions rather than generic disclaimers."
           }
         },
         "overall_score": 8.9,
         "top_3_improvements": [
-          "Resolve the pricing model uncertainty (per-seat vs. per-service vs. per-workspace) before GA, as it directly affects instrumentation of success metrics like 'active workspaces' and retention cohort definitions.",
-          "Define the exact data model for edge cases called out in risks \u2014 specifically monorepo multi-service deploys and ArgoCD multi-env sync events \u2014 so engineering has unambiguous ingestion rules before building the event pipeline.",
-          "Add a go-to-market and launch milestones section covering beta cohort size, GA date criteria, and a phased EU data residency plan so the PRD can drive cross-functional alignment beyond the engineering team."
+          "Resolve the pricing model ambiguity documented as a risk by adding even a provisional monetization hypothesis to the PRD so downstream go-to-market and packaging decisions have a foundation.",
+          "Clarify the ArgoCD multi-environment deployment event definition before GA by including a concrete data model decision (e.g., one event per environment promotion vs. one per sync) directly in the acceptance criteria rather than leaving it open in risks.",
+          "Strengthen user stories by grounding each persona in a named company stage or team size context (e.g., 'As an engineering manager at a 30-engineer Series B startup') to sharpen prioritization trade-offs and prevent persona collapse during design reviews."
         ]
       }
     },
@@ -121,30 +121,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include precise numbers (e.g., 20% acceptance rate, 12% platform fee, 48-hour payment window, 5-business-day SLA) leaving little ambiguity in expected behavior."
+            "reason": "Requirements are concrete with named thresholds, timelines, pricing structures, and behavioral rules (e.g., 12% fee disclosed at checkout, 48-hour approval window, 7-day stale flag) leaving little room for ambiguity."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five metrics have explicit baselines, numeric targets, and time-bound horizons (e.g., $200K GMV by month 9, 88% completion rate by month 6), enabling straightforward progress tracking."
+            "reason": "All five metrics include explicit numeric targets, time horizons, and baselines or reasoned proxies (e.g., 88% completion benchmarked to freelance platform norms, $200K GMV by month 9), making progress trackable from day one."
           },
           "testability": {
-            "score": 8,
-            "reason": "Most acceptance criteria are objectively verifiable (availability staleness flag at 7 days, single-click extension, Stripe release timing), though 'consistently applied' vetting quality and moderation enforcement lack automated test hooks."
+            "score": 9,
+            "reason": "Acceptance criteria are largely binary and observable \u2014 pass/fail vetting rate under 20%, shortlist delivered within 30 minutes, single-click extension, auto-payment within 2 business days \u2014 with only minor subjectivity in moderation enforcement."
           },
           "user_centricity": {
-            "score": 9,
-            "reason": "Four distinct personas are defined with realistic context, and each user story follows a proper role-goal-benefit format addressing genuine pain points backed by quantified friction (200+ profiles, 10-15 hours review, $130-160K salary)."
+            "score": 8,
+            "reason": "Personas are role-specific and contextually grounded (PM at seed startup, CTO without talent function, freelancer avoiding Upwork proposals) with distinct pain points and non-circular outcome clauses, though no persona has a proper name or narrative depth that would distinguish a 9."
           },
           "completeness": {
-            "score": 8,
-            "reason": "All standard PRD sections are present and detailed, including risks and out-of-scope items, but the document omits a technical architecture sketch, launch phasing or milestones, and stakeholder/dependency mapping."
+            "score": 9,
+            "reason": "Every standard PRD section is present with substantive content \u2014 the problem statement cites real salary and retainer figures, risks include non-obvious issues like IP ownership of trial deliverables and off-platform leakage incentives, and out-of-scope entries reflect deliberate v1 scoping decisions rather than filler."
           }
         },
-        "overall_score": 8.7,
+        "overall_score": 8.9,
         "top_3_improvements": [
-          "Add a phased rollout plan with explicit milestones (e.g., beta cohort size, designer pre-seeding timeline) to bridge the gap between acceptance criteria and actual launch readiness.",
-          "Define a standardized deliverable quality rubric and dispute-mediation SLA to make the trial-task evaluation and end-of-sprint escalation process objectively testable rather than judgment-dependent.",
-          "Include a fee-reduction or loyalty mechanism spec to directly address off-platform leakage risk, with a measurable target (e.g., reduce post-first-sprint churn to below X%) so the hypothesis can be validated post-launch."
+          "Add named, narrative personas with brief contextual backgrounds (e.g., 'Sara, a PM at a 12-person fintech startup') to elevate user stories from role labels to genuinely differentiated characters and sharpen empathy during review.",
+          "Define a concrete dispute resolution and mediation SLA for deliverable quality disagreements \u2014 currently flagged as an open question but absent from acceptance criteria, leaving a gap that could block launch readiness.",
+          "Specify a standardized evaluation rubric per design specialty for trial tasks (referenced as a risk) and include it as an acceptance criterion or appendix so that trial task quality assessment is objective and auditable rather than reviewer-dependent."
         ]
       }
     },
@@ -155,30 +155,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include precise numeric thresholds (WER <8%, 5-minute summary SLA, 30-second bot join, 2-minute CRM sync, 3-second search), named integrations, and explicitly scoped v1 boundaries with minimal ambiguity."
+            "reason": "Requirements include precise numeric thresholds (WER <8%, sync within 2 minutes, search within 3 seconds, bot join within 30 seconds), named integrations, and clearly bounded scope with explicit v1 exclusions."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five success metrics include a named measurement method, a quantified baseline from real data (e.g., 32-minute pre-launch study, 52% field completion from 500-opp audit), and a specific time-bound target."
+            "reason": "Every success metric has a quantified baseline from real measurement (e.g., 32 min/call from 8-rep time-tracking study, 52% field completion from 500-opportunity audit) and a specific target with a time horizon, with only the summary accuracy metric lacking a pre-launch baseline."
           },
           "testability": {
             "score": 9,
-            "reason": "Acceptance criteria are largely verifiable with concrete pass/fail conditions (WER on a 50-call labeled set, latency SLAs, versioned corrections, audible consent gate), though 'quiet environment' for WER leaves minor environmental ambiguity."
+            "reason": "Acceptance criteria are largely objective and verifiable with defined measurement conditions (50-call labeled test set for WER, 6-month corpus for search latency, 24-hour window for coaching metrics), though talk-time and monologue metrics lack a precision/definition spec."
           },
           "user_centricity": {
             "score": 8,
-            "reason": "Four distinct personas are well-defined with role-specific stories that map to genuine daily pain points, though prospect/buyer perspective and onboarding friction for new reps are absent."
+            "reason": "Personas are differentiated by concrete role and context (5-30 rep teams, 3-8 calls/day, RevOps building forecasts, manager coaching without attendance) and stories capture genuine friction points, though no individual rep persona names or industry-specific contexts are used to further differentiate."
           },
           "completeness": {
             "score": 9,
-            "reason": "All major PRD sections are present and substantive\u2014problem statement, personas, user stories, acceptance criteria, metrics with baselines, risks with mitigations, and a clear out-of-scope list\u2014with only a go-to-market and pricing strategy section missing."
+            "reason": "All standard sections are present with substantive, non-generic content including legal nuance (two-party consent by state, GDPR right-to-erasure), operational risks (Salesforce API rate limits, bot detection breakage), and deliberate out-of-scope decisions with rationale implied by roadmap callouts."
           }
         },
         "overall_score": 8.9,
         "top_3_improvements": [
-          "Add a pricing and packaging section: the PRD flags per-seat vs. usage-based as an open question but never resolves it, leaving a critical GTM and product-design dependency unaddressed.",
-          "Define the prospect/buyer consent and data-deletion flows as first-class acceptance criteria rather than open risks, since GDPR right-to-erasure and two-party consent are legal blockers that need testable pass/fail gates before GA.",
-          "Include an onboarding and activation user story for new reps (e.g., OAuth setup, calendar connection, first-call walkthrough) to ensure the path from sign-up to first recorded call is specified and measurable against an activation metric."
+          "Add a pre-launch baseline or benchmark source for the summary accuracy metric (currently the only metric without a measured baseline), to ensure the 78% target is grounded and the metric can be evaluated at GA.",
+          "Specify talk-time ratio and monologue frequency calculation definitions (e.g., monologue = uninterrupted rep speech >60 seconds) so the manager dashboard metrics are unambiguous and testable against a clear formula.",
+          "Introduce at least one fully named, context-rich persona narrative (e.g., an account executive at a 15-person SaaS company running 6 demos/day) to elevate user stories from role labels to empathy-grounded requirements that can arbitrate design tradeoffs."
         ]
       }
     },
@@ -189,30 +189,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include precise thresholds (1mOhm conductivity, 3mm water depth, 60-second Wi-Fi failover, 30-second sustained moisture, 72-hour battery), named competitor benchmarks, and quantified market sizing with cited sources."
+            "reason": "Requirements include precise thresholds (1mOhm conductivity, 3mm water depth, 30-second sustained detection, 60-second Wi-Fi failover), named carrier (Verizon LTE-M), and quantified user population (6.5M), leaving little ambiguity."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five success metrics include a baseline, a numeric target, a timeframe, and a measurement method, with the only minor gap being the unavoidable lack of a cellular-backup competitor baseline."
+            "reason": "All five metrics have explicit numeric targets, defined measurement windows, and honest baseline acknowledgments including a direct competitor benchmark and industry false-alert rate, with the only gap being no hard revenue or retention metric."
           },
           "testability": {
             "score": 9,
-            "reason": "Each acceptance criterion specifies the exact test procedure (e.g., 20 field tests across 5 markets, 5 unmoderated usability participants, discharge test at 68F), making independent verification straightforward with minimal ambiguity."
+            "reason": "Each acceptance criterion specifies the exact test procedure (e.g., physically disconnect router, 20 field tests across 5 markets, 5 unmoderated usability participants, discharge test at 68F), making independent verification straightforward."
           },
           "user_centricity": {
             "score": 8,
-            "reason": "Four distinct personas are well-differentiated with realistic contexts and seven user stories map cleanly to concrete jobs-to-be-done, though the insurance carrier persona lacks a corresponding user story and tenant-side experience is absent."
+            "reason": "Four distinct personas are grounded in concrete contexts (unoccupied vacation home, 1-10 unit landlord, 10-100 property manager, insurance carrier) and user stories tie actions to non-circular outcomes, though no persona has a named individual and the insurance-carrier persona lacks its own user story."
           },
           "completeness": {
             "score": 9,
-            "reason": "The PRD covers problem statement, personas, user stories, acceptance criteria, success metrics, risks/open questions, and out-of-scope with notable depth, though it lacks a monetization/pricing section, a release timeline, and technical architecture overview."
+            "reason": "All standard sections are present with substantive content \u2014 the problem statement cites primary sources and dollar amounts, risks include non-obvious items like tenant privacy law and repair-network strategy, and out-of-scope entries reflect deliberate scoping decisions rather than filler."
           }
         },
         "overall_score": 8.9,
         "top_3_improvements": [
-          "Add a pricing and monetization section detailing hardware price points, subscription tiers for cellular data/dashboard access, and the insurance channel revenue model to resolve the open unit-economics risk already flagged in the PRD.",
-          "Include a user story and acceptance criterion for the insurance carrier persona (e.g., API-based certification verification or usage reporting) so all four listed target users are represented end-to-end.",
-          "Add a high-level release timeline or milestone plan (alpha hardware, beta fleet size, GA date, carrier certification window) to give engineering and go-to-market teams a shared schedule against which to sequence the open risks."
+          "Add a named insurance-carrier user story to match the persona already defined in target_users, ensuring every persona has at least one corresponding story with a meaningful outcome.",
+          "Include a retention or engagement metric (e.g., 90-day active monitoring rate or subscription renewal rate) to complement unit-sales volume and signal product stickiness beyond initial purchase.",
+          "Resolve the open question on cellular subscription unit economics with a concrete decision or decision deadline, as unresolved SIM cost model directly affects pricing strategy and partner negotiations before GA."
         ]
       }
     },
@@ -223,30 +223,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include precise numeric thresholds (e.g., 5-minute task creation, 15-minute HRIS sync, -10 to +90 day offsets, 48-hour escalation) and named integrations, leaving little room for ambiguity."
+            "reason": "Requirements name exact systems (BambooHR, Workday, Slack), quantify time windows (5 minutes, 15 minutes, 48 hours), define field-level detail for templates, and cite specific compliance standards (SOC 2, ISO 27001, eIDAS), leaving almost no ambiguity."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five metrics include a named baseline with sourcing methodology and a time-bound quantified target, though the MRR and retention baselines of $0/0% at launch offer no pre-launch signal for calibration."
+            "reason": "Every metric includes a named baseline derived from actual beta-customer data or time studies, a numeric target, and a time-bound evaluation window, with both product-health and business metrics (MRR, retention) covered."
           },
           "testability": {
             "score": 9,
-            "reason": "Acceptance criteria are largely binary and time-bound (e.g., PDF generated within 30 seconds, sync within 15 minutes, notifications at task creation and 24 hours before due date), enabling automated or scripted QA validation with minimal interpretation."
+            "reason": "Acceptance criteria specify observable outputs with hard numeric thresholds (e.g., tasks created within 5 minutes, PDF generated within 30 seconds, escalation after exactly 48 hours) that can be verified by automated tests or auditable logs without subjective judgment."
           },
           "user_centricity": {
-            "score": 9,
-            "reason": "Four distinct personas with realistic job contexts are mapped to specific stories that articulate a clear pain, desired action, and outcome, though the new-employee persona has only one story relative to its centrality in the product experience."
+            "score": 8,
+            "reason": "Four differentiated personas with concrete role contexts (HR BP designing programs, IT admin provisioning 5-10 SaaS tools, hiring manager without calendar management, new hire in first 90 days) each drive distinct, non-interchangeable stories with meaningful outcome clauses, though personas lack named individuals or company-size/industry texture that would push to a 9-10."
           },
           "completeness": {
-            "score": 8,
-            "reason": "All major PRD sections are present and detailed, including risks with open questions and explicit out-of-scope items, but the PRD lacks a competitive landscape analysis, a monetization/pricing decision (flagged as open), and a phased rollout or launch plan."
+            "score": 9,
+            "reason": "All standard sections are present with substantive content \u2014 problem statement cites a dollar figure and named source, risks surface non-obvious issues like eIDAS QES legality and org-chart data gaps, out-of-scope entries reflect deliberate v1 deferral decisions with post-GA notes, and no section reads as filler."
           }
         },
         "overall_score": 8.9,
         "top_3_improvements": [
-          "Resolve the open pricing model question (per-seat vs. per-hire) and document the chosen model with rationale, as this directly affects the MRR metric and customer predictability, which are both listed as success criteria.",
-          "Expand new-employee user stories to cover additional critical moments such as overdue task reminders, blocked task visibility when a dependency is incomplete, and mobile access, since the new hire is the product's primary end-user and is currently underrepresented.",
-          "Add a competitive differentiation section identifying key alternatives (e.g., Rippling, Trainual, Notion-based checklists) and articulating why OnboardOS wins on specific dimensions, which is necessary for positioning, pricing confidence, and roadmap prioritization."
+          "Add persona depth by specifying company-size context, industry vertical, or a named archetype (e.g., 'People Ops manager at a 300-person fully-remote SaaS company') to sharpen prioritization decisions and edge-case handling.",
+          "Define a fallback acceptance criterion and explicit error states for HRIS sync failures \u2014 e.g., what OnboardOS does when a Workday API call times out or returns a duplicate hire record \u2014 to close the most likely integration gap before engineering scoping.",
+          "Resolve the pricing model open question within the PRD by adding a recommended decision with rationale (per-hire vs. per-seat) and linking it to the MRR target, since the chosen model directly affects the revenue metric's achievability and customer contract structure."
         ]
       }
     },
@@ -257,30 +257,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include precise numeric thresholds (WER <12%, 1.5s latency, 55 dB SPL, 78%/110 WPM adaptation triggers) with named device targets and accent groups, leaving minimal ambiguity."
+            "reason": "Requirements cite exact thresholds (1.5s latency, 12% WER, 78% accuracy, 110 WPM), named device models, dB levels, and CEFR levels throughout, leaving almost no ambiguity."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five success metrics include a named baseline source, a quantified target, a time horizon, and an eligible population definition, enabling rigorous post-launch evaluation."
+            "reason": "Every success metric has a numeric target, a named baseline source (Sensor Tower, RevenueCat, EF EPI), a time horizon, and a scoped population, enabling rigorous post-launch evaluation."
           },
           "testability": {
             "score": 9,
-            "reason": "Every acceptance criterion specifies observable conditions, measurement instruments, sample sizes, or labeled test sets that an QA engineer can execute without interpretation."
+            "reason": "Acceptance criteria specify test set sizes (200 utterances per accent), device models, measurement conditions (55 dB SPL, LTE), and observable outputs (highlighted text, teacher dashboard latency), making each criterion objectively verifiable."
           },
           "user_centricity": {
             "score": 8,
-            "reason": "Four distinct, demographically grounded personas drive seven well-formed user stories that map to real contexts (commute, classroom assignment, intermediate plateau), though emotional/motivational depth and edge-case learner journeys are lightly covered."
+            "reason": "Personas are concrete and differentiated by geography, profession, and learning context (B1-B2 plateau, ESL teacher, commuting professional), and each story ties to a specific, non-trivial pain point with a meaningful outcome, though no persona has a named individual identity to anchor empathy fully."
           },
           "completeness": {
-            "score": 8,
-            "reason": "All core PRD sections are present and detailed, but the document lacks a competitive analysis section, a release timeline or phasing plan, and explicit technical architecture constraints beyond latency and offline requirements."
+            "score": 9,
+            "reason": "All standard sections are substantively filled: the problem statement cites indexed data and quantifies the gap, risks include non-obvious legal (BIPA) and device-performance concerns, out-of-scope entries reflect deliberate roadmap decisions, and the self-identified v1 scope conflict (teacher features) is explicitly flagged."
           }
         },
-        "overall_score": 8.7,
+        "overall_score": 8.9,
         "top_3_improvements": [
-          "Add a release timeline or phased milestone plan that maps features to specific versions, resolving the explicit tension flagged between the teacher-account success metric and the v1 out-of-scope declaration for teacher assignment features.",
-          "Include a competitive differentiation section that articulates how SpeakNative's real-time feedback and adaptive difficulty compare concretely to Duolingo, Babbel, and iTalki, grounding positioning decisions for marketing and roadmap prioritization.",
-          "Expand technical and architectural constraints to cover low-end Android device requirements (minimum RAM, OS version, APK size budget) and define the offline AI inference strategy, reducing engineering ambiguity for the declared offline capability."
+          "Resolve the explicit v1 scope conflict: teacher assignment features are listed as out-of-scope yet teacher account activations are a primary success metric \u2014 either include a lightweight teacher feature in v1 or replace the metric with one aligned to in-scope functionality.",
+          "Add a retention or churn metric (e.g., D60/D90 retention rate) to complement DAU/MAU, since habit formation in a subscription language app is better diagnosed with cohort retention curves than a single engagement ratio.",
+          "Define the content safety and off-topic input handling specification (currently an open question) as a concrete acceptance criterion before GA, including what the AI must and must not do when a learner deviates from the scenario."
         ]
       }
     },
@@ -291,30 +291,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements are highly concrete with named integrations (Snowflake, BigQuery, Okta, Azure AD), precise time bounds (10 minutes provisioning, 5-minute revocation, 30-second Slack reflection), and clearly scoped access granularity, leaving almost no ambiguity."
+            "reason": "Requirements consistently name exact systems (Snowflake, BigQuery, Okta), quantified time bounds (10 min provisioning, 5 min revocation, 30-second Slack reflection), and explicit scope boundaries, leaving little room for ambiguity."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five metrics include a quantified baseline sourced from beta customer data and a specific, time-bound target, enabling rigorous pre/post measurement with minimal interpretation required."
+            "reason": "All five metrics include a numeric baseline sourced from beta customer data, a specific numeric target, and a timeframe, enabling unambiguous pass/fail assessment post-launch."
           },
           "testability": {
             "score": 9,
-            "reason": "Every acceptance criterion specifies a measurable condition, a verification method (e.g., querying the warehouse permission API post-expiry, timing end-to-end provisioning), and explicit pass/fail thresholds with no subjective language."
+            "reason": "Every acceptance criterion specifies a measurable condition and a verification method (e.g., querying the warehouse permission API after expiry, timing end-to-end provisioning), making each criterion independently automatable or auditable."
           },
           "user_centricity": {
-            "score": 9,
-            "reason": "Four distinct, realistic personas are defined with concrete pain points, and seven user stories follow a consistent format with explicit goals and rationale tied directly to observed workflow failures."
+            "score": 8,
+            "reason": "Personas are differentiated by concrete role and pain point (analyst blocked by Jira wait, compliance officer under audit pressure, platform engineer drowning in Slack coordination), with outcomes tied to meaningful workflow changes, though persona context could be slightly richer with seniority or industry detail."
           },
           "completeness": {
             "score": 9,
-            "reason": "The PRD covers problem statement, target users, user stories, acceptance criteria, success metrics, risks/open questions, and out-of-scope sections with substantial detail, though it omits a competitive landscape, pricing/packaging, and a release timeline."
+            "reason": "All standard sections are present with substantive content: the problem statement quantifies the failure modes, risks surface non-obvious operational hazards (break-glass access, dbt conflicts, revocation job failure), out-of-scope entries reflect deliberate v1 trade-offs, and baselines are empirically grounded rather than assumed."
           }
         },
-        "overall_score": 9.0,
+        "overall_score": 8.9,
         "top_3_improvements": [
-          "Add a competitive landscape and differentiation section (e.g., vs. Immuta, Privacera, or Okta Access Requests) to clarify why DataGate wins in the mid-market segment and inform positioning decisions.",
-          "Define a release timeline or phased roadmap so stakeholders understand sequencing of Snowflake vs. BigQuery support, Slack integration, and the break-glass access mode relative to a GA date.",
-          "Clarify the conflict detection mechanism for coexistence with dbt or Apache Ranger beyond flagging it as a risk\u2014specify whether DataGate will operate in read-only audit mode, block conflicting policies, or require manual reconciliation to remove ambiguity for engineering."
+          "Add a break-glass emergency access workflow as a defined feature (not just an open question), including the audit trail requirements and security notification SLA, since its absence is a compliance gap for any customer needing after-hours incident response.",
+          "Specify data residency and storage architecture for the immutable access log (cloud provider, region options, retention period, encryption standard) before EU go-to-market rather than deferring it as an open question, as it directly gates a key customer segment.",
+          "Strengthen justification quality enforcement by defining minimum criteria (character count, required fields, or template prompts) and adding a corresponding acceptance criterion, to prevent the audit log from degrading into noise as analysts game the free-text field."
         ]
       }
     },
@@ -325,30 +325,30 @@
         "scores": {
           "specificity": {
             "score": 9,
-            "reason": "Requirements include precise numeric thresholds (150-mile radius, 5-minute posting visibility, 2-second search, 8% fee, 3-business-day payouts), named market (Portland OR), and concrete behavioral definitions throughout."
+            "reason": "Requirements include precise thresholds (150-mile radius, 5-minute visibility, 2-second search, 8% fee, 3-business-day payout, 48-hour cancellation window) leaving almost no ambiguity in scope or behavior."
           },
           "measurability": {
             "score": 9,
-            "reason": "All five metrics have explicit baselines, numeric targets, and time-bound windows, with the farm waste metric even grounded in pre-launch interview data, though GMV TAM is an estimate rather than validated market sizing."
+            "reason": "Every metric has a numeric target, a time horizon, a cohort definition, and a pre-launch baseline sourced from interviews or TAM estimates, enabling rigorous tracking from day one."
           },
           "testability": {
             "score": 9,
-            "reason": "Each acceptance criterion specifies observable inputs, outputs, and timing constraints (e.g., inventory visible within 5 minutes, search returns within 2 seconds, ratings published within 1 hour) that QA can verify directly, with only the offline-draft-saving behavior left implicit."
+            "reason": "Each acceptance criterion specifies observable inputs, system actions, and measurable outputs (e.g., 'visible within 5 minutes', 'alert within 10 minutes', 'payout within 3 business days') that QA can verify without interpretation."
           },
           "user_centricity": {
-            "score": 8,
-            "reason": "Four distinct personas are well-differentiated with realistic context, and each user story follows the canonical format with a concrete outcome, though distributor personas have user stories in target_users but no corresponding user story in the user_stories list."
+            "score": 9,
+            "reason": "All four personas carry concrete role titles with quantified context (e.g., '30%+ local sourcing', '5-15 farms', '5-500 acres'), and each story ties a specific workflow pain to a meaningful outcome rather than restating the feature."
           },
           "completeness": {
-            "score": 8,
-            "reason": "All major PRD sections are present and detailed, including a thorough out-of-scope and risks list, but the document lacks a competitive landscape analysis, a monetization/business model section beyond the fee mention, and a launch/go-to-market plan."
+            "score": 9,
+            "reason": "All standard sections are present with substantive content: problem cites quantified waste and time data, risks include non-obvious issues like cold-start and seasonality churn, and out-of-scope entries reflect deliberate v1 deferral decisions with rationale."
           }
         },
-        "overall_score": 8.8,
+        "overall_score": 9.0,
         "top_3_improvements": [
-          "Add a user story and acceptance criteria covering the regional distributor persona, which is named in target_users but entirely absent from the functional requirements and stories.",
-          "Include a seasonality mitigation strategy as a concrete plan (e.g., off-season produce categories, greenhouse partners, or demand-retention tactics) rather than leaving it as an unresolved open question.",
-          "Add a competitive landscape and go-to-market section detailing how HarvestLink will acquire its pre-launch cohort of 15+ farms and 20+ restaurants to solve the cold-start risk identified in risks_open_questions."
+          "Add a dispute resolution policy directly in the PRD (currently flagged as an open question) \u2014 specify whether HarvestLink mediates, escrows disputed payment, or strictly facilitates communication, since this affects both the payment flow and the terms-of-service design before launch.",
+          "Define the produce grading/description standard inline rather than leaving it as a risk: specify minimum required fields (USDA grade, size range, harvest date, growing method) so farm onboarding and the inventory posting UI can enforce them from day one.",
+          "Include a winter/seasonality retention strategy as a concrete plan (e.g., expand to greenhouse growers, partner with cold-storage distributors, or introduce a 'pre-season commitment' feature) rather than leaving it as an unanswered open question, since Portland's seasonal drop is a known churn driver."
         ]
       }
     },
@@ -359,30 +359,30 @@
         "scores": {
           "specificity": {
             "score": 2,
-            "reason": "Requirements are vague and generic throughout, using phrases like 'comprehensive experience,' 'acceptable performance,' and 'advanced features' with no concrete definitions or measurable thresholds."
+            "reason": "Requirements are vague and generic throughout \u2014 'comprehensive and engaging experience,' 'acceptable performance,' and 'different types of workouts' are placeholders, not concrete specifications."
           },
           "measurability": {
-            "score": 2,
-            "reason": "All three success metrics lack quantified targets, using non-numeric language like 'high engagement rates' and 'significant downloads' that cannot be objectively measured or evaluated."
+            "score": 1,
+            "reason": "All three metrics lack real targets \u2014 'high engagement rates,' 'significant downloads,' and '4 stars' are either unmeasured or minimally defined, with no timeframes, user counts, or retention rates specified."
           },
           "testability": {
             "score": 2,
-            "reason": "Acceptance criteria such as 'easy to use and intuitive' and 'acceptable under normal usage conditions' are entirely subjective and cannot be verified through objective testing or automated checks."
+            "reason": "Acceptance criteria like 'easy to use and intuitive,' 'meaningful way,' and 'acceptable under normal usage conditions' are entirely subjective and cannot be verified objectively by a QA team."
           },
           "user_centricity": {
-            "score": 3,
-            "reason": "User stories follow the correct format but describe overly generic personas with no demographic, behavioral, or motivational specificity, and the stories themselves map to features rather than genuine user problems."
+            "score": 2,
+            "reason": "All personas are generic labels ('a user,' 'a premium user') with circular or trivially obvious stories \u2014 'I want to track workouts to see progress' restates the action as the outcome and reflects no real pain point or differentiated context."
           },
           "completeness": {
-            "score": 4,
-            "reason": "All standard PRD sections are structurally present, but critical sections like technical requirements, timelines, monetization strategy, and competitive analysis are missing or treated superficially."
+            "score": 3,
+            "reason": "All standard sections are structurally present but every section contains filler-quality content \u2014 risks are obvious boilerplate, out-of-scope entries are non-decisions, and the problem statement lacks urgency, evidence, or market sizing."
           }
         },
-        "overall_score": 2.6,
+        "overall_score": 2.0,
         "top_3_improvements": [
-          "Define quantified success metrics with specific numeric targets, timeframes, and measurement methods (e.g., 'achieve 10,000 DAU within 6 months post-launch with a 30-day retention rate of 40%').",
-          "Rewrite acceptance criteria as objectively verifiable conditions with measurable thresholds (e.g., 'app must load the dashboard in under 2 seconds on a 4G connection on devices running iOS 15+ and Android 11+').",
-          "Develop distinct, research-backed user personas with specific demographics, fitness levels, pain points, and behavioral contexts to replace the current generic 'people who want to get fit' target user definitions."
+          "Replace vague success metrics with specific, time-bound KPIs such as 'achieve 10,000 MAU within 6 months with a 30-day retention rate of 40%' and establish real pre-launch baselines via competitive benchmarks.",
+          "Rewrite acceptance criteria as objectively verifiable conditions with measurable thresholds, for example 'workout logging flow must be completable in under 3 taps' or 'app must load the dashboard in under 2 seconds on a mid-range Android device.'",
+          "Replace generic user personas with named, role-specific profiles (e.g., 'Maya, a 34-year-old working parent who has 20 minutes for home workouts') and rewrite each story to articulate a genuine pain point with a non-circular outcome that explains why the feature matters to that persona."
         ]
       }
     },
@@ -392,31 +392,31 @@
       "eval": {
         "scores": {
           "specificity": {
-            "score": 3,
-            "reason": "Requirements are vague and high-level with no concrete details such as field definitions, workflow steps, integration specs, or performance benchmarks."
+            "score": 2,
+            "reason": "Requirements are vague and generic \u2014 'fast and responsive,' 'email integration should work reliably,' and 'good adoption' provide no concrete thresholds, scope boundaries, or implementation details."
           },
           "measurability": {
-            "score": 2,
-            "reason": "All three success metrics lack baselines and use qualitative targets like 'good adoption' and 'high satisfaction' instead of quantified, time-bound goals."
+            "score": 1,
+            "reason": "All three metrics lack real baselines ('unknown,' 'not measured,' 'no current baseline') and targets are qualitative platitudes ('good adoption,' 'high satisfaction') with no numeric goals or timeframes."
           },
           "testability": {
-            "score": 3,
-            "reason": "Acceptance criteria are too ambiguous to verify objectively \u2014 terms like 'reliably,' 'fast and responsive,' and 'key sales metrics' have no defined thresholds or test conditions."
+            "score": 2,
+            "reason": "Acceptance criteria are untestable as written \u2014 'fast and responsive,' 'work reliably,' and 'key sales metrics' have no defined thresholds, conditions, or pass/fail criteria an engineer or QA could verify."
           },
           "user_centricity": {
-            "score": 5,
-            "reason": "Personas are broadly defined and user stories follow the correct format, but they lack depth, pain-point specificity, and context about the jobs-to-be-done."
+            "score": 4,
+            "reason": "Personas use generic role labels (sales rep, manager, business owner) with plausible but shallow stories; outcomes are obvious or circular (e.g., 'so that I don't lose track' merely restates tracking) and no contextual differentiation exists between persona types."
           },
           "completeness": {
-            "score": 5,
-            "reason": "Standard PRD sections are present but several are either placeholder-level (out-of-scope) or missing entirely, such as timeline, technical constraints, and competitive analysis."
+            "score": 3,
+            "reason": "All standard sections are structurally present but each contains placeholder-quality content \u2014 out-of-scope entries are vague filler, risks are generic boilerplate, and the problem statement lacks urgency, market sizing, or evidence of the pain."
           }
         },
-        "overall_score": 3.5,
+        "overall_score": 2.4,
         "top_3_improvements": [
-          "Define quantified, time-bound success metrics with real baselines \u2014 for example, 'achieve 80% weekly active usage among sales reps within 90 days of launch' \u2014 so progress can be objectively tracked.",
-          "Rewrite acceptance criteria with specific, measurable conditions such as page load times under 2 seconds, exact dashboard KPIs listed, and defined email sync success rate thresholds to enable objective QA testing.",
-          "Add detailed feature specifications including data models, workflow diagrams, and integration requirements to eliminate ambiguity and give engineering and design teams actionable guidance."
+          "Replace all success metrics with quantified targets and real or estimated baselines \u2014 e.g., '70% weekly active usage within 90 days of launch' and 'NPS \u2265 40 by Q2' \u2014 so progress can actually be tracked.",
+          "Rewrite acceptance criteria as objective, verifiable conditions with explicit thresholds \u2014 e.g., 'Pipeline page loads in under 2 seconds at P95 with 500 concurrent users' and 'Email sync reflects new messages within 60 seconds of receipt.'",
+          "Deepen user stories with specific, context-rich personas and genuine pain points \u2014 e.g., 'As a field sales rep managing 80+ accounts with no admin support, I want automated follow-up reminders so that I stop losing deals to silence after demo calls.'"
         ]
       }
     },
@@ -427,30 +427,30 @@
         "scores": {
           "specificity": {
             "score": 2,
-            "reason": "Requirements are vague and generic, lacking concrete details such as performance benchmarks, specific feature behaviors, or technical constraints that would make them actionable."
+            "reason": "Requirements are vague platitudes ('better way to organize', 'easy to format') with no concrete feature definitions, performance thresholds, or technical constraints."
           },
           "measurability": {
             "score": 1,
-            "reason": "All three metrics have undefined baselines and qualitative targets like 'many documents' or 'most employees,' making it impossible to quantify success or failure."
+            "reason": "All three metrics lack real baselines and use unmeasurable targets like 'many documents' and 'most employees', making quantified success impossible."
           },
           "testability": {
-            "score": 2,
-            "reason": "Acceptance criteria use subjective language such as 'relevant results' and 'easy to format' with no measurable thresholds, edge cases, or objective pass/fail conditions."
+            "score": 3,
+            "reason": "Acceptance criteria use subjective language ('relevant results', 'easy to format') with no thresholds, edge cases, or objective pass/fail conditions that a QA engineer could act on."
           },
           "user_centricity": {
             "score": 4,
-            "reason": "User stories follow the correct format and cover recognizable personas, but the personas lack depth, context, or pain-point specificity that would ground them in real observed user needs."
+            "reason": "Personas use generic role labels ('employee', 'team lead', 'new hire') and stories describe obvious, interchangeable actions without surfacing real pain points or meaningful outcome differentiation."
           },
           "completeness": {
             "score": 3,
-            "reason": "While all standard sections are nominally present, key sections like out-of-scope and success metrics are placeholder-level content, and critical sections such as timeline, technical requirements, and competitive context are entirely absent."
+            "reason": "All standard sections are structurally present but every section contains placeholder-quality content \u2014 out-of-scope includes 'to be determined', risks are generic boilerplate, and no section would survive a real PM review."
           }
         },
-        "overall_score": 2.4,
+        "overall_score": 2.6,
         "top_3_improvements": [
-          "Replace all success metrics with SMART targets, e.g., '60% of employees actively search at least once per week within 90 days of launch,' and establish real baselines through pre-launch surveys or proxy data.",
-          "Rewrite acceptance criteria with objective, verifiable conditions, for example 'search must return results in under 500ms for queries across 10,000 documents' and 'permission changes must take effect within 60 seconds.'",
-          "Flesh out the problem statement with quantified evidence such as time wasted per employee per week, and enrich user personas with demographic, behavioral, and contextual details drawn from actual user research."
+          "Define quantified success metrics with real baselines (e.g., 'reduce average time-to-find-information from 8 minutes to under 2 minutes, measured via search session logs') so success can actually be evaluated.",
+          "Rewrite acceptance criteria with objective, testable thresholds (e.g., 'search returns results in under 500ms and surfaces the correct document in the top 3 results for 90% of sampled queries').",
+          "Replace generic persona labels with named, context-specific roles and give each user story a non-circular outcome that reflects a genuine pain point (e.g., 'As a remote onboarding engineer who joins without a buddy, I want structured day-1 task checklists so I can become productive without blocking my manager')."
         ]
       }
     },
@@ -461,30 +461,30 @@
         "scores": {
           "specificity": {
             "score": 2,
-            "reason": "Requirements are almost entirely vague and qualitative, using phrases like 'without issues,' 'easily,' and 'good overall experience' with no concrete functional or technical details."
+            "reason": "Requirements are vague and generic throughout \u2014 'without issues', 'easily', 'smooth and secure', and 'good overall experience' are undefined, leaving no concrete behavioral or functional specification."
           },
           "measurability": {
             "score": 1,
-            "reason": "All three metrics lack quantitative targets and baselines, using non-measurable language like 'growing number,' 'sellers are happy,' and 'good repeat purchase rates.'"
+            "reason": "All three metrics lack real baselines and use qualitative non-targets like 'growing number', 'sellers are happy', and 'good repeat purchase rates', making quantitative measurement impossible."
           },
           "testability": {
             "score": 2,
-            "reason": "Acceptance criteria cannot be objectively verified because terms like 'without issues,' 'smoothly,' and 'good overall experience' have no defined pass/fail thresholds or test conditions."
+            "reason": "Acceptance criteria like 'without issues', 'easily', and 'good overall experience' have no objective pass/fail condition and cannot be verified by a QA engineer or user researcher."
           },
           "user_centricity": {
-            "score": 4,
-            "reason": "User stories follow the standard format and cover both buyer and seller perspectives, but personas lack demographic or behavioral specificity and the stories are too generic to reflect deep user research."
+            "score": 3,
+            "reason": "Personas are generic labels ('buyer', 'seller', 'people new to shopping') with no named roles or context, and stories like 'shop without frustration' are circular or trivially obvious with no differentiated pain points."
           },
           "completeness": {
-            "score": 5,
-            "reason": "All major PRD sections are present including problem statement, user stories, metrics, risks, and out-of-scope, but sections like technical requirements, timeline, and prioritization are entirely missing."
+            "score": 3,
+            "reason": "All standard sections are structurally present but every section contains placeholder-quality content \u2014 the problem statement lacks urgency or data, risks are boilerplate, and no section would survive a real PM review."
           }
         },
-        "overall_score": 2.7,
+        "overall_score": 2.2,
         "top_3_improvements": [
-          "Define quantitative success metrics with specific numeric targets and realistic baselines, e.g., 'achieve 10,000 completed transactions within 90 days of launch' and 'buyer repeat purchase rate \u2265 30% within 6 months.'",
-          "Rewrite acceptance criteria as objectively verifiable test cases with explicit conditions and thresholds, e.g., 'checkout flow completes in \u2264 3 steps with a page load time under 2 seconds and a 99.9% payment success rate.'",
-          "Make requirements and user stories concrete by specifying exact features, workflows, and constraints, e.g., specify search filters, listing fields, inventory management capabilities, and fraud prevention mechanisms rather than using generic descriptors like 'easily' or 'without issues.'"
+          "Replace all vague acceptance criteria with objectively measurable conditions (e.g., 'checkout completes in under 3 steps with <2% error rate on payment submission') so QA and engineering have a clear definition of done.",
+          "Rewrite success metrics with specific numeric targets and real or estimated baselines (e.g., 'Buyer repeat purchase rate: baseline 0% at launch, target \u226525% within 90 days of first purchase by Month 6').",
+          "Develop concrete, differentiated personas with named roles and genuine pain points (e.g., 'Maria, a part-time Etsy seller managing 50 SKUs without inventory software') so user stories capture specific problems rather than generic desires."
         ]
       }
     },
@@ -495,30 +495,30 @@
         "scores": {
           "specificity": {
             "score": 2,
-            "reason": "Requirements are vague and generic throughout \u2014 phrases like 'helpful and relevant,' 'easy to use,' and 'high engagement' provide no concrete, actionable detail about features, behaviors, or technical constraints."
+            "reason": "Requirements are vague and generic throughout \u2014 'helpful and relevant suggestions', 'easy to use', 'high engagement' \u2014 with no concrete feature definitions, technical constraints, or measurable thresholds anywhere in the document."
           },
           "measurability": {
-            "score": 2,
-            "reason": "All three metrics lack numeric targets, baselines are either absent or described as 'difficult to measure,' and qualitative descriptors like 'high engagement' and 'sustainable revenue' cannot be quantifiably tracked."
+            "score": 1,
+            "reason": "All three metrics lack real baselines ('no baseline', 'difficult to measure') and targets are qualitative platitudes ('high engagement', 'sustainable revenue') that cannot be quantified or tracked."
           },
           "testability": {
-            "score": 3,
-            "reason": "Acceptance criteria such as 'should be easy to use' and 'appropriate and relevant' are subjective and cannot be verified with objective pass/fail tests without measurable thresholds or defined benchmarks."
+            "score": 2,
+            "reason": "Acceptance criteria use subjective, untestable language ('helpful', 'appropriate', 'easy to use', 'relevant') with no thresholds, test conditions, or objective pass/fail definitions."
           },
           "user_centricity": {
-            "score": 4,
-            "reason": "Personas are overly broad ('anyone who needs to write') with minimal differentiation, and user stories follow the correct format but lack specific pain points, contexts, or quantified outcomes that reflect genuine user research."
+            "score": 3,
+            "reason": "Personas are generic labels ('user', 'business professional', 'content creator') with shallow, interchangeable stories; outcomes are circular or trivially obvious ('write faster so I can be more productive') and no differentiated context or genuine pain point is captured."
           },
           "completeness": {
-            "score": 5,
-            "reason": "All standard PRD sections are structurally present, but most are superficially populated \u2014 out-of-scope items are circular, risks lack mitigation strategies, and there is no timeline, prioritization, or technical requirements section."
+            "score": 4,
+            "reason": "All standard sections are structurally present but every section contains placeholder-quality content \u2014 risks are obvious boilerplate, out-of-scope entries are vague meta-descriptions, and the problem statement lacks urgency, sizing, or evidence."
           }
         },
-        "overall_score": 3.0,
+        "overall_score": 2.4,
         "top_3_improvements": [
-          "Define quantitative success metrics with specific numeric targets, measurement methodologies, and realistic baselines (e.g., 'achieve 40% DAU/MAU ratio within 6 months of launch').",
-          "Rewrite acceptance criteria as objectively verifiable conditions with measurable thresholds (e.g., 'grammar suggestions must achieve >90% precision on a standardized benchmark dataset').",
-          "Narrow and sharpen target personas with specific demographics, jobs-to-be-done, and validated pain points, and align user stories to those personas with concrete, outcome-driven value propositions."
+          "Replace all qualitative metrics with quantified targets and real baselines \u2014 e.g., 'AI suggestion acceptance rate \u2265 40% within 90 days, measured against industry benchmark of 25%' \u2014 so success can actually be tracked.",
+          "Rewrite acceptance criteria with objective, testable conditions including thresholds, edge cases, and explicit pass/fail definitions \u2014 e.g., 'Grammar errors detected with precision \u2265 90% on a standardized test corpus of 500 sentences'.",
+          "Develop differentiated personas with specific roles, contexts, and genuine pain points \u2014 e.g., 'Maya, a non-native English-speaking sales manager who sends 30+ client emails daily and loses deals due to tone mismatches' \u2014 and tie each user story to a non-obvious, meaningful outcome."
         ]
       }
     },
@@ -528,31 +528,31 @@
       "eval": {
         "scores": {
           "specificity": {
-            "score": 3,
-            "reason": "Requirements are vague and high-level, lacking concrete details such as supported protocols (Zigbee, Z-Wave, Matter), response time thresholds, number of devices supported at launch, or specific automation trigger types."
+            "score": 2,
+            "reason": "Requirements are vague and generic throughout \u2014 'major smart home brands', 'simple and intuitive interface', and 'strong sales performance' provide no concrete, actionable specifications."
           },
           "measurability": {
-            "score": 2,
-            "reason": "All success metrics lack quantitative targets, using placeholder language like 'strong sales performance' and 'high customer satisfaction scores' instead of actual numbers or thresholds."
+            "score": 1,
+            "reason": "All three metrics lack real numeric targets and baselines, using placeholder phrases like 'strong sales performance' and 'high customer satisfaction scores' that cannot be quantified or tracked."
           },
           "testability": {
             "score": 2,
-            "reason": "Acceptance criteria use subjective qualifiers like 'simple and intuitive,' 'reliably most of the time,' and 'appropriately' that cannot be objectively verified or tested against a pass/fail standard."
+            "reason": "Acceptance criteria are subjective and untestable \u2014 'work reliably most of the time', 'appropriately' secure, and 'simple and intuitive' have no objective pass/fail thresholds."
           },
           "user_centricity": {
-            "score": 4,
-            "reason": "User stories cover recognizable needs but personas are generic ('homeowner,' 'user') without differentiated pain points, behavioral context, or frequency/severity data to prioritize features."
+            "score": 3,
+            "reason": "Personas are entirely generic ('homeowner', 'user') with no differentiated context or role, and stories like 'I want voice control so I can use hands-free commands' are circular and capture no real pain point depth."
           },
           "completeness": {
-            "score": 5,
-            "reason": "Standard sections are present but thin; the PRD is missing technical architecture, release timeline/milestones, dependencies, monetization model, and competitive differentiation strategy."
+            "score": 4,
+            "reason": "All standard sections are structurally present but every section contains thin, placeholder-quality content \u2014 risks are obvious industry boilerplate, out-of-scope entries are vague, and no section would survive a real PM review."
           }
         },
-        "overall_score": 3.2,
+        "overall_score": 2.4,
         "top_3_improvements": [
-          "Replace all vague metric targets with specific, measurable KPIs \u2014 e.g., '50,000 units sold in year 1,' 'NPS \u2265 45,' 'support \u2265 200 certified devices at launch' \u2014 so success can be objectively evaluated.",
-          "Rewrite acceptance criteria with objective, testable thresholds \u2014 e.g., 'hub pairs with a new device in \u2264 60 seconds,' 'automations execute within 2 seconds of trigger 99% of the time,' 'passes OWASP IoT security checklist' \u2014 to enable QA sign-off.",
-          "Sharpen requirements with concrete technical specifications such as supported communication protocols, maximum latency for commands, offline operation capability, and a prioritized list of compatible brands at launch to eliminate ambiguity for engineering."
+          "Replace all metric targets and baselines with real numbers \u2014 e.g., '50,000 units sold in year one', 'NPS \u2265 45 within 6 months', 'support \u2265 200 certified devices at launch' \u2014 so success can actually be measured.",
+          "Rewrite acceptance criteria with objective, binary pass/fail thresholds \u2014 e.g., 'Hub pairs with any Matter 1.0 certified device within 60 seconds', 'automation trigger latency \u2264 500ms in 99% of executions' \u2014 to make them testable.",
+          "Replace generic persona labels with named, context-rich personas (e.g., 'Maya, a dual-income parent managing a 3-bedroom home who loses time switching between 5 apps daily') and ensure each user story articulates a distinct, non-obvious pain point with a meaningful outcome."
         ]
       }
     },
@@ -563,30 +563,30 @@
         "scores": {
           "specificity": {
             "score": 2,
-            "reason": "Requirements are vague and generic (e.g., 'messages sent' and 'reliable video calling') with no concrete technical thresholds, feature definitions, or differentiating details."
+            "reason": "Requirements are vague and generic \u2014 no latency targets, message size limits, participant caps for video calls, or any concrete technical or behavioral thresholds defined."
           },
           "measurability": {
             "score": 1,
-            "reason": "All three metrics lack quantified targets, using placeholder language like 'growing,' 'high volume,' and 'long-term,' making success completely unquantifiable."
+            "reason": "All three metrics lack real baselines and use qualitative targets like 'high message volume' and 'growing user base,' making quantified success measurement impossible."
           },
           "testability": {
             "score": 3,
-            "reason": "Acceptance criteria name features but define no testable conditions \u2014 no latency limits, participant counts, file size constraints, or pass/fail thresholds."
+            "reason": "Acceptance criteria use subjective language ('reliably,' 'easy,' 'well organized') with no objective pass/fail thresholds, making consistent QA verification impractical."
           },
           "user_centricity": {
             "score": 4,
-            "reason": "User stories follow the correct format and cover plausible roles, but personas are shallow stereotypes and the 'so that' clauses are self-evident rather than revealing genuine pain points or jobs-to-be-done."
+            "reason": "Personas use generic labels ('team member,' 'manager,' 'remote employee') with plausible but shallow stories; outcomes are obvious or circular and no differentiation in context or pain point depth exists."
           },
           "completeness": {
             "score": 4,
-            "reason": "Standard sections are present but critical sections are missing \u2014 no competitive differentiation, no timeline or milestones, no technical constraints, and the out-of-scope section is not linked to any phased roadmap."
+            "reason": "All standard sections are present but content is placeholder-quality \u2014 the problem statement asserts rather than evidences urgency, risks are obvious boilerplate, and out-of-scope items are deferred features rather than deliberate scoping rationale."
           }
         },
-        "overall_score": 2.7,
+        "overall_score": 2.8,
         "top_3_improvements": [
-          "Replace all vague metric targets with specific, time-bound numbers (e.g., '500 DAUs within 90 days of launch,' '70% Week-4 retention,' 'p99 message delivery under 500ms') so success can actually be measured.",
-          "Rewrite acceptance criteria with objective, verifiable conditions including performance thresholds, supported group sizes, file size/type limits, and platform compatibility versions to enable real QA testing.",
-          "Sharpen the problem statement and user personas with quantified evidence of pain, clear differentiation from Slack/Teams, and a specific beachhead market segment to justify why TeamConnect should exist."
+          "Replace all success metrics with specific, quantified targets and real or estimated baselines (e.g., '1,000 DAU within 90 days of launch,' '70% Week-4 retention'), and define a measurement methodology for each.",
+          "Rewrite acceptance criteria with objective, testable thresholds \u2014 for example, 'video calls support up to 50 participants with < 200ms latency on a standard broadband connection' \u2014 so QA can produce a clear pass/fail verdict.",
+          "Develop differentiated personas with concrete roles and contexts (e.g., 'Maya, a software engineer coordinating async code reviews across a 12-hour timezone gap') and rewrite user stories so the outcome clause expresses a non-obvious business or emotional value rather than restating the feature."
         ]
       }
     },
@@ -597,30 +597,30 @@
         "scores": {
           "specificity": {
             "score": 2,
-            "reason": "Requirements are vague and generic throughout \u2014 'large and growing user base,' 'meaningful connections,' and 'reasonably easy to configure' provide no concrete, actionable detail for engineering or design teams."
+            "reason": "Requirements are vague and generic \u2014 'relevant content', 'meaningful connections', and 'reasonably easy to configure' are undefined, with no concrete feature specifications, thresholds, or technical constraints anywhere in the document."
           },
           "measurability": {
             "score": 1,
-            "reason": "All three success metrics lack numeric targets, defined timeframes, and baselines, making it impossible to quantitatively determine whether the product has succeeded."
+            "reason": "All three metrics lack numeric targets ('large and growing', 'high daily engagement', 'users prefer') and have no real baselines, making it impossible to quantify success or failure at any point."
           },
           "testability": {
             "score": 3,
-            "reason": "Acceptance criteria describe features at a surface level but use subjective qualifiers like 'reasonably easy' and omit measurable thresholds, load conditions, or specific behaviors needed for objective QA verification."
+            "reason": "Acceptance criteria describe capabilities at a surface level (can post, can connect, feed shows relevant posts) but provide no objective pass/fail thresholds, definition of 'relevant', or measurable privacy configuration standards."
           },
           "user_centricity": {
-            "score": 3,
-            "reason": "User stories follow the correct format but target personas are broadly defined demographic buckets rather than specific archetypes with distinct pain points, contexts, or jobs-to-be-done."
+            "score": 2,
+            "reason": "All stories use the generic 'As a user' persona with no differentiation, and the outcome clauses are circular or trivially obvious (e.g., 'so that I can express myself', 'so that I don't waste time'), adding no meaningful insight into real pain points."
           },
           "completeness": {
-            "score": 5,
-            "reason": "All standard PRD sections are structurally present, but most are superficially populated \u2014 risks lack mitigation plans, out-of-scope items are partially undefined, and there is no timeline, technical constraints, or competitive analysis section."
+            "score": 3,
+            "reason": "All standard sections are structurally present, but every section contains placeholder-quality content \u2014 the problem statement lacks urgency data, metrics have no baselines, risks are well-known boilerplate, and out-of-scope entries are vague deferrals rather than deliberate decisions."
           }
         },
-        "overall_score": 2.7,
+        "overall_score": 2.2,
         "top_3_improvements": [
-          "Define quantitative success metrics with specific numeric targets, measurement methodology, and time-bound milestones (e.g., '500K MAU within 12 months post-launch, measured via analytics pipeline').",
-          "Rewrite acceptance criteria with objectively verifiable conditions, removing subjective language and adding specific thresholds such as feed relevance scores, latency limits, and privacy setting step counts.",
-          "Develop distinct, research-backed user personas with demographic specifics, behavioral attributes, and clearly articulated pain points to replace the current vague audience descriptions."
+          "Replace all metrics with quantified targets and real baselines \u2014 e.g., '500K registered users within 12 months', 'DAU/MAU ratio \u2265 30%', 'NPS \u2265 40 vs. competitor benchmark of X' \u2014 so success can be objectively measured.",
+          "Define concrete, differentiated personas with specific contexts (e.g., 'college student overwhelmed by TikTok algorithm', 'hobby photographer frustrated by Instagram reach drops') and rewrite user stories so each outcome captures a non-obvious, specific pain point.",
+          "Rewrite acceptance criteria with objective, verifiable pass/fail conditions \u2014 including a defined algorithm or ruleset for 'content relevance', specific privacy control options that must exist, and performance/latency thresholds for feed loading."
         ]
       }
     },
@@ -630,31 +630,31 @@
       "eval": {
         "scores": {
           "specificity": {
-            "score": 3,
-            "reason": "Requirements use vague language like 'simple', 'efficient', and 'basic' without defining concrete functional behaviors, data models, SLAs, or technical constraints."
+            "score": 2,
+            "reason": "Requirements are vague and generic throughout \u2014 'simple form', 'basic reporting', 'faster resolution times' \u2014 with no concrete field definitions, SLA thresholds, or feature specifications."
           },
           "measurability": {
-            "score": 2,
-            "reason": "All three success metrics lack numeric baselines and quantified targets, using placeholder phrases like 'faster than before' and 'employees report being satisfied' that cannot be objectively measured."
+            "score": 1,
+            "reason": "All three metrics lack real baselines ('longer than acceptable', 'not currently tracked') and targets are entirely qualitative ('faster', 'satisfied', 'more'), making quantification impossible."
           },
           "testability": {
-            "score": 4,
-            "reason": "Acceptance criteria describe observable behaviors (form submission, status updates, notifications, reporting) but omit specific conditions, thresholds, or edge cases needed for unambiguous QA verification."
+            "score": 3,
+            "reason": "Acceptance criteria describe capabilities at a surface level ('simple and clear form', 'basic reporting') but omit any objective pass/fail conditions, thresholds, or measurable definitions that a QA engineer could verify."
           },
           "user_centricity": {
-            "score": 5,
-            "reason": "Three distinct personas are identified and mapped to relevant user stories, but the stories lack depth around pain points, context, and job-to-be-done details that would differentiate real needs from generic placeholders."
+            "score": 4,
+            "reason": "Personas use generic role labels (employee, IT technician, IT manager) with plausible but interchangeable stories; outcomes are shallow and obvious, and no differentiated context, pain point depth, or non-circular value is articulated."
           },
           "completeness": {
-            "score": 5,
-            "reason": "All standard PRD sections are present including problem statement, user stories, acceptance criteria, metrics, risks, and out-of-scope, but each section is too shallow to guide engineering or design decisions without significant elaboration."
+            "score": 3,
+            "reason": "All standard sections are structurally present but every section contains placeholder-quality content \u2014 the problem statement lacks urgency data, metrics have no real baselines, and risks are generic industry boilerplate without mitigation strategies."
           }
         },
-        "overall_score": 3.7,
+        "overall_score": 2.6,
         "top_3_improvements": [
-          "Define quantified success metrics with numeric baselines and targets (e.g., 'reduce average ticket resolution time from 48 hours to 24 hours within 90 days' and 'achieve CSAT score \u2265 4.2/5.0').",
-          "Replace vague requirement language with specific, testable functional specifications including field definitions, SLA thresholds, notification trigger rules, and role-based permission details.",
-          "Enrich user stories with realistic context and measurable outcomes, and expand acceptance criteria to include edge cases, performance benchmarks, and explicit pass/fail conditions usable by QA."
+          "Define quantitative baselines and numeric targets for all success metrics (e.g., 'reduce mean resolution time from 48 hours to 24 hours within 6 months') so success can actually be measured.",
+          "Rewrite acceptance criteria with objective, testable conditions including specific field requirements, SLA thresholds, notification trigger rules, and report definitions that a QA engineer can verify against a pass/fail standard.",
+          "Enrich persona context and user stories with specific pain points and non-circular outcomes (e.g., 'As a tier-1 technician handling 50+ tickets daily across three office locations, I want auto-triage by category so I can eliminate manual sorting that consumes 2 hours per day')."
         ]
       }
     },
@@ -665,30 +665,30 @@
         "scores": {
           "specificity": {
             "score": 3,
-            "reason": "Requirements are vague and high-level (e.g., 'straightforward and secure process', 'growing number') without concrete functional details, constraints, or technical specifications."
+            "reason": "Requirements use vague language throughout ('straightforward', 'growing number', 'find value') with no concrete thresholds, technical details, or unambiguous definitions."
           },
           "measurability": {
             "score": 2,
-            "reason": "All three metrics lack numeric targets, defined timeframes, and meaningful baselines, making it impossible to objectively quantify success."
+            "reason": "All three metrics lack real numeric targets and baselines ('no data available', 'growing number over time'), making quantified success measurement impossible."
           },
           "testability": {
-            "score": 3,
-            "reason": "Acceptance criteria describe desired outcomes in broad terms (e.g., 'clearly visible', 'straightforward') with no measurable thresholds or specific conditions that a QA team could verify objectively."
+            "score": 4,
+            "reason": "Acceptance criteria describe observable behaviors (search, profile creation, reviews visible) but lack specific pass/fail thresholds, edge cases, or measurable conditions needed for objective verification."
           },
           "user_centricity": {
             "score": 4,
-            "reason": "User stories cover basic roles and goals but personas are generic and undifferentiated, and no pain-point depth, context, or job-to-be-done framing is provided."
+            "reason": "Personas use generic labels ('customer', 'service provider') with plausible but interchangeable stories; outcomes are shallow and obvious with no differentiated pain points or context beyond basic functionality."
           },
           "completeness": {
-            "score": 5,
-            "reason": "Standard PRD sections are present (problem, users, stories, criteria, metrics, risks, out-of-scope) but each section is superficial and missing supporting detail such as wireframes, dependencies, timeline, or prioritization."
+            "score": 4,
+            "reason": "All standard sections are present but content is thin throughout \u2014 metrics are placeholder-quality, risks are generic industry boilerplate, and the problem statement lacks urgency, market sizing, or evidence of user research."
           }
         },
-        "overall_score": 3.3,
+        "overall_score": 3.4,
         "top_3_improvements": [
-          "Define quantitative success metrics with specific numeric targets and timeframes (e.g., '500 completed bookings within 90 days of launch', '40% customer repeat-booking rate within 6 months').",
-          "Rewrite acceptance criteria with objectively verifiable, testable conditions including measurable thresholds (e.g., 'Search results must return relevant local providers within 2 seconds', 'Payment flow must not exceed 3 steps').",
-          "Deepen persona definitions and user stories with demographic details, specific pain points, and frequency-of-need context to move beyond generic roles and enable more targeted product decisions."
+          "Replace all vague metric targets with specific numeric KPIs (e.g., '500 completed bookings within 90 days of launch', '40% customer repeat booking rate within 6 months') anchored to real baselines from competitive research.",
+          "Enrich personas with concrete roles and contexts (e.g., 'Maria, a working parent in a mid-size city who needs same-week home repair without taking time off work') and rewrite user stories to surface genuine pain points rather than restating feature descriptions.",
+          "Sharpen acceptance criteria with explicit, testable thresholds such as search result load time under 2 seconds, minimum required fields for provider profiles, and a defined review display format \u2014 so QA can produce unambiguous pass/fail verdicts."
         ]
       }
     }

@@ -1,73 +1,83 @@
 {
   "title": "ShipBoard",
-  "problem_statement": "Engineering teams at companies with 5-50 microservices have no single place to see deployment health across the stack: deploy frequency, rollback rate, and lead time live in separate CI/CD tools (GitHub Actions, Jenkins, ArgoCD) with no aggregated view. Engineering managers spend 30-60 minutes per week manually compiling deploy metrics from disparate dashboards to answer reliability questions in leadership reviews. When a cascading rollback occurs, identifying which service broke the chain requires log spelunking across 3+ systems with no timeline correlation. A read-only deployment intelligence layer that aggregates CI/CD events, surfaces DORA metrics per service, and provides a correlated incident timeline can give engineering leaders the visibility they need without requiring a platform engineering headcount to maintain it.",
+  "problem_statement": "Engineering teams operating 5\u201350 microservices lack a unified deployment health dashboard, forcing engineering managers to spend 30\u201360 minutes per week manually aggregating deploy frequency, rollback rate, and lead time metrics from siloed tools like GitHub Actions, Jenkins, and ArgoCD. When cascading rollbacks occur, identifying the originating service requires manual log correlation across three or more systems with no shared timeline. This fragmentation increases in cost and risk as microservice counts grow and leadership expectations for real-time reliability data intensify. ShipBoard addresses this by providing a single correlated pane of glass for deployment health across all CI/CD integrations.",
   "target_users": [
-    "Engineering managers at companies with 5-50 services who compile deploy metrics manually for weekly leadership reviews",
-    "Staff engineers and tech leads who need to correlate deployment events with incident timelines during or after an outage",
-    "VP Engineering and CTO at Series A-C companies who need DORA benchmark data to assess engineering effectiveness",
-    "DevOps or platform engineers who configure CI/CD pipelines and want a read-only audit trail of who deployed what and when"
+    "Engineering manager overseeing 5\u201350 microservices who prepares weekly reliability reports for leadership",
+    "On-call platform engineer who investigates and resolves cascading deployment failures across multiple services",
+    "VP of Engineering or CTO who needs real-time deployment reliability data for executive reviews",
+    "DevOps engineer responsible for configuring and maintaining CI/CD pipelines across GitHub Actions, Jenkins, and ArgoCD",
+    "Staff software engineer who monitors the deployment health of services they own"
   ],
   "user_stories": [
-    "As an engineering manager, I want to see deploy frequency, change failure rate, and median lead time per service over the trailing 30 days so that I can track DORA metrics without running manual queries",
-    "As a staff engineer, I want a correlated timeline showing all deployments across all services within a 2-hour window so that I can identify which deploy preceded an incident without log spelunking",
-    "As an engineering manager, I want to receive a Slack alert when any service's change failure rate exceeds 15% in a rolling 7-day window so that I can investigate before the problem compounds",
-    "As a VP Engineering, I want a weekly digest comparing this week's DORA metrics against the prior 4-week average per team so that I can identify teams trending toward lower velocity or higher failure rate",
-    "As a DevOps engineer, I want to connect a new GitHub Actions workflow to ShipBoard via a webhook token so that new services appear in the dashboard without modifying shared infrastructure",
-    "As an engineering manager, I want to export 90 days of deploy history for any service as CSV so that I can include quantitative evidence in quarterly engineering reviews",
-    "As a staff engineer during an incident, I want to annotate a deployment event with a postmortem link so that future team members can trace rollback decisions to their documented root cause"
+    "As an engineering manager overseeing 5\u201350 microservices who prepares weekly reliability reports for leadership, I want a single dashboard showing deploy frequency, rollback rate, and lead time aggregated across all connected CI/CD tools so that I can generate my weekly reliability report in under 5 minutes without switching between systems",
+    "As an on-call platform engineer who investigates and resolves cascading deployment failures across multiple services, I want a correlated deployment timeline that highlights the first service to roll back and surfaces all downstream rollbacks triggered within a configurable time window so that I can identify the root-cause service in under 10 minutes without manual log spelunking",
+    "As a VP of Engineering or CTO who needs real-time deployment reliability data for executive reviews, I want an auto-generated reliability summary showing DORA metrics trends over the past 30 and 90 days so that I can answer leadership questions about deployment health without waiting for manual reports from my engineering managers",
+    "As a DevOps engineer responsible for configuring and maintaining CI/CD pipelines across GitHub Actions, Jenkins, and ArgoCD, I want a guided integration wizard for each supported CI/CD tool that validates connectivity and normalizes webhook payloads so that I can onboard a new tool integration in under 30 minutes with no custom scripting",
+    "As a staff software engineer who monitors the deployment health of services they own, I want per-service deployment health cards showing current deploy status, recent rollback history, and mean lead time so that I can proactively identify degrading trends in my services before they escalate to incidents",
+    "As an engineering manager overseeing 5\u201350 microservices who prepares weekly reliability reports for leadership, I want configurable alerting thresholds that notify me via Slack or email when a service's rollback rate exceeds a defined percentage over a rolling 7-day window so that I can intervene before reliability issues surface in leadership reviews",
+    "As an on-call platform engineer who investigates and resolves cascading deployment failures across multiple services, I want a filterable event log that correlates deployment events across all services on a single timeline with source-tool attribution so that I can reconstruct the exact sequence of events during an incident without accessing three separate systems"
   ],
   "acceptance_criteria": [
-    "ShipBoard ingests deployment events from GitHub Actions, Jenkins, and ArgoCD via webhook; a new integration is operational within 15 minutes of a DevOps engineer configuring the webhook token in the ShipBoard UI",
-    "DORA metrics (deploy frequency, lead time for changes, change failure rate, time to restore service) are calculated and displayed per service for trailing 7, 30, and 90 day windows following the DORA research definitions",
-    "The correlated deployment timeline view renders all deployments across all connected services within any user-selected 24-hour window within 3 seconds, for workspaces with up to 50 services and 500 daily deployments",
-    "Slack alerts for change failure rate exceeding the configured threshold (default 15%, admin-adjustable per service) are delivered within 10 minutes of the triggering deployment event being ingested",
-    "CSV export for any service covers the full 90-day retention window and downloads within 30 seconds for services with up to 10,000 deployment events",
-    "ShipBoard stores read-only webhook payloads and does not require write access to source code repositories or CI/CD systems; enforced at the integration layer and documented in the security model",
-    "A new workspace admin can connect at least one CI/CD integration and see their first deployment event in the dashboard within 25 minutes of signup, validated through usability testing with 6 DevOps engineers"
+    "The unified dashboard displays deploy frequency, rollback rate, and lead time for all connected services updated within 60 seconds of a deployment event being received",
+    "The correlated rollback timeline correctly identifies the first rolling-back service and all downstream rollbacks occurring within a user-configurable window (default 30 minutes) with at least 95% accuracy in a test scenario involving 10 or more services",
+    "Integration wizards for GitHub Actions, Jenkins, and ArgoCD each complete end-to-end connectivity validation and begin ingesting normalized deployment events within 30 minutes of starting setup, requiring zero custom scripting from the user",
+    "Each DORA metric (deployment frequency, lead time for changes, change failure rate, mean time to restore) is calculated correctly as validated against a known reference dataset with less than 1% variance",
+    "Per-service deployment health cards render current deploy status, last 10 rollback events, and 30-day mean lead time with data no older than 2 minutes under normal operating conditions",
+    "Slack and email alerts for rollback rate threshold breaches are delivered within 5 minutes of the threshold being crossed, configurable per service and per team",
+    "The auto-generated reliability summary report can be exported as a PDF or shared via a unique URL, and contains 30-day and 90-day trend charts for all four DORA metrics",
+    "The system supports ingestion of at least 10,000 deployment events per hour per tenant without degrading dashboard load time beyond 3 seconds at p95",
+    "Role-based access control allows engineering managers to grant read-only dashboard access to VP/CTO personas without exposing raw pipeline configuration or credentials",
+    "All data in transit and at rest is encrypted using AES-256 and TLS 1.2 or higher, verified by a third-party security scan prior to GA release"
   ],
   "success_metrics": [
     {
-      "metric": "Weekly active workspaces (workspaces where at least one user views a DORA metric dashboard in a 7-day period)",
-      "baseline": "0 at launch",
-      "target": "200 active workspaces within 6 months of GA"
+      "metric": "Time engineering managers spend manually compiling weekly reliability reports",
+      "baseline": "30\u201360 minutes per week per manager",
+      "target": "Under 5 minutes per week per manager within 90 days of adoption"
     },
     {
-      "metric": "Integrations per active workspace (number of distinct CI/CD sources connected per workspace, averaged across active workspaces)",
-      "baseline": "0 at launch; workspaces with 2+ integrations retain at 3x the rate of single-integration workspaces based on analogous tooling benchmarks",
-      "target": "Average of 2.2 integrations per active workspace within 60 days of launch"
+      "metric": "Mean time to identify root-cause service during a cascading rollback incident",
+      "baseline": "45\u201390 minutes requiring log access across 3+ systems (self-reported)",
+      "target": "Under 10 minutes using ShipBoard correlated timeline within 60 days of adoption"
     },
     {
-      "metric": "Time-to-first-metric (minutes from workspace creation to viewing a populated DORA metric for the first connected service)",
-      "baseline": "No existing benchmark; target derived from internal usability testing during beta",
-      "target": "Median time-to-first-metric under 20 minutes across new workspaces"
+      "metric": "Percentage of connected CI/CD integrations completed without engineering support tickets",
+      "baseline": "0% (no existing integration wizard; all integrations require custom scripting)",
+      "target": "85% or more of new integrations completed self-serve within 30 minutes"
     },
     {
-      "metric": "Engineering manager NPS (Net Promoter Score from in-app survey triggered at 30 days of use)",
-      "baseline": "No baseline at launch",
-      "target": "NPS of 45 or above from engineering manager respondents at 90 days post-GA"
+      "metric": "Weekly active usage rate among engineering managers at accounts with 3+ connected services",
+      "baseline": "0% (product not yet launched)",
+      "target": "70% or more of engineering manager seats active weekly at 6 months post-launch"
     },
     {
-      "metric": "90-day workspace retention (workspaces that view at least one dashboard in week 13 after signup)",
-      "baseline": "0% at launch",
-      "target": "55% 90-day retention by end of month 6 post-GA"
+      "metric": "Customer-reported DORA metric data accuracy versus source-of-truth CI/CD tool logs",
+      "baseline": "Not measured (metrics currently compiled manually with no validation)",
+      "target": "99% or greater accuracy as measured by quarterly automated reconciliation against raw pipeline logs"
     }
   ],
   "risks_open_questions": [
-    "GitHub Actions webhook rate limits may drop events during high-frequency deploy bursts; need event buffering with at-least-once delivery semantics and an idempotency key before GA",
-    "DORA metric definitions vary across organizations — some teams count hotfix deployments differently; need to document the exact calculation methodology and consider exposing configuration knobs for change failure rate classification",
-    "Jenkins integration requires a plugin installed on the Jenkins server, which may require IT approval in enterprise environments and limit the addressable TAM",
-    "ArgoCD sync events do not map 1:1 to deployments in multi-env setups; need to clarify what constitutes a deployment event for GitOps-based workflows before finalizing the data model",
-    "Data residency: customers in the EU may not be able to send CI/CD payloads containing commit author names to a US-hosted service; need GDPR data residency analysis before EU go-to-market",
-    "Pricing model — per-seat vs. per-service vs. per-workspace — not yet validated; the right unit of value is unclear because deployers and viewers of metrics are different personas",
-    "How should ShipBoard handle monorepo setups where a single GitHub Actions run deploys 5 services simultaneously — should each service deploy be a separate event or a single grouped event?"
+    "API rate limits on GitHub Actions, Jenkins, and ArgoCD may delay event ingestion during high-volume deployment periods \u2014 need to define queueing and backpressure strategy before beta",
+    "Customers with self-hosted Jenkins or ArgoCD instances behind firewalls will require an agent-based ingestion model; scope and timeline for a self-hosted agent are not yet defined",
+    "Defining 'rollback' consistently across CI/CD tools is non-trivial \u2014 GitHub Actions redeployments, ArgoCD sync reversions, and Jenkins build retries have different semantics; normalization logic must be validated with at least 5 design partners before GA",
+    "Multi-cloud and hybrid deployment environments (e.g., services deployed to both EKS and GKE) may produce duplicate or out-of-order events that corrupt lead time calculations \u2014 deduplication strategy must be designed and tested",
+    "Privacy and compliance requirements vary by enterprise customer; some customers may prohibit sending deployment metadata to a SaaS platform \u2014 need to assess demand for an on-premises or VPC-hosted deployment option",
+    "How should ShipBoard handle services that use blue/green or canary deployments where a 'rollback' is ambiguous \u2014 partial traffic shift reversal vs. full rollback?",
+    "What is the minimum viable integration surface for Jenkins given the breadth of its plugin ecosystem \u2014 which plugins will be supported at launch and which will be deferred?",
+    "Pricing model is undecided: per-seat, per-service, or per-event volume \u2014 each creates different incentives and may conflict with enterprise procurement norms",
+    "Will ShipBoard store raw log data or only normalized deployment events? Storing raw logs increases storage cost and compliance surface area significantly",
+    "Is there sufficient demand for a mobile view of the reliability dashboard for on-call engineers, or is desktop-first sufficient for the initial release?"
   ],
   "out_of_scope": [
-    "Writing or modifying CI/CD pipeline configurations on behalf of users",
-    "Real-time log streaming or error monitoring (ShipBoard tracks deployment events, not runtime application health)",
-    "Integration with GitLab CI, CircleCI, or Buildkite in v1; GitHub Actions, Jenkins, and ArgoCD only",
-    "Alerting on infrastructure metrics (CPU, memory, latency) — that is the domain of existing APM tools",
-    "Code review or pull request analytics",
-    "Automated rollback triggering based on failure rate thresholds",
-    "Compliance reporting or SOC 2 evidence generation at launch"
+    "Execution or triggering of deployments \u2014 ShipBoard is read-only and observability-only; it does not orchestrate or modify pipelines",
+    "Log aggregation, distributed tracing, or APM functionality \u2014 ShipBoard ingests deployment events only, not application runtime logs or traces",
+    "Incident management workflows such as paging, escalation policies, or postmortem templates \u2014 these remain in tools like PagerDuty or Jira",
+    "Support for non-deployment CI pipeline stages such as unit test results, code coverage, or static analysis metrics",
+    "Cost analytics for cloud infrastructure or CI/CD compute spend",
+    "Code review or pull request analytics beyond lead time as it relates to deployment events",
+    "Built-in remediation or automated rollback triggering based on detected anomalies",
+    "Support for mobile native applications (iOS/Android) in the initial release",
+    "Integration with ticketing systems such as Jira or ServiceNow in v1",
+    "Multi-tenancy features such as org-level hierarchies or business-unit-level billing in v1"
   ]
 }

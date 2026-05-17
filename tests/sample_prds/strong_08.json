@@ -1,74 +1,81 @@
 {
   "title": "SpeakNative",
-  "problem_statement": "An estimated 1.5 billion people are learning English globally, yet 73% of intermediate learners (B1-B2 CEFR level) plateau for 12+ months because available apps (Duolingo, Babbel) focus on vocabulary and grammar drills rather than spontaneous spoken conversation — the skill most needed for professional and social fluency (EF English Proficiency Index 2023). Live tutoring via iTalki addresses this gap but costs $15-40 per session, creating a price barrier that limits learners to 1-2 sessions per week, insufficient for the 10+ hours of conversation practice needed to advance a CEFR level. An AI conversation partner that conducts structured spoken exchanges, provides real-time pronunciation and fluency feedback, and adapts scenario difficulty to the learner's current level can deliver daily conversation practice at a price point accessible to the global middle class.",
+  "problem_statement": "Approximately 1.5 billion people are learning English globally, and 73% of intermediate learners at the B1-B2 CEFR level stall for 12 or more months because dominant apps focus on vocabulary and grammar drills rather than spontaneous spoken conversation. Live human tutoring closes this gap functionally but costs $15-40 per session, limiting most learners to one or two sessions per week \u2014 far below the 10+ hours of conversation practice research shows is necessary to advance a CEFR level. The convergence of mature speech recognition, large language models capable of natural dialogue, and a 1.5-billion-person addressable market makes 2024 the right moment to deliver AI-powered daily conversation practice at an accessible price point. Without a scalable, affordable solution, hundreds of millions of learners will remain stuck at intermediate plateaus, limiting their professional mobility and social integration.",
   "target_users": [
-    "Intermediate English learners (B1-B2 CEFR) aged 18-35 in non-English-speaking countries preparing for job interviews, international university programs, or professional promotion",
-    "Adult learners who have completed an app-based vocabulary course (Duolingo level 10+) and feel stuck because they cannot hold a real conversation",
-    "Working professionals in Southeast Asia, Latin America, and Eastern Europe who need English for client communication but cannot afford regular iTalki sessions",
-    "English as a Second Language (ESL) teachers who want to assign structured speaking homework that tracks student progress without requiring the teacher's time"
+    "B1-B2 CEFR intermediate adult learner in a non-English-speaking country seeking career advancement in a multinational company",
+    "Recent immigrant to an English-speaking country needing conversational fluency for daily social and civic integration",
+    "University student preparing for an English-language academic program or international internship",
+    "Self-directed adult learner who has exhausted gamified vocabulary apps and wants structured speaking practice on a tight budget"
   ],
   "user_stories": [
-    "As an intermediate English learner, I want to choose from a set of realistic conversation scenarios (job interview, business meeting, airport, restaurant) and practice speaking aloud with an AI partner so that I build fluency in the contexts I actually need",
-    "As a learner, I want immediate feedback on my pronunciation after each utterance highlighting specific phonemes I mispronounced so that I can correct errors in real time rather than internalizing bad habits",
-    "As a learner, I want the AI to gradually increase conversation complexity as my session scores improve so that I am always working slightly above my comfort level",
-    "As a learner, I want a weekly fluency report showing words per minute, filler word frequency, and pronunciation accuracy trend so that I can see concrete progress and stay motivated during the intermediate plateau",
-    "As a working professional, I want to complete a 10-minute practice session during my commute using only my phone's speaker and microphone so that I can practice daily without needing a quiet room or headphones",
-    "As an ESL teacher, I want to assign a specific scenario and minimum session length to students and receive a completion report with their fluency scores so that I can track speaking homework without scheduling live sessions",
-    "As a learner, I want to replay my conversation recording alongside a native speaker reference recording of the same script so that I can hear the contrast and identify my accent differences by ear"
+    "As a B1-B2 CEFR intermediate adult learner in a non-English-speaking country seeking career advancement in a multinational company, I want to complete a 10-minute AI-driven job interview simulation before my workday so that I can practice professional vocabulary and reduce hesitation in real meetings.",
+    "As a B1-B2 CEFR intermediate adult learner in a non-English-speaking country seeking career advancement in a multinational company, I want to receive immediate phoneme-level pronunciation feedback after each spoken turn so that I can identify and correct specific accent errors that undermine my credibility with native-speaking colleagues.",
+    "As a recent immigrant to an English-speaking country needing conversational fluency for daily social and civic integration, I want to role-play scenario conversations such as speaking with a landlord, visiting a clinic, or attending a parent-teacher meeting so that I can handle real-life interactions confidently without costly tutoring sessions.",
+    "As a recent immigrant to an English-speaking country needing conversational fluency for daily social and civic integration, I want the app to detect when I switch to my native language mid-sentence and gently prompt me to rephrase in English so that I build the habit of thinking and speaking in English rather than translating internally.",
+    "As a university student preparing for an English-language academic program or international internship, I want to practice timed spoken responses to IELTS Speaking or TOEFL Independent tasks with AI scoring so that I can track my band or score trajectory over time and know when I am ready for the real exam.",
+    "As a self-directed adult learner who has exhausted gamified vocabulary apps and wants structured speaking practice on a tight budget, I want unlimited daily AI conversation sessions for under $10 per month so that I can practice as often as research recommends without financial anxiety limiting my frequency.",
+    "As a self-directed adult learner who has exhausted gamified vocabulary apps and wants structured speaking practice on a tight budget, I want a weekly spoken fluency report showing words-per-minute, filler-word frequency, and grammatical error categories so that I can set concrete improvement goals without needing a human tutor to assess me."
   ],
   "acceptance_criteria": [
-    "The AI conversation partner responds to each learner utterance within 1.5 seconds of speech ending on a device with a stable LTE connection, measured across 50 test sessions on iPhone 13 and Pixel 7",
-    "Speech recognition accuracy (word error rate) for B1-level English learners with Indian, Brazilian, and Polish accents is below 12% WER on a 200-utterance labeled test set per accent group, evaluated before GA",
-    "Pronunciation feedback identifies the specific phoneme and provides an example word containing the target sound within 2 seconds of the learner's utterance; feedback is displayed as highlighted text, not only audio",
-    "Conversation difficulty adapts upward when a learner scores above 78% pronunciation accuracy and above 110 words per minute in 3 consecutive sessions; adapts downward when below 60% accuracy in 2 consecutive sessions",
-    "The weekly fluency report displays words-per-minute trend (trailing 4 weeks), filler word frequency per minute, and pronunciation accuracy percentage, updated within 1 hour of the last completed session of the week",
-    "Sessions of 5-15 minutes can be completed with the phone's built-in microphone and speaker in ambient noise up to 55 dB SPL (typical street or office level) without accuracy degrading beyond the 12% WER threshold",
-    "Teacher accounts can assign scenarios to up to 30 students, set a minimum session duration (5-20 minutes), and view per-student completion status and session score within the teacher dashboard within 24 hours of session completion",
-    "The app and all AI conversation content are available offline after initial scenario download; only fluency report syncing and teacher dashboard updates require internet connectivity"
+    "The AI conversation engine responds to a learner's spoken turn within 1.5 seconds of speech-end detection on a standard 4G mobile connection at least 95% of the time.",
+    "Speech recognition correctly transcribes B1-B2 learner speech with non-native accents at a Word Error Rate of 12% or lower across a benchmark set of 500 utterances spanning at least 10 accent groups.",
+    "After each conversation session, the app surfaces a structured feedback card identifying at least 3 grammatical error types, 3 mispronounced phonemes with audio model examples, and a fluency score on a 0-100 scale within 10 seconds of session end.",
+    "Role-play scenario library contains a minimum of 50 distinct real-life scenarios across 5 domains (workplace, social, healthcare, civic, academic) at launch, each with branching dialogue paths of at least 8 turns.",
+    "A learner's CEFR sub-level progress estimate, derived from spoken output analysis, updates after every completed session and is displayed with an explanation of the evidence used to generate it.",
+    "The app enforces English-only conversation mode by detecting native-language utterances with at least 90% precision and triggering an in-session English rephrasing prompt within one conversational turn.",
+    "Subscription checkout and first conversation session can be completed end-to-end in under 5 minutes on a first-time install on both iOS and Android.",
+    "All user audio data is encrypted in transit and at rest, retained for no more than 30 days by default, and fully deletable by the user via a single in-app action with confirmation within 24 hours."
   ],
   "success_metrics": [
     {
-      "metric": "Daily active users / monthly active users ratio (DAU/MAU), a proxy for habit formation",
-      "baseline": "Language learning app median DAU/MAU: 0.21 (Sensor Tower 2023)",
-      "target": "DAU/MAU ratio of 0.30 or above within 90 days of launch, measured across users with 30+ days since install"
+      "metric": "Weekly Active Speaking Minutes per paying subscriber",
+      "baseline": "Estimated 20 minutes/week based on typical iTalki session frequency at comparable price points",
+      "target": "70 minutes/week average by Month 6 post-launch"
     },
     {
-      "metric": "CEFR level progression rate (percentage of B1 users who score at B2 level on the in-app CEFR assessment after 90 days of use at 3+ sessions per week)",
-      "baseline": "Comparable iTalki study: 31% of learners with 2 sessions per week advance a CEFR level in 6 months",
-      "target": "45% of eligible users (B1 entry, 3+ sessions per week) advance to B2 on in-app assessment within 90 days"
+      "metric": "30-day paying subscriber retention rate",
+      "baseline": "Industry average for language-learning subscription apps: approximately 35%",
+      "target": "55% 30-day retention by end of Quarter 2 post-launch"
     },
     {
-      "metric": "Session completion rate (percentage of started sessions that reach the minimum 5-minute mark without the user navigating away)",
-      "baseline": "No baseline; targeting Duolingo lesson completion rate of 68% as comparable engagement benchmark",
-      "target": "Session completion rate above 72% within 60 days of launch"
+      "metric": "Percentage of active users who advance at least one CEFR sub-level within 90 days of consistent use (5+ sessions/week)",
+      "baseline": "0% (no prior product baseline; research benchmark: ~15% advance with 2 sessions/week of human tutoring)",
+      "target": "40% of qualifying users advance one CEFR sub-level within 90 days"
     },
     {
-      "metric": "D30 subscription conversion rate (percentage of free users who subscribe to premium within 30 days of first session)",
-      "baseline": "Language app freemium median: 3.5% D30 conversion (RevenueCat Benchmark 2023)",
-      "target": "6% D30 conversion rate within 90 days of launch"
+      "metric": "Monthly Recurring Revenue (MRR)",
+      "baseline": "$0 at launch",
+      "target": "$500,000 MRR by end of Month 12"
     },
     {
-      "metric": "Teacher account activations (ESL teacher accounts with at least one student assignment sent)",
-      "baseline": "0 at launch",
-      "target": "500 active teacher accounts within 6 months of launch, driven by direct outreach to ESL teaching communities"
+      "metric": "Net Promoter Score (NPS) among subscribers active for 30+ days",
+      "baseline": "Duolingo NPS benchmark: approximately 30",
+      "target": "NPS of 50 or above by Month 6"
+    },
+    {
+      "metric": "Average AI conversation turn latency (speech-end to AI audio response start)",
+      "baseline": "Industry observed average for conversational AI voice apps: ~2.5 seconds",
+      "target": "Below 1.5 seconds at p95 within 60 days of launch"
     }
   ],
   "risks_open_questions": [
-    "Speech recognition accuracy degrades significantly for learners with heavy accents; if WER exceeds 15% for a specific accent group, the feedback loop breaks and learners disengage — need ongoing accent-specific model fine-tuning post-launch",
-    "Real-time AI conversation response under 1.5 seconds requires low-latency LLM inference; cloud latency spikes during peak hours may break the conversational feel — need streaming response and fallback to cached scenario templates",
-    "Learners in markets like India and Brazil may use the app on low-end Android devices (2GB RAM, Android 9); need performance testing on low-spec devices before launch, not just flagship hardware",
-    "Learner privacy: conversation recordings contain voice biometric data, which is regulated in Illinois (BIPA) and increasingly in other states — need legal review of voice data retention and deletion policy before US launch",
-    "Monetization sensitivity: target markets (Southeast Asia, Latin America, Eastern Europe) have significantly lower willingness to pay than US users; $9.99/month pricing may need regional pricing tiers to achieve conversion targets",
-    "Does the AI conversation partner need to handle off-topic learner inputs gracefully without breaking the scenario or producing inappropriate content — this needs to be defined and tested before launch",
-    "Teacher assignment feature success metric conflict: teacher account activations are listed as a success metric but teacher assignment features are out of scope for v1 — this tension must be resolved before finalizing scope"
+    "Speech recognition accuracy degrades significantly for learners with strong regional accents (e.g., South Asian, West African, Southeast Asian English) \u2014 will WER targets be achievable across all accent groups without accent-specific model fine-tuning, and what is the cost and data availability to do so?",
+    "LLM-generated conversational responses may include factually incorrect information, culturally insensitive content, or inadvertently reinforce the learner's grammatical errors rather than correcting them \u2014 what guardrails, red-teaming, and human review processes are required pre-launch?",
+    "GDPR, CCPA, and emerging AI-specific data regulations require explicit consent for voice data storage; the legal basis for retaining audio to improve models must be established before launch \u2014 is a consent-based opt-in for model training data sufficient, or is a separate data processing agreement needed?",
+    "At a sub-$10/month price point, LLM inference and speech API costs per active user must remain below approximately $2/month to sustain margins \u2014 current per-session costs for GPT-4-class models and Whisper-class ASR may exceed this threshold at target usage levels; is model distillation or fine-tuned open-source models the right cost lever?",
+    "Open question: Should CEFR sub-level assessment be built on a validated psychometric framework (e.g., aligned to Cambridge or ALTE standards) requiring external validation studies, or is a proprietary proxy sufficient for product feedback purposes without regulatory risk?",
+    "Learner motivation and habit formation are the primary drivers of long-term retention; streaks and leaderboards are known to produce anxiety and churn in adult learners \u2014 what engagement mechanic best serves the demographic without replicating Duolingo's gamification criticisms?",
+    "The scenario role-play library requires culturally localized content for the top 10 learner markets (Brazil, India, Japan, Germany, France, etc.) \u2014 is AI-generated localization of scenario contexts sufficient, or does it require human cultural review to avoid misrepresenting norms and risking negative press?",
+    "Competitive risk: Duolingo has publicly announced an AI conversation product; Google and Microsoft have native speech AI capabilities \u2014 what is SpeakNative's defensible moat if large incumbents ship free conversation features within 12-18 months of our launch?"
   ],
   "out_of_scope": [
-    "Support for languages other than English as the target language in v1",
-    "Human tutor marketplace or live tutoring session booking",
-    "Grammar and vocabulary drills; SpeakNative focuses on spoken conversation only",
-    "Writing or reading skill development",
-    "IELTS or TOEFL exam-specific preparation mode at launch",
-    "Teacher assignment and classroom management features in v1 (post-GA roadmap item)",
-    "Translation of the app UI into non-English languages at launch"
+    "Support for languages other than English as the target practice language at initial launch (e.g., AI-powered Spanish or Mandarin conversation practice)",
+    "Human tutor marketplace or live session booking functionality; SpeakNative is AI-only at launch with no human-in-the-loop tutoring component",
+    "Formal certification or official CEFR examination preparation with proctored testing and accredited score reporting",
+    "Reading, writing, or listening skill modules; the v1 product scope is spoken conversation practice only",
+    "B2B enterprise or school district licensing, LMS integrations, or bulk seat management dashboards",
+    "Offline mode or downloadable conversation packs for use without an internet connection",
+    "Content for absolute beginners at A1-A2 CEFR level; onboarding requires a minimum B1 placement score to enter the core conversation experience",
+    "Social or community features such as learner-to-learner conversation matching, forums, or leaderboards"
   ]
 }
