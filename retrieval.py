@@ -1,15 +1,30 @@
 import json
 import os
+import streamlit as st
 
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_chroma import Chroma
 from langchain_core.documents import Document
 
 _EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 
+@st.cache_resource(show_spinner=False)
+def get_embeddings():
+    from langchain_huggingface import HuggingFaceEmbeddings
+    return HuggingFaceEmbeddings(model_name=_EMBED_MODEL)
+
+
+@st.cache_resource(show_spinner=False)
+def get_db(persist_dir: str = "chroma_db"):
+    from langchain_chroma import Chroma
+    return Chroma(
+        persist_directory=persist_dir,
+        embedding_function=get_embeddings(),
+    )
+
+
 def build_corpus_index(corpus_dir: str = "corpus", persist_dir: str = "chroma_db") -> int:
-    embeddings = HuggingFaceEmbeddings(model_name=_EMBED_MODEL)
+    from langchain_chroma import Chroma
+    embeddings = get_embeddings()
     documents = []
     for fname in sorted(os.listdir(corpus_dir)):
         if not fname.endswith(".json"):
@@ -29,15 +44,12 @@ def build_corpus_index(corpus_dir: str = "corpus", persist_dir: str = "chroma_db
     return len(documents)
 
 
-def _load_db(persist_dir: str) -> Chroma:
-    return Chroma(
-        persist_directory=persist_dir,
-        embedding_function=HuggingFaceEmbeddings(model_name=_EMBED_MODEL),
-    )
+def _load_db(persist_dir: str):
+    return get_db(persist_dir)
 
 
 def retrieve_similar_prds(query: str, k: int = 2, persist_dir: str = "chroma_db") -> str:
-    results = _load_db(persist_dir).similarity_search(query, k=k)
+    results = get_db(persist_dir).similarity_search(query, k=k)
     blocks = []
     for i, doc in enumerate(results, 1):
         prd = json.loads(doc.metadata["full_prd"])
@@ -60,5 +72,5 @@ def retrieve_similar_prds(query: str, k: int = 2, persist_dir: str = "chroma_db"
 
 
 def get_similar_prd_metas(query: str, k: int = 2, persist_dir: str = "chroma_db") -> list[dict]:
-    results = _load_db(persist_dir).similarity_search(query, k=k)
+    results = get_db(persist_dir).similarity_search(query, k=k)
     return [json.loads(doc.metadata["full_prd"]) for doc in results]

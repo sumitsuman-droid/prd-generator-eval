@@ -7,7 +7,7 @@ Reference examples (may be empty):
 
 Return a single JSON object with exactly these keys:
 {{
-  "title": "string — concise product name",
+  "title": "string — a descriptive product name with a brief subtitle in the format 'ProductName: Subtitle describing what it does and for whom'. Example: 'MarketLens: Retail Media Insights Dashboard for B2B Marketplace Advertisers' or 'ETA Live: Real-Time Last-Mile Delivery Tracking for Food Delivery Customers'. The product name should be 1-2 words, the subtitle should be 6-12 words and describe the product's function and target user.",
   "problem_statement": "string — 2-4 sentences describing the problem, who has it, and why it matters now",
   "target_users": ["string", ...],
   "user_stories": ["As a <persona>, I want <action> so that <outcome>", ...],
