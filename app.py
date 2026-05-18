@@ -4,7 +4,7 @@ import json
 from io import BytesIO
 
 from docx import Document
-from generator import generate_prd_streaming, evaluate_prd, parse_prd_text
+from generator import generate_prd_streaming, evaluate_prd, parse_prd_text, explain_retrieval
 from retrieval import get_similar_prd_metas, retrieve_similar_prds
 
 
@@ -198,6 +198,10 @@ def _render_eval(evaluation: dict) -> None:
         f"<h2 style='color:{color}'>Overall Score: {overall} / 10</h2>",
         unsafe_allow_html=True,
     )
+    st.caption(
+        "Scores are directional quality signals, not absolute truth. "
+        "The rubric is designed to highlight improvement areas and compare outputs consistently."
+    )
     DIMENSIONS = ["specificity", "measurability", "testability", "user_centricity", "completeness"]
     scores = evaluation.get("scores", {})
     dim_cols = st.columns(5)
@@ -219,8 +223,8 @@ _SAMPLE_QUERIES = [
 ]
 
 st.set_page_config(page_title="PRD Generator", page_icon="📋", layout="wide")
-st.title("PRD Generator")
-st.caption("Powered by Claude — generates a structured PRD and scores it with an LLM-as-judge eval.")
+st.title("PRD Generator with Eval Harness")
+st.markdown("Generate structured PRDs from rough product ideas, then evaluate output quality with a calibrated LLM-as-judge rubric.")
 
 if "_pending_idea" in st.session_state:
     st.session_state["idea"] = st.session_state.pop("_pending_idea")
@@ -253,6 +257,11 @@ if st.button("Generate PRD", type="primary", disabled=not idea.strip()):
             _retrieval_ok = False
 
     if _retrieval_ok:
+        for r in retrieved_prds:
+            try:
+                r["_why_retrieved"] = explain_retrieval(idea.strip(), r)
+            except Exception:
+                r["_why_retrieved"] = ""
         st.session_state["retrieved_prds"] = retrieved_prds
         st.session_state["_idea"] = idea.strip()
         st.session_state["_retrieved_examples"] = (
@@ -271,6 +280,9 @@ if "retrieved_prds" in st.session_state:
             sentences = r.get("problem_statement", "").split(". ")
             summary = ". ".join(sentences[:2]) + ("." if len(sentences) > 2 else "")
             st.caption(summary)
+            explanation = r.get("_why_retrieved", "")
+            if explanation:
+                st.caption(f"**Why retrieved:** {explanation}")
 
 # Two placeholders: prd_placeholder owns PRD rendering, eval_placeholder owns eval scores.
 prd_placeholder = st.empty()

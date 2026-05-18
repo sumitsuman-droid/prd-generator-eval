@@ -89,3 +89,32 @@ def generate_prd_with_retrieval(user_idea: str) -> dict:
         "guidance, not content to copy:\n\n" + retrieved
     )
     return generate_prd(user_idea, retrieved_examples=retrieved_examples)
+
+
+EXPLAIN_PROMPT = (
+    "Given a user's product idea and a retrieved reference PRD, write ONE SHORT SENTENCE "
+    "(15-25 words) explaining why this reference PRD is structurally similar to the user's "
+    "idea. Focus on the structural/architectural similarity (e.g., persona patterns, workflow "
+    "type, domain, user-stakeholder structure), NOT topical content overlap.\n\n"
+    "User idea: {user_idea}\n\n"
+    "Reference PRD title: {title}\n"
+    "Reference PRD problem: {problem_statement}\n\n"
+    "Return ONLY the explanation sentence, no preamble, no quotes, no formatting. Just the "
+    "sentence itself, starting with a verb or noun phrase like \"Similar operational "
+    "workflow...\" or \"Shares the same...\" or \"Both involve...\"."
+)
+
+
+def explain_retrieval(user_idea: str, retrieved_prd: dict) -> str:
+    problem = retrieved_prd.get("problem_statement", "")[:300]
+    prompt = EXPLAIN_PROMPT.format(
+        user_idea=user_idea,
+        title=retrieved_prd.get("title", ""),
+        problem_statement=problem,
+    )
+    message = _get_client().messages.create(
+        model=EVAL_MODEL,
+        max_tokens=80,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return message.content[0].text.strip()
