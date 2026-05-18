@@ -41,7 +41,7 @@ In my previous work, I worked on a LangChain/OpenAI-based assistant for Unilever
 
 With this project, I wanted to test a specific question: can a Large Language Model (LLM) evaluate structured product output against a clear rubric, and how much calibration is needed before those scores become useful?
 
-I am currently exploring GenAI Product Manager roles in Germany and the Netherlands. I wanted this project to show how I think about LLM products beyond the prompt layer: retrieval quality, evaluation design, failure analysis, iteration, and the trade-offs that come up when turning a demo into something more dependable.
+ I wanted this project to show how I think about LLM products beyond the prompt layer: retrieval quality, evaluation design, failure analysis, iteration, and the trade-offs that come up when turning a demo into something more dependable.
 
 ---
 
