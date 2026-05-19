@@ -4,6 +4,10 @@ A small Product Requirements Document (PRD) generator with a built-in evaluation
 
 The app takes a rough product idea, turns it into a structured PRD, and then scores the output against a rubric. I built this project to explore a question I have been thinking about for a while: once a GenAI demo works, how do you know if the output is good enough for someone to actually trust and use?
 
+## About this work
+
+This project was built across three weekends in late 2026 as part of my exploration of GenAI Product Manager roles in Germany and the Netherlands. The code and write-up are mine — the README, calibration notes, and corpus design reflect my own thinking and iteration process. If you're a recruiter or PM interested in this work, please reach out via [LinkedIn](https://www.linkedin.com/in/sumit5suman/).
+
 **Live demo:** To be added after deployment
 
 ![Hero screenshot](examples/screenshot_01_hero.png)

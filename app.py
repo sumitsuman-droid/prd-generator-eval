@@ -225,6 +225,11 @@ _SAMPLE_QUERIES = [
 st.set_page_config(page_title="PRD Generator", page_icon="📋", layout="wide")
 st.title("PRD Generator with Eval Harness")
 st.markdown("Generate structured PRDs from rough product ideas, then evaluate output quality with a calibrated LLM-as-judge rubric.")
+st.caption(
+    "_This is a portfolio demonstration of LLM evaluation methodology. "
+    "The app uses paid API credits — please use thoughtfully. If you're a recruiter exploring my work, "
+    "feel free to reach out via [LinkedIn](https://www.linkedin.com/in/sumit5suman/)._"
+)
 
 if "_pending_idea" in st.session_state:
     st.session_state["idea"] = st.session_state.pop("_pending_idea")
