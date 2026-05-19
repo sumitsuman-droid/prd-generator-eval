@@ -6,7 +6,8 @@ The app takes a rough product idea, turns it into a structured PRD, and then sco
 
 ## About this work
 
-This project was built across three weekends in late 2026 as part of my exploration of GenAI Product Manager roles in Germany and the Netherlands. The code and write-up are mine — the README, calibration notes, and corpus design reflect my own thinking and iteration process. If you're a recruiter or PM interested in this work, please reach out via [LinkedIn](https://www.linkedin.com/in/sumit5suman/).
+This is a personal project I built across three weekends in late 2026. The code, README, calibration notes, and corpus design reflect my own thinking and iteration process. If you're a recruiter or PM interested in this work, please reach out via [LinkedIn](https://www.linkedin.com/in/sumit5suman/).
+
 
 **Live demo:** To be added after deployment
 
