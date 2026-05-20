@@ -231,8 +231,13 @@ st.caption(
     "feel free to reach out via [LinkedIn](https://www.linkedin.com/in/sumit5suman/)._"
 )
 
+# Handle chip selection -> textarea prefill
 if "_pending_idea" in st.session_state:
     st.session_state["idea"] = st.session_state.pop("_pending_idea")
+
+# ============================================================
+# CONTROL SECTION — fixed position at top, never moves
+# ============================================================
 
 idea = st.text_area(
     "Describe your product idea",
@@ -242,8 +247,8 @@ idea = st.text_area(
 )
 
 st.markdown("**Try a sample idea:**")
-_cc = st.columns(3)
-for _i, (_col, _q) in enumerate(zip(_cc, _SAMPLE_QUERIES), 1):
+_chip_cols = st.columns(3)
+for _i, (_col, _q) in enumerate(zip(_chip_cols, _SAMPLE_QUERIES), 1):
     with _col:
         with st.container(border=True):
             st.markdown(_q)
@@ -251,36 +256,40 @@ for _i, (_col, _q) in enumerate(zip(_cc, _SAMPLE_QUERIES), 1):
                 st.session_state["_pending_idea"] = _q
                 st.rerun()
 
-if st.button("Generate PRD", type="primary", disabled=not idea.strip()):
-    _retrieval_ok = True
-    with st.spinner("Retrieving similar PRDs…"):
-        try:
-            retrieved_prds = get_similar_prd_metas(idea.strip(), k=2)
-            retrieved_text = retrieve_similar_prds(idea.strip(), k=2)
-        except Exception as e:
-            st.error(f"Retrieval failed: {e}")
-            _retrieval_ok = False
+generate_clicked = st.button("Generate PRD", type="primary", disabled=not idea.strip())
 
-    if _retrieval_ok:
-        for r in retrieved_prds:
-            try:
-                r["_why_retrieved"] = explain_retrieval(idea.strip(), r)
-            except Exception:
-                r["_why_retrieved"] = ""
-        st.session_state["retrieved_prds"] = retrieved_prds
-        st.session_state["_idea"] = idea.strip()
-        st.session_state["_retrieved_examples"] = (
-            "For reference, here are similar PRDs to use as style and structure "
-            "guidance, not content to copy:\n\n" + retrieved_text
-        )
-        st.session_state.pop("prd", None)
-        st.session_state.pop("evaluation", None)
-        st.session_state["_generating"] = True
-        st.rerun()
+st.divider()
 
-if "retrieved_prds" in st.session_state:
+# ============================================================
+# OUTPUT SECTION — single container at fixed position below button
+# Container is created ONCE here. Contents change based on state.
+# ============================================================
+
+output_container = st.container()
+
+ARCHITECTURE_MARKDOWN = """
+1. **Idea input** — You paste a product idea in plain English.
+2. **Retrieval** — The system embeds your query using `sentence-transformers/all-MiniLM-L6-v2`
+   and retrieves the 2 most-similar PRDs from a curated corpus of 15 reference PRDs stored in Chroma.
+3. **Grounded generation** — Those retrieved PRDs are injected into the generation prompt
+   (Claude Sonnet 4.6), so the output inherits structural rigor without copying content.
+4. **LLM-as-judge eval** — The generated PRD is automatically scored 1–10 by a second
+   Claude call across 5 dimensions: specificity, measurability, testability, user-centricity,
+   and completeness. The rubric is calibrated to a strong/weak separation of 6.56 on a
+   20-PRD test set.
+
+Code, calibration details, and corpus on GitHub.
+"""
+
+FOOTER_CAPTION = (
+    "Built by Sumit Suman · [LinkedIn](https://www.linkedin.com/in/sumit5suman/) · "
+    "[GitHub](https://github.com/sumitsuman-droid/prd-generator-eval)"
+)
+
+
+def _render_retrieved_expander(retrieved_prds):
     with st.expander("Retrieved similar PRDs (RAG context)"):
-        for r in st.session_state["retrieved_prds"]:
+        for r in retrieved_prds:
             st.markdown(f"**{r['title']}**")
             sentences = r.get("problem_statement", "").split(". ")
             summary = ". ".join(sentences[:2]) + ("." if len(sentences) > 2 else "")
@@ -289,116 +298,94 @@ if "retrieved_prds" in st.session_state:
             if explanation:
                 st.caption(f"**Why retrieved:** {explanation}")
 
-# Two placeholders: prd_placeholder owns PRD rendering, eval_placeholder owns eval scores.
-prd_placeholder = st.empty()
-eval_placeholder = st.empty()
 
-# Streaming/eval phase — runs on the rerun immediately after button click.
-# _generating is popped at the top so a mid-stream crash can't create an infinite loop.
-if st.session_state.pop("_generating", False):
-    _idea = st.session_state["_idea"]
-    _examples = st.session_state["_retrieved_examples"]
+def _render_architecture_footer():
+    with st.expander("How it works (architecture)"):
+        st.markdown(ARCHITECTURE_MARKDOWN)
+    st.caption(FOOTER_CAPTION)
 
-    # Stage A: stream
-    full_text = ""
-    try:
-        for chunk in generate_prd_streaming(_idea, _examples):
-            full_text += chunk
-            with prd_placeholder.container():
-                st.markdown(_streaming_display_text(full_text))
-    except Exception as e:
-        prd_placeholder.error(f"PRD generation failed: {e}")
-        st.stop()
 
-    # Stage B: parse and render structured PRD once
-    try:
-        prd = parse_prd_text(full_text)
-    except (json.JSONDecodeError, ValueError):
-        prd_placeholder.error("Failed to parse generated PRD — output may have been truncated.")
-        with st.expander("Raw output"):
-            st.code(full_text)
-        st.stop()
+# Decide what renders inside output_container based on state
+if generate_clicked:
+    # Clear previous state at the very start
+    st.session_state.pop("prd", None)
+    st.session_state.pop("evaluation", None)
+    st.session_state.pop("retrieved_prds", None)
 
-    st.session_state["prd"] = prd
-    with prd_placeholder.container():
-        _render_full_prd(prd)
+    with output_container:
+        # Stage A: Retrieval
+        with st.spinner("Retrieving similar PRDs and analyzing them…"):
+            try:
+                retrieved_prds = get_similar_prd_metas(idea.strip(), k=2)
+                retrieved_text = retrieve_similar_prds(idea.strip(), k=2)
+                for r in retrieved_prds:
+                    try:
+                        r["_why_retrieved"] = explain_retrieval(idea.strip(), r)
+                    except Exception:
+                        r["_why_retrieved"] = ""
+            except Exception as e:
+                st.error(f"Retrieval failed: {e}")
+                st.stop()
 
-    # Stage C: eval into its own placeholder
-    with eval_placeholder.container():
+        st.session_state["retrieved_prds"] = retrieved_prds
+        _render_retrieved_expander(retrieved_prds)
+
+        # Stage B: Streaming generation
+        examples_text = (
+            "For reference, here are similar PRDs to use as style and structure "
+            "guidance, not content to copy:\n\n" + retrieved_text
+        )
+
+        stream_area = st.empty()
+        with stream_area.container():
+            st.info("Generating PRD…")
+
+        full_text = ""
+        try:
+            for chunk in generate_prd_streaming(idea.strip(), examples_text):
+                full_text += chunk
+                with stream_area.container():
+                    st.markdown(_streaming_display_text(full_text))
+        except Exception as e:
+            stream_area.error(f"PRD generation failed: {e}")
+            st.stop()
+
+        # Stage C: Parse and render structured PRD
+        try:
+            prd = parse_prd_text(full_text)
+        except (json.JSONDecodeError, ValueError):
+            stream_area.error("Failed to parse generated PRD — output may have been truncated.")
+            with st.expander("Raw output"):
+                st.code(full_text)
+            st.stop()
+
+        st.session_state["prd"] = prd
+        with stream_area.container():
+            _render_full_prd(prd)
+
+        # Stage D: Evaluation
         with st.spinner("Running LLM-as-judge evaluation…"):
             try:
                 evaluation = evaluate_prd(prd)
             except Exception as e:
                 st.error(f"Evaluation failed: {e}")
                 evaluation = {}
+
         st.session_state["evaluation"] = evaluation
         _render_eval(evaluation)
-        with st.expander("How it works (architecture)"):
-            st.markdown(
-                """
-                1. **Idea input** — You paste a product idea in plain English.
-                2. **Retrieval** — The system embeds your query using `sentence-transformers/all-MiniLM-L6-v2`
-                   and retrieves the 2 most-similar PRDs from a curated corpus of 15 reference PRDs stored in Chroma.
-                3. **Grounded generation** — Those retrieved PRDs are injected into the generation prompt
-                   (Claude Sonnet 4.6), so the output inherits structural rigor without copying content.
-                4. **LLM-as-judge eval** — The generated PRD is automatically scored 1–10 by a second
-                   Claude call across 5 dimensions: specificity, measurability, testability, user-centricity,
-                   and completeness. The rubric is calibrated to a strong/weak separation of 6.56 on a
-                   20-PRD test set.
-
-                Code, calibration details, and corpus on GitHub.
-                """
-            )
-        st.caption(
-            "Built by Sumit Suman · [LinkedIn](https://www.linkedin.com/in/sumit5suman/) · "
-            "[GitHub](https://github.com/sumitsuman-droid/prd-generator-eval)"
-        )
+        _render_architecture_footer()
 
 elif "prd" in st.session_state:
-    # Subsequent reruns (e.g. Download button): re-render from session_state.
-    with prd_placeholder.container():
+    # User triggered a non-generate rerun (e.g. clicked Download button)
+    # Re-render existing PRD inside output_container
+    with output_container:
+        if "retrieved_prds" in st.session_state:
+            _render_retrieved_expander(st.session_state["retrieved_prds"])
         _render_full_prd(st.session_state["prd"])
-    with eval_placeholder.container():
         _render_eval(st.session_state.get("evaluation", {}))
-        with st.expander("How it works (architecture)"):
-            st.markdown(
-                """
-                1. **Idea input** — You paste a product idea in plain English.
-                2. **Retrieval** — The system embeds your query using `sentence-transformers/all-MiniLM-L6-v2`
-                   and retrieves the 2 most-similar PRDs from a curated corpus of 15 reference PRDs stored in Chroma.
-                3. **Grounded generation** — Those retrieved PRDs are injected into the generation prompt
-                   (Claude Sonnet 4.6), so the output inherits structural rigor without copying content.
-                4. **LLM-as-judge eval** — The generated PRD is automatically scored 1–10 by a second
-                   Claude call across 5 dimensions: specificity, measurability, testability, user-centricity,
-                   and completeness. The rubric is calibrated to a strong/weak separation of 6.56 on a
-                   20-PRD test set.
+        _render_architecture_footer()
 
-                Code, calibration details, and corpus on GitHub.
-                """
-            )
-        st.caption(
-            "Built by Sumit Suman · [LinkedIn](https://www.linkedin.com/in/sumit5suman/) · "
-            "[GitHub](https://github.com/sumitsuman-droid/prd-generator-eval)"
-        )
-
-if "prd" not in st.session_state and not st.session_state.get("_generating_active", False):
-    with st.expander("How it works (architecture)"):
-        st.markdown(
-            """
-            1. **Idea input** — You paste a product idea in plain English.
-            2. **Retrieval** — The system embeds your query using `sentence-transformers/all-MiniLM-L6-v2`
-               and retrieves the 2 most-similar PRDs from a curated corpus of 15 reference PRDs stored in Chroma.
-            3. **Grounded generation** — Those retrieved PRDs are injected into the generation prompt
-               (Claude Sonnet 4.6), so the output inherits structural rigor without copying content.
-            4. **LLM-as-judge eval** — The generated PRD is automatically scored 1–10 by a second
-               Claude call across 5 dimensions: specificity, measurability, testability, user-centricity,
-               and completeness. The rubric is calibrated to a strong/weak separation of 6.56 on a
-               20-PRD test set.
-
-            Code, calibration details, and corpus on GitHub.
-            """
-        )
-    st.caption(
-        "Built by Sumit Suman · [LinkedIn](https://www.linkedin.com/in/sumit5suman/) · "
-        "[GitHub](https://github.com/sumitsuman-droid/prd-generator-eval)"
-    )
+else:
+    # Initial state — no PRD yet, no generation in progress
+    with output_container:
+        _render_architecture_footer()
