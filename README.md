@@ -9,7 +9,7 @@ The app takes a rough product idea, turns it into a structured PRD, and then sco
 This is a personal project I built across three weekends in late 2026. The code, README, calibration notes, and corpus design reflect my own thinking and iteration process. If you're a recruiter or PM interested in this work, please reach out via [LinkedIn](https://www.linkedin.com/in/sumit5suman/).
 
 
-**Live demo:** To be added after deployment
+**Live demo:** https://prd-eval-sumit.streamlit.app
 
 ![Hero screenshot](examples/screenshot_01_hero.png)
 
