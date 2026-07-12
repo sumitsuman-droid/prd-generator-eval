@@ -6,7 +6,7 @@ This is a portfolio project demonstrating LLM evaluation methodology. The substa
 
 When generating a second or third PRD in the same session, the previously generated PRD content may briefly remain visible in dimmed grey style during the new generation. The new PRD always renders correctly above it.
 
-**Impact:** Cosmetic. The dimmed previous content is greyed out and recedes visually. Refreshing the page between generations clears the artifact entirely. Single-generation flow (the typical recruiter experience) is unaffected.
+**Impact:** Cosmetic. The dimmed previous content is greyed out and recedes visually. Refreshing the page between generations clears the artifact entirely. Single-generation flow (the typical single-visit user experience) is unaffected.
 
 **Design tradeoff:** I prioritized locking the Generate PRD button to a fixed position at the top of the page over fully eliminating this artifact. A moving button (the alternative I tested) is more visually disruptive than dimmed text remnants because the button is brightly colored and draws attention; the ghost text recedes.
 

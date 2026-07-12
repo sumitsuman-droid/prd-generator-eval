@@ -215,19 +215,17 @@ def _render_eval(evaluation: dict) -> None:
     for i, tip in enumerate(evaluation.get("top_3_improvements", []), 1):
         st.markdown(f"{i}. {tip}")
 
-
 _SAMPLE_QUERIES = [
-    "Create a PRD for a real-time ETA prediction and tracking experience for last-mile food delivery customers",
-    "Create a PRD for a retail media insights dashboard for advertisers selling on a B2B e-commerce marketplace",
+    "Create a PRD for a 3D product configurator that lets athletes and teams design and personalize custom sportswear kits in real time",
+    "Create a PRD for an agentic document processing tool that extracts and validates shipment data from freight booking documents and customer emails",
     "Create a PRD for a supplier-facing workflow tool that lets tour operators bulk-update inventory and pricing across marketplace listings",
 ]
-
 st.set_page_config(page_title="PRD Generator", page_icon="📋", layout="wide")
 st.title("PRD Generator with Eval Harness")
 st.markdown("Generate structured PRDs from rough product ideas, then evaluate output quality with a calibrated LLM-as-judge rubric.")
 st.caption(
     "_This is a portfolio demonstration of LLM evaluation methodology. "
-    "The app uses paid API credits — please use thoughtfully. If you're a recruiter exploring my work, "
+    "The app uses paid API credits. If you'd like to connect or discuss this work, "
     "feel free to reach out via [LinkedIn](https://www.linkedin.com/in/sumit5suman/)._"
 )
 
